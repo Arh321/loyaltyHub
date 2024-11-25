@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/header/header";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
+import AppProvider from "@/redux/provider/app-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,10 +31,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta ">
-          <Header />
-          {children}
-        </div>
+        <AppProvider>
+          <AntdRegistry>
+            <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta ">
+              <Header />
+              {children}
+            </div>
+          </AntdRegistry>
+        </AppProvider>
       </body>
     </html>
   );
