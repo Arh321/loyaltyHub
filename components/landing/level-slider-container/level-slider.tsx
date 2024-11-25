@@ -6,7 +6,7 @@ import style from "./level-slider.module.css";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { IClubStatusNew } from "@/types/club-status";
-import axiosInstance, { controlers } from "@/utils/apiConfig";
+// import axiosInstance, { controlers } from "@/utils/apiConfig";
 import { Skeleton } from "antd";
 import LevelPerviewCart from "./level-perview-cart";
 

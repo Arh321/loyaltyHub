@@ -22,6 +22,7 @@ const useAuth = () => {
   // Function to check login and handle routing
   const checkLogin = useCallback(() => {
     const token = cookies.get("token");
+    // Memoize the dispatch functions to prevent unnecessary re-creation
 
     if (!token) {
       const protectedPaths = ["/basket", "/profile"];
