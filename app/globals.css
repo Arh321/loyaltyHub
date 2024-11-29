@@ -6,6 +6,22 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
+
+@font-face {
+  font-family: Regular;
+  src: url("./fonts/IRANYekanXFaNum-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: Light;
+  src: url("./fonts/IRANYekanXFaNum-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: Bold;
+  src: url("./fonts/IRANYekanXFaNum-Bold.woff") format("woff");
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

@@ -117,17 +117,20 @@ const LevelsSlider = () => {
       </div>
     );
   return (
-    <div className="w-full relative">
+    <div className="w-full h-full relative ">
       <Swiper
         slidesPerView={1}
         pagination={true}
-        navigation={true}
+        navigation={false}
         modules={[Navigation, Pagination]}
         className={clsx(style["LevelsSlider-swiper"])}
       >
         {data.map((item, index) => {
           return (
-            <SwiperSlide key={index}>
+            <SwiperSlide
+              key={index}
+              className="w-full flex justify-center items-center "
+            >
               <LevelPerviewCart level={item} />
             </SwiperSlide>
           );
