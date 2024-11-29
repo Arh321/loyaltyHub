@@ -13,6 +13,23 @@ const config: Config = {
         Bold: "Bold",
         Light: "Light",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        popIn: {
+          "0%": { top: "80%", "z-index": "-1" },
+          "90%": { top: "100%" },
+          "100%": { "z-index": "1" },
+        },
+      },
+      animation: {
+        fadeIn: "fadeIn 0.3s ease-in-out",
+        "fadeIn-repetive": "fadeIn 2s ease-in-out",
+
+        popIn: "popIn 0.7s ease-in-out",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

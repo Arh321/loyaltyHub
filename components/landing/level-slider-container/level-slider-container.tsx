@@ -1,6 +1,6 @@
 import Image from "next/image";
 import border from "../../../public/images/level-custom-border.png";
-import LevelsSlider from "./level-slider";
+import LevelSlidersComponent from "./level-slider-lazy";
 
 const CurrentLevelSliderContainer = () => {
   return (
@@ -12,7 +12,7 @@ const CurrentLevelSliderContainer = () => {
         <div className="w-full flex flex-col pt-4 gap-0 items-center justify-center aspect-square rounded-t-full bg-Highlighter z-[1] shadow-lg rounded-b-[999px] overflow-hidden">
           <p className="font-Regular text-sm">امیر حسین نظامی</p>
           <div className="w-full aspect-[16/5]">
-            <LevelsSlider />
+            <LevelSlidersComponent />
           </div>
         </div>
       </div>

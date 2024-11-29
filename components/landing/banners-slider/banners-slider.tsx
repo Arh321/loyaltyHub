@@ -11,7 +11,7 @@ import Image from "next/image";
 const BannerSlidersComponent = () => {
   const images = [banner1, banner2, banner3];
   return (
-    <div className="w-full h-full relative ">
+    <div className="w-full h-full relative animate-fadeIn">
       <Swiper
         slidesPerView={1}
         pagination={true}

@@ -114,7 +114,7 @@ const LevelsSlider = () => {
   if (!data)
     return (
       <div className="w-2/3 mx-auto flex justify-center">
-        <Skeleton.Node className="!flex !w-full !h-full aspect-square" />
+        <Skeleton.Node className="!flex !w-full !h-full aspect-square" active />
       </div>
     );
   return (
