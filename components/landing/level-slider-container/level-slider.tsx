@@ -75,7 +75,7 @@ const levelsData: IClubStatusNew[] = [
     creditPercentageDecription:
       " دريافت 5 درصد اعتبار از هر فاکتور براي خريد بعدي دريافت 7 درصد اعتبار از  خريد ماه درابتداي ماه بعدي",
     nextLevelPercent: 37,
-    levelPercent: 100,
+    levelPercent: 37,
     nextLevelTitle: "نقره اي",
     nextLevelRemainPrice: 78320000,
     clubControlDays: 550,
@@ -112,7 +112,7 @@ const LevelsSlider = () => {
   if (error) return <div>Error: {error}</div>;
   if (!data)
     return (
-      <div className="w-1/2 mx-auto flex justify-center">
+      <div className="w-2/3 mx-auto flex justify-center">
         <Skeleton.Node className="!flex !w-full !h-full aspect-square" />
       </div>
     );
@@ -121,7 +121,7 @@ const LevelsSlider = () => {
       <Swiper
         slidesPerView={1}
         pagination={true}
-        navigation={false}
+        navigation={true}
         modules={[Navigation, Pagination]}
         className={clsx(style["LevelsSlider-swiper"])}
       >

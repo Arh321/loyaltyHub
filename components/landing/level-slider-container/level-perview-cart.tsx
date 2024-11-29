@@ -5,6 +5,9 @@ import BronzeLevel from "../../../public/images/BronzeLevel.png";
 import GoldLevel from "../../../public/images/GoldLevel.png";
 
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
+import { Progress } from "antd";
+import styles from "../../../styles/ant-custom-styles.module.css";
+import clsx from "clsx";
 
 interface LevelPerviewCartProps {
   level: IClubStatusNew;
@@ -40,7 +43,7 @@ const LevelPerviewCart: React.FC<LevelPerviewCartProps> = ({ level }) => {
           style={{ objectFit: "contain" }}
         />
       </div>
-      <p className="pt-[5px] relative">
+      <p className="pt-[8px] relative">
         {level.customerLevelState == "Done" && (
           <span className="min-w-[88px] bg-BG font-Regular text-[12px] px-4 py-1 rounded-[50px] text-center">
             تکمیل شده
@@ -52,13 +55,30 @@ const LevelPerviewCart: React.FC<LevelPerviewCartProps> = ({ level }) => {
           </span>
         )}
         {level.customerLevelState == "Next" && (
-          <span className="min-w-[88px] text-Secondary2 bg-BG  flex items-center gap-1 font-Bold px-4 py-2 rounded-[50px] text-center">
-            <span className="drop-shadow-sm"> خرید مانده</span>
-            <span className="flex items-center gap-1">
-              <span className="text-xs">تومان</span>
-              {numberToPersianPrice(level.nextLevelRemainPrice)}
+          <div className="relative w-full">
+            <span className="min-w-[88px] text-Secondary2 bg-BG text-[12px] flex items-center gap-1 font-Bold px-4 py-2 rounded-[50px] text-center">
+              <span className="drop-shadow-sm whitespace-nowrap">
+                خرید مانده
+              </span>
+              <span className="flex items-center gap-1">
+                <span className="text-[8px]">تومان</span>
+                {numberToPersianPrice(level.nextLevelRemainPrice)}
+              </span>
             </span>
-          </span>
+            <span className="w-[34px] h-[34px] bg-Highlighter shadow-lg rounded-full p-2 text-sm font-Bold flex justify-center items-center absolute top-0 left-0 right-0 mx-auto  -translate-y-[70%]">
+              {level.levelPercent}
+            </span>
+            <Progress
+              percent={50}
+              strokeColor={"var(--Secondary2)"}
+              strokeWidth={2}
+              showInfo={false}
+              trailColor="var(--BG)"
+              rootClassName="!px-3 !-mt-8 !h-3 !relative"
+              strokeLinecap="round"
+              className={clsx(styles["next-progresBar"])}
+            />
+          </div>
         )}
       </p>
     </div>

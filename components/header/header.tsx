@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import logo from "../../public/images/hosseiniLogo.png";
 import Image from "next/image";
+import Sidebar from "./side-bar";
 const Header = () => {
   return (
     <header
@@ -16,9 +17,8 @@ const Header = () => {
       <Link href={"/"}>
         <Image src={logo} alt="لوگو" />
       </Link>
-      <button className="text-Highlighter">
-        <Icon icon="lucide:menu" color="white" width={"2rem"} />
-      </button>
+
+      <Sidebar logo={logo} />
     </header>
   );
 };

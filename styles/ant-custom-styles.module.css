@@ -1,0 +1,18 @@
+.next-progresBar [class~="ant-progress-outer"] {
+  width: calc(100% - 24px) !important;
+  border: 2px solid var(--BG);
+  border-radius: 10px;
+  position: absolute !important;
+}
+
+/* Base styles */
+.custom-sider {
+  position: fixed; /* Fixed position to slide in/out */
+  top: 0;
+  right: 0; /* Place the sider on the right */
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  transition: transform 0.3s ease; /* Smooth sliding transition */
+}

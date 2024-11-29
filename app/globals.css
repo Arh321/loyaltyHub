@@ -6,7 +6,7 @@
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
-
+@import "../styles/ant-custom-styles.module.css";
 @font-face {
   font-family: Regular;
   src: url("./fonts/IRANYekanXFaNum-Regular.woff") format("woff");
@@ -25,6 +25,45 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary1: #1d313b;
+  --primary2: #416e86;
+  --secondary: #50675e;
+  --secondary-50: #f8fafb;
+  --call-to-action: #ff844b;
+  --call-to-action-50: #ff844b80;
+  --call-to-action-disable: #ffe0d2;
+  --backGround: #fbfeff;
+  --highliter: #ffffff;
+  --alert: #ff0000;
+  --gold: #edf10c;
+  --social-telegram: #27a7e7;
+  --social-whatsapp: #4ecb5c;
+  --skeleton-background: #e5e7eb;
+  --main-light-silver: #e7e8e9;
+  --secondary2: #e4e7f4;
+  --primary: #202224;
+  --secondary1: #37a7bb;
+  --sec1-hover: #9bd3dd;
+  --Secondary2: #1e9c51;
+  --sec2-hover: #cdd0dc;
+  --CTA-Focus: #0e843e;
+  --cta-hover: #173461;
+  --focus: #48bb78;
+  --disable: #d3dbe8;
+  --highlighter: #ffffff;
+  --highlighter-hover: #edf0f8;
+  --BG: #f2f6fc;
+  --alert: #c03030;
+  --alert-hover: #f6e2e2;
+  --success: #60c213;
+  --success-hover: #e6f1e3;
+  --row1: #ffffff;
+  --row2: #edeff7;
+  --row-seen: #f5f6fa;
+  --chart1: #84d2f6;
+  --chart2: #ff5a5a;
+  --chart3: #15557c;
+  --Tritary: #adbab2;
 }
 
 @media (prefers-color-scheme: dark) {
