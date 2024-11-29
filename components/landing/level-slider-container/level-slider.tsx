@@ -106,6 +106,7 @@ const LevelsSlider = () => {
     // fetchData();
     setTimeout(() => {
       setData(levelsData);
+      setError(null);
     }, 1500);
   }, []);
 

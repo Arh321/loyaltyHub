@@ -1,9 +1,5 @@
-import Cookies from "universal-cookie";
-import { CustomerToken } from "../../../types/authentication";
-import { CustomerAddress, ProfileInfo } from "../../../types/profile";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { FavoriteProduct, Product } from "../../../types/product";
-import { IInvoicesResult } from "../../../types/invoice";
+import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
@@ -20,16 +16,14 @@ interface ProfileMissedFieldsProps {
   isRequierdMissed: boolean;
 }
 export interface ProfileSliceType {
-  info: ProfileInfo;
-  customerToken: CustomerToken;
+  info: unknown;
+  customerToken: unknown;
   hasToken: boolean;
   loadingProfile: boolean;
   profileNotifeProps: ProfileNotifeProps;
   profileMissedFields: ProfileMissedFieldsProps;
-  customerAddress: CustomerAddress[];
-  customerFavorites: Product[];
-  customerInvoices: IInvoicesResult | undefined;
-  profileCompleteDialog: boolean,
+
+  profileCompleteDialog: boolean;
 }
 
 const initialState: ProfileSliceType = {
@@ -71,25 +65,22 @@ const initialState: ProfileSliceType = {
     fields: [],
     isRequierdMissed: false,
   },
-  customerAddress: [],
-  customerFavorites: [],
-  customerInvoices: undefined,
 };
 
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    onSetToken: (state, payload: PayloadAction<CustomerToken>) => {
-      state.customerToken = payload.payload;
-      cookies.set("token", payload.payload, {
-        path: "/",
-        expires: new Date(payload.payload.expires),
-      });
-      state.hasToken = true;
+    onSetToken: () => {
+      // state.customerToken = payload.payload;
+      // cookies.set("token", payload.payload, {
+      //   path: "/",
+      //   expires: new Date(payload.payload.expires),
+      // });
+      // state.hasToken = true;
     },
     onProfileCompleteDialog: (state) => {
-      state.profileCompleteDialog = !state.profileCompleteDialog
+      state.profileCompleteDialog = !state.profileCompleteDialog;
     },
     onCheckHasToken: (state) => {
       const token = cookies.get("token");
@@ -107,7 +98,7 @@ const profileSlice = createSlice({
       });
       state.hasToken = false;
     },
-    onSetProfile: (state, payload: PayloadAction<ProfileInfo>) => {
+    onSetProfile: (state, payload: PayloadAction<unknown>) => {
       state.info = payload.payload;
     },
     onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
@@ -116,38 +107,21 @@ const profileSlice = createSlice({
     onShowNotif: (state, payload: PayloadAction<ProfileNotifeProps>) => {
       state.profileNotifeProps = payload.payload;
     },
-    onSetCustomerAddress: (
-      state,
-      payload: PayloadAction<CustomerAddress[]>
-    ) => {
-      state.customerAddress = payload.payload;
-    },
-    onSetCustomerFavoritesProducts: (
-      state,
-      payload: PayloadAction<Product[]>
-    ) => {
-      state.customerFavorites = payload.payload;
-    },
-    onSetCustomerFInvoices: (
-      state,
-      payload: PayloadAction<IInvoicesResult>
-    ) => {
-      state.customerInvoices = payload.payload;
-    },
 
-    onCheckProfile: (state, payload: PayloadAction<ProfileInfo>) => {
-      let fields: string[] = [];
-      let requierdItems = [
+    onCheckProfile: (state, payload: PayloadAction<unknown>) => {
+      const fields: string[] = [];
+      const requierdItems = [
         "nationalCode",
         "lastName",
         "firstName",
         "cellPhone",
       ];
       Object.entries(payload.payload).forEach((i) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         i[1] == null && fields.push(i[0]);
       });
       state.profileMissedFields.fields = fields;
-      let tmp = fields.filter((i) => requierdItems.includes(i));
+      const tmp = fields.filter((i) => requierdItems.includes(i));
       state.profileMissedFields.isRequierdMissed = tmp.length ? true : false;
     },
   },
@@ -160,11 +134,10 @@ export const {
   onSetProfile,
   onLoadingProfile,
   onShowNotif,
-  onSetCustomerAddress,
-  onSetCustomerFavoritesProducts,
+
   onCheckProfile,
-  onSetCustomerFInvoices,
-  onProfileCompleteDialog
+
+  onProfileCompleteDialog,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
