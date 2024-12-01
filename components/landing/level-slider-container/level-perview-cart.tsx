@@ -45,12 +45,12 @@ const LevelPerviewCart: React.FC<LevelPerviewCartProps> = ({ level }) => {
       </div>
       <p className="pt-[8px] relative">
         {level.customerLevelState == "Done" && (
-          <span className="min-w-[88px] bg-BG font-Regular text-[12px] text-Primary px-4 py-1 rounded-[50px] text-center">
+          <span className="min-w-[88px] bg-BG font-Regular text-[14px] text-Primary px-4 py-[0.3rem] rounded-[50px] text-center">
             تکمیل شده
           </span>
         )}
         {level.customerLevelState == "Current" && (
-          <span className="min-w-[88px] bg-Secondary2 text-white font-Regular text-[12px] px-4 py-1 rounded-[50px] text-center">
+          <span className="min-w-[88px] bg-Secondary2 text-white font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center">
             سطح من
           </span>
         )}

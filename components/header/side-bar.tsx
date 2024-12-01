@@ -73,13 +73,13 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
           <div className="w-full flex items-center justify-between">
             <button
               onClick={toggleCollapsed}
-              className="text-Highlighter w-[74px] aspect-square"
+              className="text-Highlighter w-[74px] h-[64px]"
             >
               <span
                 style={{
                   boxShadow: "4px 4px 6px 0px rgba(0,0,0,0.29) inset",
                 }}
-                className="w-full h-full bg-BG rounded-br-[60px] flex items-center  text-Alert text-3xl"
+                className="w-full h-full bg-BG rounded-br-[50px] flex items-center  text-Alert text-3xl"
               >
                 <Icon icon="stash:times" className="translate-x-1/2" />
               </span>

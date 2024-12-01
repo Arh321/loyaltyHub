@@ -60,6 +60,19 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        ".no-scrollbar": {
+          "-ms-overflow-style": "none" /* IE و Edge */,
+          "scrollbar-width": "none" /* فایرفاکس */,
+        },
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none" /* مرورگرهای Webkit */,
+        },
+      });
+    },
+  ],
 };
 export default config;

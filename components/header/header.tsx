@@ -7,18 +7,28 @@ const Header = () => {
   return (
     <header
       style={{
-        backgroundImage: "url(../../public/images/Group 366250 1.png)",
+        backgroundImage: `url(/images/bg-art.png)`,
+        backgroundSize: "contain", // Ensures the image covers the element
+        backgroundRepeat: "repeat", // Prevents the image from repeating
+        backgroundPosition: "center", // Centers the image
       }}
-      className="w-full flex items-center justify-between px-[16px] py-[16px]"
+      className="w-full "
     >
-      <button className="text-Highlighter">
-        <Icon icon="lets-icons:user-light" color="white" width={"2rem"} />
-      </button>
-      <Link href={"/"}>
-        <Image src={logo} alt="لوگو" />
-      </Link>
-
-      <Sidebar logo={logo} />
+      <div
+        style={{
+          background:
+            "linear-gradient(to left, #198D41, transparent,transparent,#198D41)",
+        }}
+        className="w-full flex items-center justify-between px-[16px] py-[16px]"
+      >
+        <button className="text-Highlighter">
+          <Icon icon="lets-icons:user-light" color="white" width={"2rem"} />
+        </button>
+        <Link href={"/"}>
+          <Image src={logo} alt="لوگو" />
+        </Link>
+        <Sidebar logo={logo} />
+      </div>
     </header>
   );
 };

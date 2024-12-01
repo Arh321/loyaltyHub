@@ -1,10 +1,11 @@
+"use client";
 import { Skeleton } from "antd";
 import dynamic from "next/dynamic";
 
 const GiftsAndCoponsContainerLAzy = dynamic(
   () => import("./gifts-and-copons-container"),
   {
-    ssr: true, // Disable SSR for this client-side component
+    ssr: false, // Disable SSR for this client-side component
     loading: () => (
       <div>
         <Skeleton.Node
