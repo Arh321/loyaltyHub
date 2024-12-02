@@ -18,6 +18,11 @@
 }
 
 @font-face {
+  font-family: Medium;
+  src: url("./fonts/IRANYekanXFaNum-Medium.woff") format("woff");
+}
+
+@font-face {
   font-family: Bold;
   src: url("./fonts/IRANYekanXFaNum-Bold.woff") format("woff");
 }
@@ -45,6 +50,8 @@
   --secondary1: #37a7bb;
   --sec1-hover: #9bd3dd;
   --Secondary2: #1e9c51;
+  --Secondary: #50675e;
+
   --sec2-hover: #cdd0dc;
   --CTA-Focus: #0e843e;
   --cta-hover: #173461;
@@ -64,6 +71,7 @@
   --chart2: #ff5a5a;
   --chart3: #15557c;
   --Tritary: #adbab2;
+  --Focus: "#409FA6";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -74,7 +82,6 @@
 }
 
 body {
-  color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }

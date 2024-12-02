@@ -57,7 +57,7 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
         <span className="drop-shadow-xl">{icon}</span>
         <p>{loading && <Skeleton.Node active className="w-12 h-3" />}</p>
         {!loading && value ? (
-          <p className="w-full flex flex-col gap-[7px] justify-center items-center">
+          <p className="w-full flex flex-col gap-[7px] justify-center items-center text-Primary">
             <span className="font-Bold">{title}</span>
             {returnCorrentVAlueView()}
           </p>

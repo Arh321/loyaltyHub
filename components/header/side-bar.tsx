@@ -73,7 +73,7 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
           <div className="w-full flex items-center justify-between">
             <button
               onClick={toggleCollapsed}
-              className="text-Highlighter w-[74px] h-[64px]"
+              className="text-Highlighter w-[74px] h-[70px]"
             >
               <span
                 style={{

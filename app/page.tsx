@@ -7,7 +7,7 @@ import MembershopReqCardComponent from "@/components/landing/membershopReqCard/m
 export default function Home() {
   return (
     <div className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[10px]">
-      <div className=" w-full min-h-[calc(100vh-80px)] overflow-y-auto flex flex-col  gap-4 sm:px-6 lsm:px-8 pt-[18px] pb-[40px]">
+      <div className=" w-full min-h-[calc(100vh-80px)] overflow-y-auto flex flex-col  gap-4 sm:px-6 lsm:px-8 pt-[18px] pb-[100px]">
         <CurrentLevelSliderContainer />
         <BannerSlidersComponent />
         <GiftsAndCoponsContainerLAzy />

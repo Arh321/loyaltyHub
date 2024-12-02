@@ -12,6 +12,7 @@ const config: Config = {
         Regular: "Regular",
         Bold: "Bold",
         Light: "Light",
+        Medium: "Medium",
       },
       keyframes: {
         fadeIn: {
@@ -43,6 +44,7 @@ const config: Config = {
         Secondary: "#50675E",
         Secondary2: "#1E9C51",
         Primary: "#252827",
+        Focus: "#409FA6",
       },
       screens: {
         sm: "320px",
@@ -63,15 +65,26 @@ const config: Config = {
 
   plugins: [
     function ({ addUtilities }) {
-      addUtilities({
-        ".no-scrollbar": {
-          "-ms-overflow-style": "none" /* IE و Edge */,
-          "scrollbar-width": "none" /* فایرفاکس */,
+      addUtilities(
+        {
+          ".no-scrollbar": {
+            "-ms-overflow-style": "none" /* IE و Edge */,
+            "scrollbar-width": "none" /* فایرفاکس */,
+          },
+          ".no-scrollbar::-webkit-scrollbar": {
+            display: "none" /* مرورگرهای Webkit */,
+          },
+          ".border-gradient-seconday": {
+            background:
+              " linear-gradient(#F2F6FC, #F2F6FC) padding-box,linear-gradient(90deg, rgba(30,156,81,0.1) 0%, rgba(30,156,81,1) 50%, rgba(30,156,81,0.1) 100%) border-box",
+
+            border: " 0 0 4px 0 solid transparent",
+            borderImage:
+              "linear-gradient(90deg, rgba(30,156,81,0.1) 0%, rgba(30,156,81,1) 50%, rgba(30,156,81,0.1) 100%) 1",
+          },
         },
-        ".no-scrollbar::-webkit-scrollbar": {
-          display: "none" /* مرورگرهای Webkit */,
-        },
-      });
+        ["responsive"] // Add responsive support
+      );
     },
   ],
 };

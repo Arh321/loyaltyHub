@@ -10,9 +10,9 @@ import clsx from "clsx";
 
 const FooterContainer = () => {
   const { navigateTo } = useNavigation();
-  const path = usePathname();
+  const pathname = usePathname();
   const handleNavigation = (pathName: string) => {
-    console.log(path);
+    console.log(pathname);
     navigateTo(pathName, { query: { ref: "home" }, shallow: true });
   };
   const footerItems = [
@@ -22,12 +22,13 @@ const FooterContainer = () => {
           width="32"
           height="32"
           color="var(--highliter)"
-          fill={path.length < 2}
+          fill={pathname.length < 2}
         />
       ),
 
       lable: "خانه",
       path: "/",
+      isActive: pathname.length < 2,
     },
     {
       icon: (
@@ -35,12 +36,13 @@ const FooterContainer = () => {
           width="32"
           height="32"
           color="var(--highliter)"
-          fill={path.includes("invoices")}
+          fill={pathname.includes("invoices")}
         />
       ),
 
       lable: "فاکتورها",
-      path: "invoices",
+      path: "/invoices",
+      isActive: pathname.includes("invoices"),
     },
     {
       icon: (
@@ -48,12 +50,13 @@ const FooterContainer = () => {
           width="32"
           height="32"
           color="var(--highliter)"
-          fill={path.includes("mylevel")}
+          fill={pathname.includes("mylevel")}
         />
       ),
 
       lable: "سطح من",
-      path: "mylevel",
+      path: "/mylevel",
+      isActive: pathname.includes("mylevel"),
     },
     {
       icon: <UserAddIcon width="32" height="32" color="var(--highliter)" />,
@@ -91,12 +94,7 @@ const FooterContainer = () => {
               <span
                 className={clsx(
                   "text-Highlighter",
-                  path.length < 2 && item.lable == "خانه"
-                    ? "!font-Bold"
-                    : "font-Regular",
-                  path.includes(item.path) && path.length > 2
-                    ? "font-Bold"
-                    : "font-Light"
+                  item.isActive ? "!font-Bold" : "font-Regular"
                 )}
               >
                 {item.lable}
