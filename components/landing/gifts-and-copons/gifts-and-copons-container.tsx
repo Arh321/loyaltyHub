@@ -32,7 +32,7 @@ const GiftsAndCoponsContainerComponent = () => {
           loading={loading}
         />
         <CoponsAndGiftsSummeryComponentItem
-          title={"کوپـن خـریـد"}
+          title={"کارت هدیه"}
           icon={<GiftIcon width="70" height="32" color="var(--Secondary2)" />}
           value={"150000"}
           type={"gift"}

@@ -3,16 +3,17 @@ import GiftsAndCoponsContainerLAzy from "@/components/landing/gifts-and-copons/g
 
 import CurrentLevelSliderContainer from "@/components/landing/level-slider-container/level-slider-container";
 import MembershopReqCardComponent from "@/components/landing/membershopReqCard/membershopReqCard";
+import PagesContainer from "@/components/pages-container/pages-container";
 
 export default function Home() {
   return (
-    <div className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[10px]">
-      <div className=" w-full min-h-[calc(100vh-80px)] overflow-y-auto flex flex-col  gap-4 sm:px-6 lsm:px-8 pt-[18px] pb-[100px]">
+    <PagesContainer>
+      <div className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 ">
         <CurrentLevelSliderContainer />
         <BannerSlidersComponent />
         <GiftsAndCoponsContainerLAzy />
         <MembershopReqCardComponent />
       </div>
-    </div>
+    </PagesContainer>
   );
 }
