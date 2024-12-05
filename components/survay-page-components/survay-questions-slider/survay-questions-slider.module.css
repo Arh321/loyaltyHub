@@ -1,0 +1,15 @@
+.survey-swiper {
+  width: 100%;
+}
+
+.survey-swiper [class~="swiper-slide-prev"] {
+  transform: rotate(-4deg) scale(0.9);
+}
+
+.survey-swiper [class~="swiper-slide-active"] {
+  transform: rotate(0) scale(1);
+}
+
+.survey-swiper [class~="swiper-slide-next"] {
+  transform: rotate(4deg) scale(0.9);
+}

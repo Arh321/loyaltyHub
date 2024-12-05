@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "custom-gradient": "linear-gradient(to top, black, transparent)", // Your custom gradient
+      },
       fontFamily: {
         Regular: "Regular",
         Bold: "Bold",

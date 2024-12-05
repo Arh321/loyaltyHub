@@ -18,7 +18,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col gap-4 py-4 border-b border-Secondary"
+      className="w-full flex flex-col gap-4 py-4 border-b border-Secondary sm:px-6"
     >
       <h1 className="w-full font-Medium text-Primary text-center ">
         {survayTopic}

@@ -73,7 +73,12 @@ const FooterContainer = () => {
         backgroundRepeat: "repeat", // Prevents the image from repeating
         backgroundPosition: "center", // Centers the image
       }}
-      className="w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto rounded-t-[20px] overflow-hidden z-50"
+      className={clsx(
+        "w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto rounded-t-[20px] overflow-hidden z-50",
+        {
+          hidden: pathname.includes("survey"),
+        }
+      )}
     >
       <div
         style={{
