@@ -45,7 +45,7 @@ const SurveyQuestionsSlider = () => {
 
   const handleNext = () => {
     if (swiperInstance) {
-      console.log(swiperInstance);
+      console.log(activeIndex);
       swiperInstance.slideNext();
     }
   };
