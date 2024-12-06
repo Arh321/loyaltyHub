@@ -35,6 +35,7 @@ const config: Config = {
         popIn: "popIn 0.7s ease-in-out",
       },
       colors: {
+        transparent: "transparent",
         background: "var(--background)",
         foreground: "var(--foreground)",
         cta: "#1E9C51",
@@ -48,6 +49,7 @@ const config: Config = {
         Secondary2: "#1E9C51",
         Primary: "#252827",
         Focus: "#409FA6",
+        SecondaryHover: "#0E843E",
       },
       screens: {
         sm: "320px",

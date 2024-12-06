@@ -3,6 +3,7 @@ import GiftsAndCoponsContainerLAzy from "@/components/landing/gifts-and-copons/g
 
 import CurrentLevelSliderContainer from "@/components/landing/level-slider-container/level-slider-container";
 import MembershopReqCardComponent from "@/components/landing/membershopReqCard/membershopReqCard";
+import SurveySubmitModal from "@/components/landing/modals/survey-submit-modal";
 import PagesContainer from "@/components/pages-container/pages-container";
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
         <GiftsAndCoponsContainerLAzy />
         <MembershopReqCardComponent />
       </div>
+      <SurveySubmitModal />
     </PagesContainer>
   );
 }

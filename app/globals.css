@@ -39,7 +39,7 @@
   --call-to-action-disable: #ffe0d2;
   --backGround: #fbfeff;
   --highliter: #ffffff;
-  --alert: #ff0000;
+  --Alert: #ff0000;
   --gold: #edf10c;
   --social-telegram: #27a7e7;
   --social-whatsapp: #4ecb5c;
@@ -91,6 +91,27 @@ body {
     text-wrap: balance;
   }
 }
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #1e9c51 94%, #0000) top/8px 8px
+      no-repeat,
+    conic-gradient(#0000 30%, #1e9c51);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

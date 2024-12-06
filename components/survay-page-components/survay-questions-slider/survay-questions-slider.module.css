@@ -13,3 +13,30 @@
 .survey-swiper [class~="swiper-slide-next"] {
   transform: rotate(4deg) scale(0.9);
 }
+
+.stars-container {
+  width: 100%;
+}
+
+.stars-container[class~="half-filled-star"] {
+  position: relative;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+.stars-container[class~="half-filled-star"] svg {
+  color: #ccc;
+  z-index: 1;
+}
+
+.stars-container [class~="half-filled-star filled-half "] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #fadb14;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: 2;
+}
