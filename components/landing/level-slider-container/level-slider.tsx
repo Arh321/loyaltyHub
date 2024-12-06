@@ -89,56 +89,49 @@ const levelsData: IClubStatusNew[] = [
 ];
 
 const LevelsSlider = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IClubStatusNew[] | null>();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   try {
-    //     const response = await axiosInstance.get<IClubStatusNew[]>(
-    //       `${controlers.ClubLevel}GetClubLevels?CompanyID=40&MobileNo=09035498833`
-    //     );
-    //     setData(response.data);
-    //   } catch (err: any) {
-    //     setError(err.message || "An error occurred");
-    //   }
-    // };
-    // fetchData();
+    setLoading(true);
     setTimeout(() => {
+      setLoading(false);
       setData(levelsData);
       setError(null);
     }, 1500);
   }, []);
 
-  if (error) return <div>Error: {error}</div>;
-  if (!data)
+  if (loading)
     return (
       <div className="w-2/3 mx-auto flex justify-center">
         <Skeleton.Node className="!flex !w-full !h-full aspect-square" active />
       </div>
     );
-  return (
-    <div className="w-full h-full relative ">
-      <Swiper
-        slidesPerView={1}
-        pagination={true}
-        navigation={true}
-        modules={[Navigation, Pagination]}
-        className={clsx(style["LevelsSlider-swiper"])}
-      >
-        {data.map((item, index) => {
-          return (
-            <SwiperSlide
-              key={index}
-              className="w-full flex justify-center items-center "
-            >
-              <LevelPerviewCart level={item} />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </div>
-  );
+  if (error) return <div>Error: {error}</div>;
+  if (!loading && data)
+    return (
+      <div className="w-full h-full relative ">
+        <Swiper
+          slidesPerView={1}
+          pagination={true}
+          navigation={true}
+          modules={[Navigation, Pagination]}
+          className={clsx(style["LevelsSlider-swiper"])}
+        >
+          {data.map((item, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className="w-full flex justify-center items-center "
+              >
+                <LevelPerviewCart level={item} />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+    );
 };
 
 export default LevelsSlider;

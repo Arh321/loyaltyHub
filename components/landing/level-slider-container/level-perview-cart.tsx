@@ -43,7 +43,7 @@ const LevelPerviewCart: React.FC<LevelPerviewCartProps> = ({ level }) => {
           style={{ objectFit: "contain" }}
         />
       </div>
-      <p className="pt-[8px] relative">
+      <div className="pt-[8px] relative">
         {level.customerLevelState == "Done" && (
           <span className="min-w-[88px] bg-BG font-Regular text-[14px] text-Primary px-4 py-[0.3rem] rounded-[50px] text-center">
             تکمیل شده
@@ -82,7 +82,7 @@ const LevelPerviewCart: React.FC<LevelPerviewCartProps> = ({ level }) => {
             </div>
           </div>
         )}
-      </p>
+      </div>
     </div>
   );
 };

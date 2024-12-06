@@ -1,6 +1,16 @@
 import PagesContainer from "@/components/pages-container/pages-container";
-import SurvayHeader from "@/components/survay-page-components/survay-header/survay-header";
-import SurvayQuestionsSlider from "@/components/survay-page-components/survay-questions-slider/survay-questions-slider";
+
+import React from "react";
+const SurvayHeader = React.lazy(
+  () =>
+    import("@/components/survay-page-components/survay-header/survay-header")
+);
+const SurvayQuestionsSlider = React.lazy(
+  () =>
+    import(
+      "@/components/survay-page-components/survay-questions-slider/survay-questions-slider"
+    )
+);
 
 const SurvayPage = () => {
   return (
