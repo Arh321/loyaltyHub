@@ -1,3 +1,4 @@
+import { IValidateUser } from "@/types/profile";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 
@@ -16,7 +17,7 @@ interface ProfileMissedFieldsProps {
   isRequierdMissed: boolean;
 }
 export interface ProfileSliceType {
-  info: unknown;
+  info: IValidateUser;
   customerToken: unknown;
   hasToken: boolean;
   loadingProfile: boolean;
@@ -28,20 +29,34 @@ export interface ProfileSliceType {
 
 const initialState: ProfileSliceType = {
   info: {
-    id: 0,
-    lastModifiedBy: "string",
-    CustomerId: 0,
-    firstName: "",
-    lastName: "",
-    cellPhone: "",
-    email: "",
-    isActive: true,
-    isTowFactorAuthentication: true,
-    birthDate: "1377/02/04",
-    nationalCode: 0,
+    firstName: "علیرضا",
+    lastName: "حسن زاده",
+    mobile: "09123456789",
     job: "",
-    birthday: "",
-    hasPassword: false,
+    birthDate: new Date(),
+    nationalCode: "0",
+    address: "",
+    customerKey: 0,
+    buyPriceInYear: 0,
+    cityID: 0,
+    partnerShipCode: "",
+    provinceID: 0,
+    customerGroupName: "",
+    customerZone: "",
+    hasFactor: false,
+    educationDegree: "",
+    followCommission: 0,
+    inviteTypeID: 0,
+    marriageDate: null,
+    nextLevelPrice: 0,
+    sexuality: false,
+    tell: "",
+    title: "",
+    token: null,
+    partnerBirthDate: null,
+    postalCode: "",
+    usedCreditPrice: 0,
+    zipCode: "",
   },
   profileCompleteDialog: false,
   customerToken: {
@@ -98,7 +113,7 @@ const profileSlice = createSlice({
       });
       state.hasToken = false;
     },
-    onSetProfile: (state, payload: PayloadAction<unknown>) => {
+    onSetProfile: (state, payload: PayloadAction<IValidateUser>) => {
       state.info = payload.payload;
     },
     onLoadingProfile: (state, payload: PayloadAction<boolean>) => {

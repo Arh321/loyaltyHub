@@ -25,7 +25,7 @@ const CustomRate: React.FC<CustomRateProps> = ({ score, getValue, reset }) => {
     if (reset) {
       setCurrentValue(score);
     }
-  }, [reset, score]);
+  }, [reset]);
 
   return (
     <div className="w-full flex flex-col gap-4">

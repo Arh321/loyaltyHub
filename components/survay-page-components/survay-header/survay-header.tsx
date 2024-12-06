@@ -1,6 +1,8 @@
 "use client";
 
+import InvoiceModalDetail from "@/components/invoice-page/invoice-detail/invoice-detai-modal";
 import moment from "jalali-moment";
+import { useState } from "react";
 
 interface SurvayHeaderProps {
   invoiceDate: string;
@@ -15,6 +17,8 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
   survayDescription,
   survayTopic,
 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <div
       dir="rtl"
@@ -34,7 +38,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
           </span>
         </span>
         <button
-          onClick={() => console.log(invoiceId)}
+          onClick={() => setOpen(true)}
           className="w-[136px] h-[46px] text-Secondary2 font-Medium flex justify-center items-center rounded-[8px] border border-Secondary2"
         >
           مشاهده فاکتور
@@ -43,6 +47,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
       <p className="text-center w-full text-Secondary font-Regular">
         {survayDescription}
       </p>
+      <InvoiceModalDetail setOpen={setOpen} open={open} />
     </div>
   );
 };
