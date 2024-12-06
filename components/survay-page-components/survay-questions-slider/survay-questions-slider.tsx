@@ -8,10 +8,12 @@ import image5 from "../../../public/surveys/hosseini.png";
 import SurvayQuestionCartComponent from "./survey-question-cart";
 
 import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./survay-questions-slider.module.css";
 import useScore from "@/hooks/useScore";
 import { useRouter } from "next/navigation";
+import { Pagination } from "swiper/modules";
+import { Skeleton } from "antd";
 
 const survays = [
   {
@@ -47,6 +49,8 @@ const survays = [
 ];
 
 const SurveyQuestionsSlider = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const { setActiveIndex, setReset, setSlides, setTempSlides, state } =
     useScore(survays);
 
@@ -86,58 +90,84 @@ const SurveyQuestionsSlider = () => {
     navigate.push(`/?${query}`);
   };
 
-  return (
-    <div className="w-full grow relative pt-[20px]">
-      <Swiper
-        slidesPerView={1.3}
-        centeredSlides={true}
-        spaceBetween={10}
-        speed={500}
-        onSwiper={(swiper) => setSwiperInstance(swiper)}
-        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-        allowTouchMove={false} // Disable dragging
-        className={clsx(style["survey-swiper"])}
-      >
-        {state.slides.map((item, index) => {
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setError(null);
+    }, 1500);
+  }, []);
+
+  if (loading)
+    return (
+      <div className="w-full mx-auto flex justify-center overflow-x-auto gap-[10px] p-[20px]">
+        {Array.from({ length: 5 }).map((_, index) => {
           return (
-            <SwiperSlide
+            <Skeleton.Node
               key={index}
-              className="flex flex-col gap-[20px] transition-all duration-500"
-            >
-              <SurvayQuestionCartComponent
-                imageUrl={item.mediuUrl}
-                title={item.question}
-                score={item.score}
-                index={item.id}
-                setTempSlides={setTempSlides}
-                tempSlides={state.tempSlides}
-                reset={state.reset}
-              />
-            </SwiperSlide>
+              className="!flex !w-[370px] !h-full aspect-[2/3]"
+              active
+            />
           );
         })}
-      </Swiper>
-      <div className="w-full flex flex-col gap-[20px] pt-[20px]">
-        <div className="w-full flex flex-col gap-[10px] items-center ">
-          <button
-            onClick={handleNext}
-            className="font-Medium  bg-Secondary2 text-Highlighter p-3 text-lg rounded w-[284px]"
-          >
-            ثبت
-          </button>
-          <button
-            onClick={handlePrev}
-            className={clsx(
-              "font-Medium bg-Highlighter text-Secondary2 p-3 text-lg rounded w-[284px] animate-fadeIn",
-              state.activeIndex == 0 && "hidden"
-            )}
-          >
-            قبلی
-          </button>
+      </div>
+    );
+  if (error) return <div>Error: {error}</div>;
+  if (!loading)
+    return (
+      <div className="w-full grow relative pt-[20px] animate-fadeIn">
+        <Swiper
+          slidesPerView={1.3}
+          centeredSlides={true}
+          pagination={true}
+          spaceBetween={10}
+          speed={500}
+          onSwiper={(swiper) => setSwiperInstance(swiper)}
+          onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+          modules={[Pagination]}
+          allowTouchMove={false} // Disable dragging
+          className={clsx(style["survey-swiper"])}
+        >
+          {state.slides.map((item, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className="flex flex-col gap-[20px] transition-all duration-500"
+              >
+                <SurvayQuestionCartComponent
+                  imageUrl={item.mediuUrl}
+                  title={item.question}
+                  score={item.score}
+                  index={item.id}
+                  setTempSlides={setTempSlides}
+                  tempSlides={state.tempSlides}
+                  reset={state.reset}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        <div className="w-full flex flex-col gap-[20px] pt-[20px]">
+          <div className="w-full flex flex-col gap-[10px] items-center h-[100px]">
+            <button
+              onClick={handleNext}
+              className="font-Medium  bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-[284px]"
+            >
+              ثبت و بعدی
+            </button>
+            <button
+              onClick={handlePrev}
+              className={clsx(
+                "font-Medium bg-Highlighter text-Secondary2 p-3 text-lg rounded-lg w-[284px] animate-fadeIn",
+                state.activeIndex == 0 && "hidden"
+              )}
+            >
+              قبلی
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default SurveyQuestionsSlider;
