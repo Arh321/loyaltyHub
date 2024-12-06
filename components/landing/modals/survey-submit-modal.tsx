@@ -50,12 +50,14 @@ const SurveySubmitModal = () => {
       onCancel={handleCancel}
       style={{
         direction: "rtl",
-        width: "95%",
+        width: "95vw",
         maxWidth: "450px",
       }}
       classNames={{
+        wrapper: style["survey-modal-wrapper"],
+
         header: "w-full text-center font-Medium !bg-transparent",
-        content: style["modal-close-button"] + " !px-[23px] !bg-BG",
+        content: style["modal-close-button"] + " !px-[23px] !bg-BG ",
       }}
       footer={
         <div className="w-full flex justify-center">

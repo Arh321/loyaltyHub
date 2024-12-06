@@ -3,15 +3,15 @@
 }
 
 .survey-swiper [class~="swiper-slide-prev"] {
-  transform: rotate(-4deg) scale(0.9);
+  transform: rotate(-4deg) scale(0.9) !important;
 }
 
 .survey-swiper [class~="swiper-slide-active"] {
-  transform: rotate(0) scale(1);
+  transform: rotate(0) scale(1) !important;
 }
 
 .survey-swiper [class~="swiper-slide-next"] {
-  transform: rotate(4deg) scale(0.9);
+  transform: rotate(4deg) scale(0.9) !important;
 }
 
 .stars-container {

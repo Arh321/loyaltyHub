@@ -17,6 +17,14 @@
   transition: transform 0.3s ease; /* Smooth sliding transition */
 }
 
+.survey-modal-wrapper {
+  width: 100%;
+}
+
+.survey-modal-wrapper [class~="ant-modal"] {
+  width: 95vw !important;
+}
+
 .modal-close-button [class~="ant-modal-close"] {
   color: var(--Alert) !important;
   font-size: 16px;
