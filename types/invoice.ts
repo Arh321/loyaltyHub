@@ -4,7 +4,9 @@ export type IInvoiceDetail = {
   cusSaleDate: string;
   cusDepName: string;
   factorID: number;
+  finalReductionPrice: number;
   finallyFactorPrice: number;
+  salePriceAfterReduction: number;
 };
 
 export interface FactorDetail {
@@ -18,4 +20,6 @@ export interface FactorDetail {
   finallyPrice: number;
   finallyReduction: number;
   afterReduction: number;
+  finallyPriceAfterReduction: number;
+  kVatPrice: number;
 }
