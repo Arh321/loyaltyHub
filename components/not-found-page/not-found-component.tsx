@@ -1,10 +1,10 @@
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import React from "react";
 
 interface NotFoundComponentProps {
   topic?: string;
   title: string;
-  image?: string;
+  image?: string | StaticImageData;
 }
 
 const NotFoundComponent: React.FC<NotFoundComponentProps> = ({

@@ -115,3 +115,19 @@ button:active {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+.ant-modal-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ant-modal-wrap .ant-modal {
+  height: max-content !important;
+  max-height: 95dvh !important;
+  width: 90vw !important;
+  margin: auto !important;
+  top: auto !important;
+}
+
+.ant-modal-wrap .ant-modal:firstchild {
+  height: 100%;
+}

@@ -10,13 +10,13 @@ import NotFoundComponent from "@/components/not-found-page/not-found-component";
 import { RootState } from "@/redux/store";
 import { ProfileSliceType } from "@/redux/profile/profileSlice";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
-import { IInvoiceDetail } from "@/types/invoice";
-import Image from "next/image";
+import { FactorDetail, IInvoiceDetail } from "@/types/invoice";
+import Image, { StaticImageData } from "next/image";
 import { IValidateUser } from "@/types/profile";
 import logo from "@/public/images/hosseiniLogo.png";
 type InvoiceIdPageProps = {
   transactionID?: string;
-  customerKey: string;
+
   onClose?: React.Dispatch<React.SetStateAction<boolean>>;
   showServayButton: boolean;
 };
@@ -24,52 +24,32 @@ type InvoiceIdPageProps = {
 const invoice: IInvoiceDetail = {
   factorDetail: [
     {
-      id: 1,
-      k_name: "Smartphone",
-      k_Price: 1200,
-      k_Amount: 2,
-      kbArcode: "123456789012",
-      vat: 10,
-      reduction: 100,
-      finallyPrice: 2300, // (k_Price * k_Amount) + vat - reduction
-      finallyReduction: 200, // Total reduction for this item
-      afterReduction: 2200, // Final price after reductions
-    },
-    {
-      id: 2,
-      k_name: "Headphones",
-      k_Price: 200,
+      id: 10193579,
+      k_name: "يقه گرد 34767",
+      k_Price: 15890000,
       k_Amount: 1,
-      kbArcode: "987654321098",
-      vat: 5,
-      reduction: 20,
-      finallyPrice: 185,
-      finallyReduction: 20,
-      afterReduction: 180,
-    },
-    {
-      id: 3,
-      k_name: "Laptop",
-      k_Price: 1500,
-      k_Amount: 1,
-      kbArcode: "456789123456",
-      vat: 50,
-      reduction: 100,
-      finallyPrice: 1450,
-      finallyReduction: 100,
-      afterReduction: 1400,
+      kbArcode: null,
+      vat: 0,
+      reduction: 50,
+      finallyPrice: 15890000,
+      finallyReduction: 7945000,
+      afterReduction: 7945000,
+      finallyPriceAfterReduction: 7945000,
+      kVatPrice: 0,
     },
   ],
-  salePrice: 5000, // Sum of final prices before reductions
-  cusSaleDate: "2024-12-05",
-  cusDepName: "Electronics Department",
-  factorID: 1001,
-  finallyFactorPrice: 3835, // Total final price after all reductions
+  salePrice: 15890000,
+  cusSaleDate: "1403/05/24 23:20",
+  cusDepName: "سجاد",
+  factorID: 2772429,
+  finallyFactorPrice: 7945000,
+  finalReductionPrice: 7945000,
+  salePriceAfterReduction: 7945000,
 };
 
 const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   transactionID,
-  customerKey,
+
   onClose,
   showServayButton,
 }) => {
@@ -80,6 +60,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   );
 
   useEffect(() => {
+    setError(false);
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
@@ -120,7 +101,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col h-full overflow-hidden animate-fadeIn"
+      className="w-full flex flex-col h-full overflow-hidden animate-fadeIn bg-Highlighter p-1 rounded-lg"
     >
       <Header
         transactionID={transactionID}
@@ -140,7 +121,7 @@ const Header: React.FC<{
   downloadPdf: () => void;
   print: () => void;
 }> = ({ onClose, downloadPdf, print }) => (
-  <div className="flex justify-between px-2 items-center py-3 light-12">
+  <div className="flex justify-between px-2 items-center py-2 text-lg font-Light ">
     <span>رسید فاکتور</span>
     <div className="flex gap-8 items-center">
       <button onClick={print}>
@@ -162,7 +143,7 @@ const InvoiceDetails: React.FC<{
   invoice: IInvoiceDetail;
   info: IValidateUser;
 }> = ({ invoice, info }) => (
-  <div className="flex flex-col justify-between text-xs light-12">
+  <div className="flex flex-col justify-between text-xs font-Light bg-Highlighter ">
     <div id="testId">
       <InvoiceSummary
         transactionID={invoice.factorID}
@@ -175,6 +156,7 @@ const InvoiceDetails: React.FC<{
       <InvoiceTotals
         salePrice={invoice.salePrice}
         finalPrice={invoice.finallyFactorPrice}
+        factorID={invoice.factorID}
       />
     </div>
   </div>
@@ -186,7 +168,7 @@ const InvoiceSummary: React.FC<{
   departmentName: string;
   info: IValidateUser;
 }> = ({ transactionID, saleDate, departmentName, info }) => (
-  <div>
+  <div className="bg-Highlighter">
     <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center">
       مشخصات فاکتور
     </div>
@@ -200,7 +182,7 @@ const InvoiceSummary: React.FC<{
       </span>
     </div>
     <div className="font-Regular grid grid-cols-4 gap-1 items-center px-2 py-1">
-      <span className="col-span-1 regular-14 bg-highlighter">فروشنده</span>
+      <span className="col-span-1 font-Regular bg-highlighter">فروشنده</span>
       <div className="col-span-3 flex gap-2 bg-highlighter items-center">
         <div className="flex items-center gap-2 pl-2 border-l-2 border-Secondary">
           <Image className="w-[50px]" src={logo} alt="" />
@@ -209,8 +191,8 @@ const InvoiceSummary: React.FC<{
         <span>{departmentName}</span>
       </div>
     </div>
-    <div className="grid grid-cols-4 text-primary gap-1 px-2 py-1 border-b">
-      <span className="col-span-1 regular-14 bg-highlighter flex items-center">
+    <div className="grid grid-cols-4 text-primary gap-1 px-2 py-1 ">
+      <span className="col-span-1 font-Regular bg-highlighter flex items-center">
         خریدار
       </span>
       <div className="col-span-3 text-sm flex items-center  justify-between p-2 bg-highlighter">
@@ -226,95 +208,90 @@ const InvoiceSummary: React.FC<{
 const InvoiceItemsTable: React.FC<{
   items: IInvoiceDetail["factorDetail"];
 }> = ({ items }) => (
-  <table className="w-full border-collapse border-y border-highlighter font-Regular">
-    <div className="w-full p-1 flex items-center">
-      <div className="font-bold bg-Highlighter w-full flex items-center">
-        <div className="w-2/5 px-2 py-1 border-l border-highlighter">
-          <p className="flex flex-col gap-2">
+  <div className="w-full border-collapse font-Regular flex flex-col">
+    <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center">
+      مشخصات فاکتور
+    </div>
+    <div className="font-bold w-full flex ">
+      <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
+        <div className="w-2/5 px-2 py-1 h-full border-l border-highlighter">
+          <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
             <span className="text-[10px]">نام کالا</span>
-            <span className="border-b border-tertiary px-2"></span>
+            <span className="border-b border-tertiary px-2 w-full"></span>
             <span className="text-[10px]">بارکد کالا</span>
           </p>
         </div>
-        <div className="w-1/5 px-2 py-1 border-l border-highlighter">
-          <p className="flex flex-col gap-2">
+        <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+          <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
             <span className="text-[10px]">تعداد</span>
-            <span className="border-b border-tertiary px-2"></span>
+            <span className="border-b border-tertiary px-2 w-full"></span>
             <span className="text-[10px]">%تخفیف</span>
           </p>
         </div>
-        <div className="w-1/5 px-2 py-1 border-l border-highlighter">
-          <p className="flex flex-col gap-2">
+        <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+          <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
             <span className="text-[10px]">قیمت</span>
-            <span className="border-b border-tertiary px-2"></span>
+            <span className="border-b border-tertiary px-2 w-full"></span>
             <span className="text-[10px]">پس از تخفیف</span>
           </p>
         </div>
-        <div className="w-1/5 px-2 py-1 border-l border-highlighter">
-          <p className="flex flex-col gap-2">
+        <div className="w-1/5 px-2 py-1 h-full">
+          <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
             <span className="text-[10px]">مبلغ نهایی</span>
-            <span className="border-b border-tertiary px-2"></span>
+            <span className="border-b border-tertiary px-2 w-full"></span>
             <span className="text-[10px]">مبلغ تخفیف</span>
           </p>
         </div>
       </div>
     </div>
-    <div className="w-full p-1">
+    <div className="w-full ">
       {items.map((item, index) => (
-        <div key={index} className="font-bold bg-Highlighter w-full my-1 flex">
-          <div className="w-2/5 px-2 py-1 border-l-4 border-BG align-middle">
-            <div className="flex flex-col justify-center h-full gap-1">
-              <span className="text-xs text-center">{item.k_name}</span>
-              <span className="border-b border-tertiary mx-auto w-full "></span>
-              <span className="text-xs text-center">
-                {item.kbArcode ? item.kbArcode : "---"}
-              </span>
-            </div>
-          </div>
-          <div className="w-1/5 px-2 py-1 border-l-4 border-BG align-bottom ">
-            <div className="flex flex-col justify-center h-full gap-1">
-              <span className="text-xs text-center">{item.k_Amount}</span>
-              <span className="border-b border-tertiary mx-auto w-full"></span>
-              <span className="text-xs text-center">{item.reduction}</span>
-            </div>
-          </div>
-          <div className="w-1/5 px-2 py-1 border-l-4 border-BG align-bottom">
-            <div className="flex flex-col justify-center h-full gap-1">
-              <span className="text-xs text-center">
-                {numberToPersianPrice(item.k_Price)}
-              </span>
-              <span className="border-b border-tertiary mx-auto w-full"></span>
-              <span className="text-xs text-center">
-                {numberToPersianPrice(item.afterReduction)}
-              </span>
-            </div>
-          </div>
-          <div className="w-1/5 px-2 py-1  align-bottom">
-            <div className="flex flex-col justify-end h-full  gap-1">
-              <span className="text-xs text-center">
-                {numberToPersianPrice(item.finallyPrice)}
-              </span>
-              <span className="border-b border-tertiary mx-auto w-full"></span>
-              <span className="text-xs text-center">
-                {item.finallyReduction}
-              </span>
-            </div>
-          </div>
-        </div>
+        <RowOfFactorDetail key={index} item={item} />
       ))}
     </div>
-  </table>
+  </div>
 );
 
 const InvoiceTotals: React.FC<{
   salePrice: number;
   finalPrice: number;
-}> = () => <div>{/* Totals */}</div>;
+  factorID: number;
+}> = ({ finalPrice, salePrice, factorID }) => (
+  <div className=" bg-Highlighter flex flex-col py-2 px-2">
+    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-[#e2e2e2]">
+      <span className="text-[16px] font-Bold">مبلغ فاکتور</span>
+      <div className="flex gap-2 justify-between items-center w-1/4">
+        <span className="font-Bold text-[16px]">
+          {numberToPersianPrice(salePrice)}
+        </span>
+        <span className="text-[10px] font-Bold">تومان</span>
+      </div>
+    </div>
+    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-[#e2e2e2]">
+      <span className="text-[16px] font-Bold">مبلغ کل خرید</span>
+      <div className="flex gap-2 justify-between items-center w-1/4">
+        <span className="font-Bold text-[16px]">
+          {numberToPersianPrice(finalPrice)}
+        </span>
+        <span className="text-[10px] font-Bold">تومان</span>
+      </div>
+    </div>
+    <div className="w-full flex flex-col items-center mt-6 gap-2">
+      <Image
+        alt={factorID.toString()}
+        src={`https://barcode.tec-it.com/barcode.ashx?data=${factorID}&code=Code25IL&multiplebarcodes=true&translate-esc=on`}
+        className="h-[5opx] w-[160px] animate-fadeIn"
+        width={200}
+        height={50}
+      />
+    </div>
+  </div>
+);
 
 const SurveyButton: React.FC = () => (
   <Link
     href="/survey/2/1/1019700/1011598"
-    className="w-full py-3 flex justify-center font-Regular rounded-md bg-CTA text-highlighter bold-14"
+    className=" py-3 flex justify-center rounded-md bg-Secondary2 text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
   >
     ثبت نظر برای این فاکتور
   </Link>
@@ -330,8 +307,54 @@ const ErrorState: React.FC<{
     className="w-full flex flex-col h-full overflow-hidden animate-fadeIn"
   >
     <Header onClose={onClose} downloadPdf={downloadPdf} print={print} />
-    <NotFoundComponent title="فاکتور خریدی یافت نشد" image={logo} />
+    <NotFoundComponent
+      title="فاکتور خریدی یافت نشد"
+      image={logo as StaticImageData}
+    />
   </div>
 );
 
 export default InvoiceIdPage;
+
+const RowOfFactorDetail = ({ item }: { item: FactorDetail }) => {
+  return (
+    <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
+      <div className="w-2/5 px-2 py-1 h-full border-l border-highlighter">
+        <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
+          <span className="text-[10px]">{item.k_name}</span>
+          <span className="border-b border-tertiary px-2 w-full"></span>
+          <span className="text-[10px]">
+            {item.kbArcode ? item.kbArcode : "---"}
+          </span>
+        </p>
+      </div>
+      <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+        <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
+          <span className="text-[10px]">{item.k_Amount}</span>
+          <span className="border-b border-tertiary px-2 w-full"></span>
+          <span className="text-[10px]">{item.reduction}</span>
+        </p>
+      </div>
+      <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+        <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
+          <span className="text-[10px]">
+            {numberToPersianPrice(item.k_Price)}
+          </span>
+          <span className="border-b border-tertiary px-2 w-full"></span>
+          <span className="text-[10px]">
+            {numberToPersianPrice(item.afterReduction)}
+          </span>
+        </p>
+      </div>
+      <div className="w-1/5 px-2 py-1 h-full">
+        <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
+          <span className="text-[10px]">
+            {numberToPersianPrice(item.finallyPrice)}
+          </span>
+          <span className="border-b border-tertiary px-2 w-full"></span>
+          <span className="text-[10px]"> {item.finallyReduction}</span>
+        </p>
+      </div>
+    </div>
+  );
+};

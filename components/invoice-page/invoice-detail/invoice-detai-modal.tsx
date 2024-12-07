@@ -1,13 +1,7 @@
-import { LoadingOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useSearchParams } from "next/navigation";
+import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import InvoiceIdPage from "./invoice-detail-component";
 
 interface InvoiceModalDetailProps {
@@ -19,10 +13,8 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
   open,
   setOpen,
 }) => {
-  const [loading, setLoading] = useState(false);
-
   const searchParams = useSearchParams();
-  const navigate = useRouter();
+
   // Memoized values for average and survey
   const { average, survey } = useMemo(() => {
     const avg = searchParams.get("average");
@@ -34,15 +26,6 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
     setOpen(true);
   };
 
-  const handleOk = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-      navigate.push("/");
-    }, 3000);
-  };
-
   const handleCancel = () => {
     setOpen(false);
   };
@@ -51,41 +34,40 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
     if (average && survey) {
       showModal();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Modal
       open={open}
-      title="دیدگاه شما ثبت شد"
-      onOk={handleOk}
+      title={
+        <div className="w-full flex items-center justify-center relative">
+          <span>دیدگاه شما ثبت شد</span>
+          <CloseOutlined
+            className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"
+            role="button"
+            onClick={() => setOpen(false)}
+          />
+        </div>
+      }
       onCancel={handleCancel}
       style={{
         direction: "rtl",
-        width: "95vw",
+        width: "95vw !important",
         maxWidth: "450px",
         height: "90dvh",
       }}
       classNames={{
-        header: "w-full text-center font-Medium !bg-transparent",
-        content: " !px-[23px] !bg-BG ",
+        header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
+        content: " !p-2 !bg-BG !h-full",
+        footer: "!hidden",
       }}
-      footer={
-        <div className="w-full flex justify-center">
-          <button
-            onClick={handleOk}
-            disabled={loading}
-            className="font-Bold hover:bg-SecondaryHover disabled:!opacity-50 transition-all text-xl bg-Secondary2 !text-Highlighter p-3 rounded-lg w-[202px]"
-          >
-            متوجه شدم
-            {loading && <LoadingOutlined />}
-          </button>
-        </div>
-      }
+      closeIcon={false}
+      footer={false}
     >
       <InvoiceIdPage
         onClose={setOpen}
-        showServayButton={true}
+        showServayButton={false}
         transactionID="1234567"
-        customerKey="12345"
       />
     </Modal>
   );
