@@ -112,6 +112,26 @@ button:active {
   transform: scale(0.95);
 }
 
+.border-gradient-secondary {
+  background: linear-gradient(#f2f6fc, #f2f6fc) padding-box,
+    linear-gradient(
+        90deg,
+        transparent 5%,
+        rgba(10, 156, 81, 1) 50%,
+        transparent 95%
+      )
+      border-box;
+
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(
+      90deg,
+      transparent 5%,
+      rgba(30, 156, 81, 1) 50%,
+      transparent 95%
+    )
+    1;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

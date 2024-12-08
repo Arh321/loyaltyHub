@@ -7,45 +7,30 @@ import InvoiceIdPage from "./invoice-detail-component";
 interface InvoiceModalDetailProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
+  showServayButton?: boolean;
 }
 
 const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
   open,
   setOpen,
+  showServayButton,
 }) => {
-  const searchParams = useSearchParams();
-
-  // Memoized values for average and survey
-  const { average, survey } = useMemo(() => {
-    const avg = searchParams.get("average");
-    const srv = searchParams.get("survey");
-    return { average: avg, survey: srv };
-  }, [searchParams]);
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
   const handleCancel = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (average && survey) {
-      showModal();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   return (
     <Modal
-      open={open}
+      open={!!open}
       title={
         <div className="w-full flex items-center justify-center relative">
-          <span>دیدگاه شما ثبت شد</span>
+          <span>فاکتور</span>
           <CloseOutlined
             className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"
             role="button"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(() => !open);
+            }}
           />
         </div>
       }
@@ -66,7 +51,7 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
     >
       <InvoiceIdPage
         onClose={setOpen}
-        showServayButton={false}
+        showServayButton={showServayButton}
         transactionID="1234567"
       />
     </Modal>

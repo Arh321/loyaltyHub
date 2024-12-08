@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -49,7 +50,6 @@ const invoice: IInvoiceDetail = {
 
 const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   transactionID,
-
   onClose,
   showServayButton,
 }) => {
@@ -130,7 +130,7 @@ const Header: React.FC<{
       <button onClick={downloadPdf}>
         <DownloadOutlined />
       </button>
-      {onClose && (
+      {!!onClose && (
         <button onClick={() => onClose(false)}>
           <i role="button" className="pi pi-times"></i>
         </button>
@@ -290,8 +290,8 @@ const InvoiceTotals: React.FC<{
 
 const SurveyButton: React.FC = () => (
   <Link
-    href="/survey/2/1/1019700/1011598"
-    className=" py-3 flex justify-center rounded-md bg-Secondary2 text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
+    href="/survey"
+    className=" py-3 flex justify-center rounded-md bg-Secondary2 text-Highlighter hover:!text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
   >
     ثبت نظر برای این فاکتور
   </Link>

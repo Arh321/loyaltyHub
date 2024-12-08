@@ -12,7 +12,6 @@ const FooterContainer = () => {
   const { navigateTo } = useNavigation();
   const pathname = usePathname();
   const handleNavigation = (pathName: string) => {
-    console.log(pathname);
     navigateTo(pathName, { query: { ref: "home" }, shallow: true });
   };
   const footerItems = [

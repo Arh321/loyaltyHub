@@ -4,8 +4,8 @@ import PagesContainer from "@/components/pages-container/pages-container";
 export default function InvoicesPAge() {
   return (
     <PagesContainer>
-      <div className="w-full z-10 sm:px-6 lsm:px-8 sticky top-0">
-        <div className="w-full flex items-center justify-center  border-gradient-seconday border-b text-Secondary2 font-Medium text-xl py-4 rounded-b-[55px] overflow-hidden">
+      <div className="w-full z-10  sticky top-0">
+        <div className="w-full flex items-center justify-center border-gradient-secondary border-b text-Secondary2 font-Medium text-xl py-4  overflow-hidden">
           فاکتورهای من
         </div>
       </div>

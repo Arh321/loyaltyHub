@@ -73,7 +73,7 @@ const SurveyQuestionsSlider = () => {
         {Array.from({ length: 5 }).map((_, index) => (
           <Skeleton.Node
             key={index}
-            className="!flex !w-[370px] aspect-[2/3]"
+            className="!flex !w-[370px] aspect-[2/3] !h-auto"
             active
           />
         ))}
@@ -96,10 +96,7 @@ const SurveyQuestionsSlider = () => {
         className={clsx(style["survey-swiper"])}
       >
         {state.slides.map((item, index) => (
-          <SwiperSlide
-            key={index}
-            className="flex flex-col gap-[20px] transition-all duration-500"
-          >
+          <SwiperSlide key={index} className="flex flex-col gap-[20px]">
             <SurvayQuestionCartComponent
               imageUrl={item.mediuUrl}
               title={item.question}

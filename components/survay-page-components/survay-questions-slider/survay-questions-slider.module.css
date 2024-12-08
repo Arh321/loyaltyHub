@@ -4,14 +4,17 @@
 
 .survey-swiper [class~="swiper-slide-prev"] {
   transform: rotate(-4deg) scale(0.9) !important;
+  transition: all 0.5s ease-in-out;
 }
 
 .survey-swiper [class~="swiper-slide-active"] {
   transform: rotate(0) scale(1) !important;
+  transition: all 0.5s ease-in-out;
 }
 
 .survey-swiper [class~="swiper-slide-next"] {
   transform: rotate(4deg) scale(0.9) !important;
+  transition: all 0.5s ease-in-out;
 }
 
 .survey-swiper [class~="swiper-pagination"] {
