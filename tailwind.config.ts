@@ -47,7 +47,7 @@ const config: Config = {
         Highlighter: "#fff",
         "Highlighter-Faded": "#E2EBF2",
         BG: "#F2F6FC",
-        Alert: "#BB0E0E",
+        Alert: "#F7410F",
         Tritary: "#ADBAB2",
         Secondary: "#50675E",
         Secondary2: "#1E9C51",

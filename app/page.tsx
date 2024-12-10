@@ -9,7 +9,7 @@ import PagesContainer from "@/components/pages-container/pages-container";
 export default function Home() {
   return (
     <PagesContainer>
-      <div className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 ">
+      <div className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]">
         <CurrentLevelSliderContainer />
         <BannerSlidersComponent />
         <GiftsAndCoponsContainerLAzy />

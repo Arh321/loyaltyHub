@@ -93,6 +93,7 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
                   option.order
                 );
                 setSortType(option.id);
+                toggleCollapsed();
               }}
               className={clsx(
                 "px-4 py-2 rounded transition-all text-lg",

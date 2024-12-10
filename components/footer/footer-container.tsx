@@ -84,7 +84,7 @@ const FooterContainer = () => {
           background:
             "linear-gradient(to left, #198D41, transparent,transparent,#198D41)",
         }}
-        className="w-full h-[80px] grid grid-cols-4 px-[16px] py-[10px]"
+        className="w-full h-[80px] grid grid-cols-4 px-[16px] py-[10px] relative"
       >
         {footerItems.map((item, index) => {
           return (
@@ -92,7 +92,7 @@ const FooterContainer = () => {
               key={index}
               role="button"
               onClick={() => handleNavigation(item.path)}
-              className="w-full flex flex-col items-center justify-between  h-full "
+              className="w-[70px] flex flex-col items-center justify-between  h-full "
             >
               <span>{item.icon}</span>
               <span
@@ -103,6 +103,9 @@ const FooterContainer = () => {
               >
                 {item.lable}
               </span>
+              {item.isActive && (
+                <span className="w-[70px] h-[6px] rounded-t-[40px] bg-Highlighter absolute bottom-0"></span>
+              )}
             </p>
           );
         })}

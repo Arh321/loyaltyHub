@@ -6,7 +6,7 @@ import Link from "next/link";
 const NotFoundComponent = () => {
   return (
     <div className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[12px]">
-      <div className=" w-full h-[calc(100vh-80px)] relative  flex flex-col  justify-center">
+      <div className=" w-full h-[calc(100vh-180px)] relative  flex flex-col items-center justify-center">
         <div className="w-full h-max flex flex-col items-center justify-center gap-4">
           <div className="w-full flex flex-col gap-4 items-center">
             <Image src={logo} alt="برادران حسینی" className="" />
