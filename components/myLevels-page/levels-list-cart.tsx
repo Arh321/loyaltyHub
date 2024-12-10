@@ -5,6 +5,10 @@ import BronzeLevel from "@/publicimages/image 1372.png";
 import GoldLevel from "@/publicimages/goldPeste.png";
 import SilverLevel from "@/publicimages/silverPeste.png";
 import Image from "next/image";
+import { useState } from "react";
+import Modal from "antd/es/modal/Modal";
+import { CloseOutlined } from "@ant-design/icons";
+import LevelDetailPopUp from "./level-list-cart-detail";
 
 interface LevelsListCartProps {
   level: IClubStatusNew;
@@ -25,6 +29,10 @@ const levelImages = [
   },
 ];
 const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const handleCancel = () => {
+    setOpen(false);
+  };
   return (
     <div
       style={{
@@ -33,7 +41,10 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
       }}
       className="w-full rounded-[10px] aspect-[16/7] shadow"
     >
-      <div className="w-full h-full flex flex-col justify-between pt-[20px]">
+      <div
+        onClick={() => setOpen(true)}
+        className="w-full h-full flex flex-col justify-between pt-[20px]"
+      >
         <div className="w-full flex items-center justify-between pr-[14px]">
           <span className="text-Secondary2 font-Medium text-xl">
             {level.title}
@@ -104,6 +115,41 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
           </div>
         </div>
       </div>
+      <Modal
+        open={!!open}
+        title={
+          <div className="w-full flex items-center justify-center relative">
+            <span>{level.title}</span>
+            <CloseOutlined
+              className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"
+              role="button"
+              onClick={() => {
+                setOpen(() => !open);
+              }}
+            />
+          </div>
+        }
+        onCancel={handleCancel}
+        style={{
+          direction: "rtl",
+          width: "95vw !important",
+          maxWidth: "450px",
+          height: "90dvh",
+        }}
+        classNames={{
+          header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
+          content: " !p-2 !bg-BG !h-full",
+          footer: "!hidden",
+        }}
+        closeIcon={false}
+        footer={false}
+      >
+        <LevelDetailPopUp
+          levelImege={GoldLevel}
+          status={level}
+          onClose={setOpen}
+        />
+      </Modal>
     </div>
   );
 };
