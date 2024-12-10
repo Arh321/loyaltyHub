@@ -2,26 +2,27 @@
 import AppLoading from "@/app/loading";
 import { usePathname } from "next/navigation";
 
-import { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 
-export default function LoadingIndicator() {
+export default function LoadingIndicator({
+  component,
+}: {
+  component: React.JSX.Element;
+}) {
   const [isPending, startTransition] = useTransition();
-  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname(); // Reactively tracks the current route.
+  const [shouldRender, setShouldRender] = React.useState(false);
 
-  useEffect(() => {
-    // Trigger loading indicator on route change
+  React.useEffect(() => {
     startTransition(() => {
-      setIsLoading(true);
-      const timer = setTimeout(() => {
-        setIsLoading(false); // Clear the loading state after a short delay
-      }, 500);
-
-      return () => clearTimeout(timer); // Cleanup timer
+      setShouldRender(true);
     });
-  }, [pathname, startTransition]);
+  }, [pathname]);
 
-  if (!isLoading) return null;
-
-  return <AppLoading />;
+  return (
+    <div className="h-full w-full flex flex-col bg-cta overflow-hidden">
+      {isPending || (!shouldRender && <AppLoading />)}
+      {shouldRender && component}
+    </div>
+  );
 }

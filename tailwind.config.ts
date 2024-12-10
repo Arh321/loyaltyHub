@@ -22,6 +22,9 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        fadeUp: {
+          "100%": { opacity: "1", transform: "translateY(0px)" },
+        },
         popIn: {
           "0%": { top: "80%", "z-index": "-1" },
           "90%": { top: "100%" },
@@ -30,6 +33,7 @@ const config: Config = {
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",
+        fadeUp: "fadeUp 0.5s ease-in-out forwards",
         "fadeIn-repetive": "fadeIn 2s ease-in-out",
 
         popIn: "popIn 0.7s ease-in-out",

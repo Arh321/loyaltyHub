@@ -92,6 +92,16 @@ body {
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+.animate-flicker {
+  animation: fadeIn 0.8s infinite alternate;
+}
+
 .loader {
   width: 50px;
   aspect-ratio: 1;
@@ -134,6 +144,16 @@ button:active {
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+}
+.custome-scrool-bar::-webkit-scrollbar {
+  background-color: var(--BG);
+  width: 4px;
+  opacity: 0;
+}
+
+.custome-scrool-bar::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: var(--Secondary2);
 }
 .ant-modal-wrap {
   display: flex;

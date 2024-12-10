@@ -6,6 +6,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AppProvider from "@/redux/provider/app-provider";
 import FooterContainer from "@/components/footer/footer-container";
 import LoadingIndicator from "@/components/loadingIndicator/loading-indicator";
+import { Suspense } from "react";
+import AppLoading from "./loading";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -50,10 +52,15 @@ export default function RootLayout({
         <AppProvider>
           <AntdRegistry>
             <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden">
-              <LoadingIndicator />
-              <Header />
-              {children}
-              <FooterContainer />
+              <LoadingIndicator
+                component={
+                  <Suspense fallback={<AppLoading />}>
+                    <Header />
+                    {children}
+                    <FooterContainer />
+                  </Suspense>
+                }
+              ></LoadingIndicator>
             </div>
           </AntdRegistry>
         </AppProvider>

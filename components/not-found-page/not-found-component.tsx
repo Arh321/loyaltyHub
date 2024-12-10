@@ -1,3 +1,4 @@
+"use client";
 import Image, { StaticImageData } from "next/image";
 import React from "react";
 import logo from "@/publicLOGO.png";
@@ -13,9 +14,15 @@ const NotFoundComponent: React.FC<NotFoundComponentProps> = ({
   topic,
 }) => {
   return (
-    <div className="w-full h-max flex flex-col items-center justify-center gap-4">
+    <div className="w-full h-max flex flex-col items-center justify-center gap-4 my-auto">
       <div className="w-full flex flex-col gap-4 items-center">
-        <Image src={image ? image : logo} alt="برادران حسینی" className="" />
+        <Image
+          src={image ? image : logo}
+          alt="برادران حسینی"
+          className=""
+          width={200}
+          height={200}
+        />
         <svg
           width="184"
           height="64"

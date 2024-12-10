@@ -23,3 +23,12 @@ export interface FactorDetail {
   finallyPriceAfterReduction: number;
   kVatPrice: number;
 }
+export interface IInvoice {
+  factorID: number;
+  cusDepName: string;
+  salePrice: number;
+  cusSaleDate: string;
+  hasSurvey: boolean;
+  isComplete: boolean;
+  transactionID: string;
+}

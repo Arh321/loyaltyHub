@@ -15,7 +15,7 @@ const SurvayQuestionsSlider = React.lazy(
 const SurvayPage = () => {
   return (
     <PagesContainer>
-      <div className="w-full  flex flex-col">
+      <div className="w-full  flex flex-col pb-[100px]">
         <SurvayHeader
           survayDescription="با شرکت در نظر سنجی، به ما کمک کنید تا خدمات و تجربه شما را بهبود بخشیم. نظرات شما برای ما ارزشمند است!"
           invoiceDate="1403/09/13"
