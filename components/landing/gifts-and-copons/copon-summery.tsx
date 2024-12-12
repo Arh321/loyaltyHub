@@ -1,6 +1,7 @@
 "use client";
 
 import { Skeleton } from "antd";
+import Link from "next/link";
 import React from "react";
 
 interface CoponsAndGiftsSummeryComponentItemProps {
@@ -48,9 +49,10 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
 
   return (
     <div className="col-span-1  animate-fadeIn w-full aspect-[6/5] bg-Highlighter rounded-[10px] overflow-hidden">
-      <div
+      <Link
+        href={type == "copon" ? "/coupons" : "/gifts"}
         style={{
-          backgroundImage: "url(/images/Lines.png)",
+          backgroundImage: "url(/images/Lines.jpg)",
         }}
         className="w-full h-full py-8 flex flex-col items-center justify-center gap-[8px]"
       >
@@ -66,7 +68,7 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
             خطا در دریافت اطلاعات
           </p>
         )}
-      </div>
+      </Link>
     </div>
   );
 };

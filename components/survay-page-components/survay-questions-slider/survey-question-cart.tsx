@@ -34,6 +34,8 @@ const SurvayQuestionCartComponent: React.FC<
       <div className="w-full aspect-[7/9] relative rounded-[24px] overflow-hidden">
         <Image
           src={imageUrl}
+          width={200}
+          height={400}
           className="w-full h-full object-cover"
           alt={title}
         />

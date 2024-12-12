@@ -37,9 +37,6 @@ const InvoicesListContainer: React.FC<InvoicesListContainerProps> = ({
           );
         })}
       </TransitionGroup>
-      {data.map((item, index) => {
-        return <InoiceListItem key={index} index={index} invoice={item} />;
-      })}
     </div>
   );
 };

@@ -2,11 +2,7 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import image1 from "../../../public/surveys/Pistachio.jpg";
-import image2 from "../../../public/surveys/Rectangle 4402.png";
-import image3 from "../../../public/surveys/peeled-almonds-clay-plate-stone-tile-wooden-background.jpg";
-import image4 from "../../../public/surveys/1029.png";
-import image5 from "../../../public/surveys/hosseini.png";
+
 import SurvayQuestionCartComponent from "./survey-question-cart";
 import { useEffect, useState, useCallback } from "react";
 import { Skeleton } from "antd";
@@ -16,11 +12,37 @@ import useScore from "@/hooks/useScore";
 import style from "./survay-questions-slider.module.css";
 
 const survays = [
-  { id: 1, mediuUrl: image1, question: "تنوع و کیفیت کالا", score: 4 },
-  { id: 2, mediuUrl: image2, question: "سرعت و کیفیت خدمات", score: 3 },
-  { id: 3, mediuUrl: image3, question: "محیط و تمیزی فروشگاه", score: 0 },
-  { id: 4, mediuUrl: image4, question: "امکانات و تجهیزات", score: 1 },
-  { id: 5, mediuUrl: image5, question: "تجربه کلی از خرید", score: 1 },
+  {
+    id: 1,
+    mediuUrl: "https://s8.uupload.ir/files/1029_(1)_(1)_jx89.jpg",
+    question: "تنوع و کیفیت کالا",
+    score: 4,
+  },
+  {
+    id: 2,
+    mediuUrl: "https://s8.uupload.ir/files/2149139388_(1)_(1)_2em5.jpg",
+    question: "سرعت و کیفیت خدمات",
+    score: 3,
+  },
+  {
+    id: 3,
+    mediuUrl: "https://s8.uupload.ir/files/hosseini_u1mo.jpg",
+    question: "محیط و تمیزی فروشگاه",
+    score: 0,
+  },
+  {
+    id: 4,
+    mediuUrl:
+      "https://s8.uupload.ir/files/peeled-almonds-clay-plate-stone-tile-wooden-background_(1)_(1)_qpd.jpg",
+    question: "امکانات و تجهیزات",
+    score: 1,
+  },
+  {
+    id: 5,
+    mediuUrl: "https://s8.uupload.ir/files/rectangle_4402_hjng.jpg",
+    question: "تجربه کلی از خرید",
+    score: 1,
+  },
 ];
 
 const SurveyQuestionsSlider = () => {
