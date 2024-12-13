@@ -22,6 +22,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: "باشگاه مشتریان",
   description: "توسعه یافته توسط تیم LoyalityHub.ir",
   icons: {
@@ -37,6 +38,12 @@ export const metadata: Metadata = {
         url: "/icons/icon-512x512.png", // Path to your OG image
         width: 512, // Optional: width of the image
         height: 512, // Optional: height of the image
+        alt: "لوگوی باشگاه مشتریان", // Optional: alt text for the image
+      },
+      {
+        url: "/icons/icon-144x144.png", // Path to your OG image
+        width: 144, // Optional: width of the image
+        height: 144, // Optional: height of the image
         alt: "لوگوی باشگاه مشتریان", // Optional: alt text for the image
       },
     ],
@@ -61,7 +68,6 @@ export default function RootLayout({
           type="image/x-icon"
           sizes="16x16"
         ></link>
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

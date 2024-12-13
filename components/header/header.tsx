@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import logo from "../../public/images/hosseiniLogo.png";
 import { usePathname, useRouter } from "next/navigation";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 const Sidebar = React.lazy(() => import("./side-bar"));
 const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
@@ -17,6 +17,10 @@ const Header = () => {
   const router = useRouter();
 
   const isSurveyPage = pathname.includes("survey");
+
+  useEffect(() => {
+    setIsModalOpen(false);
+  }, [pathname]);
 
   return (
     <header
@@ -32,7 +36,7 @@ const Header = () => {
             <Icon icon="stash:times" width="2.5rem" />
           </button>
         ) : (
-          <div className="w-full flex items-center justify-between px-4 py-4">
+          <div className="w-full flex items-center justify-between px-4 py-5 relative">
             <div className="flex items-center gap-8">
               {pathname !== "/" && (
                 <button
@@ -51,7 +55,10 @@ const Header = () => {
                 <Icon icon="lets-icons:user-light" width="2rem" />
               </button>
             </div>
-            <Link href="/">
+            <Link
+              href="/"
+              className="absolute inset-0 m-auto w-max h-max -translate-y-2"
+            >
               <Image src={logo} alt="لوگو" priority />
             </Link>
             <Sidebar logo={logo} />
