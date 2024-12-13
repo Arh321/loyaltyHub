@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import clsx from "clsx";
 import useScore from "@/hooks/useScore";
 import style from "./survay-questions-slider.module.css";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const survays = [
   {
@@ -47,6 +48,7 @@ const survays = [
 
 const SurveyQuestionsSlider = () => {
   const [loading, setLoading] = useState(true);
+  const [loadingNavigate, setLoadingNAvigate] = useState(false);
   const { setActiveIndex, setReset, setSlides, setTempSlides, state } =
     useScore(survays);
   const [swiperInstance, setSwiperInstance] = useState(null);
@@ -54,19 +56,25 @@ const SurveyQuestionsSlider = () => {
 
   // Handle loading state
   useEffect(() => {
+    navigate.prefetch("/");
+
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
 
   // Handle slide submission
   const handleSubmitSurvey = useCallback(() => {
+    setLoadingNAvigate;
+    true;
     const average = state.slides.reduce((prev, curr) => prev + curr.score, 0);
     const query = new URLSearchParams({
       average: (average / state.slides.length).toFixed(1),
       survey: "done",
     }).toString();
-
-    navigate.push(`/?${query}`);
+    setTimeout(() => {
+      navigate.push(`/?${query}`);
+      setLoadingNAvigate(false);
+    }, 750);
   }, [state.slides, navigate]);
 
   // Navigation handlers
@@ -137,6 +145,7 @@ const SurveyQuestionsSlider = () => {
             onClick={handleNext}
             className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-[284px]"
           >
+            {loadingNavigate && <LoadingOutlined />}
             ثبت و بعدی
           </button>
           <button

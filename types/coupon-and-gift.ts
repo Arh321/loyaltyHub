@@ -10,3 +10,18 @@ export type ICoupon = {
   id: number;
   isUsed: boolean;
 };
+
+export type IGifts = {
+  giftBalanceID: number;
+  startDate: string;
+  expDate: string;
+  gcBalance: number;
+  gcNum: string;
+  groupName: string;
+  customerID: number;
+  companyID: number;
+  minBuyPrice: number;
+  giftTotalPrice: number;
+  giftType: string;
+  giftOccasion: string;
+};
