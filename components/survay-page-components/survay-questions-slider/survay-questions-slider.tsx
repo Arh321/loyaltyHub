@@ -64,8 +64,8 @@ const SurveyQuestionsSlider = () => {
 
   // Handle slide submission
   const handleSubmitSurvey = useCallback(() => {
-    setLoadingNAvigate;
-    true;
+    setLoadingNAvigate(true);
+
     const average = state.slides.reduce((prev, curr) => prev + curr.score, 0);
     const query = new URLSearchParams({
       average: (average / state.slides.length).toFixed(1),

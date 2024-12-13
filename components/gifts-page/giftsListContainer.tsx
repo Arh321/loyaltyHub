@@ -166,9 +166,10 @@ const GiftsContainerList = () => {
   if (loading || !data)
     return (
       <div className="w-full flex flex-col gap-[12px]">
-        {Array.from({ length: 8 }).map(() => {
+        {Array.from({ length: 8 }).map((_, index) => {
           return (
             <Skeleton.Node
+              key={index}
               className="!flex !w-full !h-full aspect-[22/10] rounded-[10px]"
               active
             />
