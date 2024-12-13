@@ -93,7 +93,7 @@ const NotFoundComponent = () => {
             href={"/"}
             className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-max"
           >
-            بازکشت به خانه
+            بازگشت به خانه
           </Link>
         </div>
       </div>
