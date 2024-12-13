@@ -7,6 +7,7 @@
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
 @import "../styles/ant-custom-styles.module.css";
+
 @font-face {
   font-family: Regular;
   src: url("./fonts/IRANYekanXFaNum-Regular.woff") format("woff");

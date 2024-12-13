@@ -1,10 +1,15 @@
 import BannerSlidersComponent from "@/components/landing/banners-slider/banners-slider-lazy";
 import GiftsAndCoponsContainerLAzy from "@/components/landing/gifts-and-copons/gifts-and-copons-container-lazy";
 
-import CurrentLevelSliderContainer from "@/components/landing/level-slider-container/level-slider-container";
-import MembershopReqCardComponent from "@/components/landing/membershopReqCard/membershopReqCard";
 import SurveySubmitModal from "@/components/landing/modals/survey-submit-modal";
+
 import PagesContainer from "@/components/pages-container/pages-container";
+import React from "react";
+
+const CurrentLevelSliderContainer = React.lazy(
+  () =>
+    import("@/components/landing/level-slider-container/level-slider-container")
+);
 
 export default function Home() {
   return (
@@ -13,7 +18,6 @@ export default function Home() {
         <CurrentLevelSliderContainer />
         <BannerSlidersComponent />
         <GiftsAndCoponsContainerLAzy />
-        <MembershopReqCardComponent />
       </div>
       <SurveySubmitModal />
     </PagesContainer>

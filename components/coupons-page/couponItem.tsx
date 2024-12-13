@@ -12,11 +12,7 @@ interface CouponItemProps {
   type: "used" | "unused";
 }
 
-export const CouponItem: React.FC<CouponItemProps> = ({
-  coupon,
-  index,
-  type,
-}) => {
+const CouponItem: React.FC<CouponItemProps> = ({ coupon, index, type }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const copyToClipboard = async (text: string) => {
@@ -103,3 +99,5 @@ export const CouponItem: React.FC<CouponItemProps> = ({
     </div>
   );
 };
+
+export default CouponItem;

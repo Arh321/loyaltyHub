@@ -5,9 +5,10 @@ import Header from "@/components/header/header";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AppProvider from "@/redux/provider/app-provider";
 import FooterContainer from "@/components/footer/footer-container";
-import LoadingIndicator from "@/components/loadingIndicator/loading-indicator";
+
 import { Suspense } from "react";
 import AppLoading from "./loading";
+import { LoadingIndicator } from "@/components/loadingIndicator/loading-indicator";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

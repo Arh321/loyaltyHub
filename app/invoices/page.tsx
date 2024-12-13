@@ -1,9 +1,17 @@
 "use client";
-import InvoicesListContainer from "@/components/invoice-page/invoices-list/invoices-list-container";
-import SortInvoiceListItems from "@/components/invoice-page/invoices-list/sort-invoice-list";
+
 import PagesContainer from "@/components/pages-container/pages-container";
 import { IInvoice } from "@/types/invoice";
-import { useState } from "react";
+import React, { useState } from "react";
+
+const SortInvoiceListItems = React.lazy(
+  () => import("@/components/invoice-page/invoices-list/sort-invoice-list")
+);
+
+const InvoicesListContainer = React.lazy(
+  () =>
+    import("@/components/invoice-page/invoices-list/invoices-list-container")
+);
 
 const invoices = [
   {

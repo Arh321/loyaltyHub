@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { Drawer } from "antd";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image, { StaticImageData } from "next/image";
@@ -155,4 +155,4 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

@@ -7,6 +7,7 @@ import banner1 from "@/public/images/banner1.png";
 import banner2 from "@/public/images/banner2.png";
 import banner3 from "@/public/images/banner3.png";
 import Image from "next/image";
+import { memo } from "react";
 
 const BannerSlidersComponent = () => {
   const images = [banner1, banner2, banner3];
@@ -35,4 +36,4 @@ const BannerSlidersComponent = () => {
   );
 };
 
-export default BannerSlidersComponent;
+export default memo(BannerSlidersComponent);

@@ -1,14 +1,15 @@
 "use client";
 import AppLoading from "@/app/loading";
 import { usePathname } from "next/navigation";
-
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useTransition } from "react";
 
-export default function LoadingIndicator({
+export function LoadingIndicator({
   component,
 }: {
   component: React.JSX.Element;
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname(); // Reactively tracks the current route.
   const [shouldRender, setShouldRender] = React.useState(false);
@@ -22,7 +23,7 @@ export default function LoadingIndicator({
   return (
     <div className="h-full w-full flex flex-col bg-cta overflow-hidden">
       {isPending || (!shouldRender && <AppLoading />)}
-      {shouldRender && component}
+      {component}
     </div>
   );
 }

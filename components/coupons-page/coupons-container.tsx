@@ -3,9 +3,9 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import clsx from "clsx";
 import { Tabs, TabsProps } from "antd";
 import { ICoupon } from "@/types/coupon-and-gift";
-import { CouponItem } from "./couponItem";
 import style from "../invoice-page/invoices-list/invoice-list-style.module.css";
 import tabStyle from "../../styles/ant-custom-styles.module.css";
+import React from "react";
 const coupons: {
   usedCoupons: ICoupon[];
   unusedCoupons: ICoupon[];
@@ -123,6 +123,8 @@ const coupons: {
     },
   ],
 };
+
+const CouponItem = React.lazy(() => import("./couponItem"));
 
 const CouponsContainerList = () => {
   const items: TabsProps["items"] = [

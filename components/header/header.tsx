@@ -1,62 +1,66 @@
 "use client";
+
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import logo from "../../public/images/hosseiniLogo.png";
 import Image from "next/image";
-import Sidebar from "./side-bar";
-import { usePathname } from "next/navigation";
-import { Modal } from "antd";
-import CancelSurveyModal from "./cancel-survey-modal";
-import { useState } from "react";
+
+import logo from "../../public/images/hosseiniLogo.png";
+import { usePathname, useRouter } from "next/navigation";
+import React, { memo, useState } from "react";
+
+const Sidebar = React.lazy(() => import("./side-bar"));
+const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
+
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const isSurveyPage = pathname.includes("survey");
 
   return (
     <header
-      style={{
-        backgroundImage: `url(/images/bg-art.png)`,
-        backgroundSize: "contain", // Ensures the image covers the element
-        backgroundRepeat: "repeat", // Prevents the image from repeating
-        backgroundPosition: "center", // Centers the image
-      }}
-      className="w-full "
+      className="w-full bg-center bg-contain bg-repeat"
+      style={{ backgroundImage: "url(/images/bg-art.png)" }}
     >
-      {
-        <div
-          style={{
-            background:
-              "linear-gradient(to left, #198D41, transparent,transparent,#198D41)",
-          }}
-        >
-          {pathname.includes("survey") ? (
-            <span
-              role="button"
-              onClick={() => setOpen(true)}
-              className="w-full flex justify-start px-[16px] py-[16px] text-Highlighter"
-            >
-              <Icon icon="stash:times" width="2.5rem" />
-            </span>
-          ) : (
-            <div className="w-full flex items-center justify-between px-[16px] py-[16px]">
+      <div className="bg-gradient-to-l from-green-600 via-transparent to-green-600">
+        {isSurveyPage ? (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="w-full flex justify-start px-4 py-4 text-Highlighter"
+          >
+            <Icon icon="stash:times" width="2.5rem" />
+          </button>
+        ) : (
+          <div className="w-full flex items-center justify-between px-4 py-4">
+            <div className="flex items-center gap-8">
+              {pathname !== "/" && (
+                <button
+                  onClick={() => router.back()}
+                  className="text-Highlighter"
+                >
+                  <Icon
+                    icon="mingcute:left-fill"
+                    width="32"
+                    height="32"
+                    className="text-Highlighter"
+                  />
+                </button>
+              )}
               <button className="text-Highlighter">
-                <Icon
-                  icon="lets-icons:user-light"
-                  color="white"
-                  width={"2rem"}
-                />
+                <Icon icon="lets-icons:user-light" width="2rem" />
               </button>
-              <Link href={"/"}>
-                <Image src={logo} alt="لوگو" />
-              </Link>
-              <Sidebar logo={logo} />
             </div>
-          )}
-        </div>
-      }
-      <CancelSurveyModal setOpen={setOpen} open={open} />
+            <Link href="/">
+              <Image src={logo} alt="لوگو" priority />
+            </Link>
+            <Sidebar logo={logo} />
+          </div>
+        )}
+      </div>
+      <CancelSurveyModal setOpen={setIsModalOpen} open={isModalOpen} />
     </header>
   );
 };
 
-export default Header;
+export default memo(Header);

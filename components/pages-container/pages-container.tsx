@@ -1,5 +1,5 @@
 import AppLoading from "@/app/loading";
-import { Suspense } from "react";
+import { memo, Suspense } from "react";
 import ErrorBoundaryWrapper from "../error-component/ErrorBoundary";
 import NotFoundComponent from "../not-found-page/not-found-component";
 import logo from "@/publicLOGO.png";
@@ -28,4 +28,4 @@ const PagesContainer = ({
   );
 };
 
-export default PagesContainer;
+export default memo(PagesContainer);
