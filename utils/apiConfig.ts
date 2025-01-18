@@ -14,14 +14,7 @@ const axiosInstance = axios.create({
 });
 
 export const controlers = {
-  Customer: "api/Customer/",
-  testCustomer: "api/Customer/",
-  ClubLevel: "api/ClubLevel/",
-  shop: "api/Shop/",
-  invoice: "api/Invoice/",
-  survay: "api/Survey/",
-  company: "api/Company/",
-  account: "Api/Account/",
+  Auth: "api/Auth",
 };
 
 // Add interceptors for request and response
@@ -58,7 +51,10 @@ axiosInstance.interceptors.response.use(
     // Handle errors globally
     if (error.response?.status === 401) {
       console.error("Unauthorized! Redirecting...");
-      if (typeof window !== "undefined") {
+      if (
+        typeof window !== "undefined" &&
+        !window.location.href.includes("login")
+      ) {
         window.location.href = "/login";
       }
     }

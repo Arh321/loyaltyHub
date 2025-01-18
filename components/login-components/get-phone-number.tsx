@@ -5,6 +5,8 @@ import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import "./get-phone-styles.css";
 import { Input } from "antd";
+import { onGetOtpByPhone } from "@/utils/authService";
+import { LoadingOutlined } from "@ant-design/icons";
 const phoneValidationSchema = yup.object().shape({
   phone: yup
     .string()
@@ -60,7 +62,7 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
         <Input
           style={{ direction: "ltr" }}
           value={phone}
-          type="tel"
+          type="number"
           inputMode="numeric"
           placeholder="مثال: ********09"
           className="w-full !font-Medium !p-3 !border !min-w-[320px] !border-Focus !rounded-lg focus:outline-none focus:border-primary transition-all duration-300 placeholder-gray-400 pr-2 py-4 admin-panel hover:bg-highlighter-hover"
@@ -73,6 +75,7 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
             e.preventDefault();
             handleInputChange(e.clipboardData.getData("Text"));
           }}
+          disabled={loading}
         />
         <label
           htmlFor="userName"
@@ -90,18 +93,16 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
       <button
         type="submit"
         className={clsx(
-          "font-Medium bg-Secondary2 text-Highlighter py-3 w-2/3 text-lg rounded-lg fixed bottom-8 right-0 left-0 mx-auto max-w-[250px]",
+          "font-Medium bg-Secondary2 disabled:opacity-70 text-Highlighter py-3 w-2/3 text-lg rounded-lg fixed bottom-8 right-0 left-0 mx-auto max-w-[250px]",
           {
             "opacity-70 text-highlighter": !isValid,
             " hover:bg-cta-hover text-highliter": isValid,
           }
         )}
-        disabled={!isValid}
+        disabled={!isValid || loading}
       >
         دریافت کد
-        {loading && (
-          <i className="pi pi-spin pi-spinner" style={{ fontSize: "1rem" }}></i>
-        )}
+        {loading && <LoadingOutlined />}
       </button>
     </form>
   );

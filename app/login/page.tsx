@@ -2,25 +2,68 @@
 import GetPhoneNumberComponent from "@/components/login-components/get-phone-number";
 import PagesContainer from "@/components/pages-container/pages-container";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import logo from "@/publicLOGO.png";
 import GetOtpCodeComponent from "@/components/login-components/get-otp";
+import { onGetOtpByInvoiceId, onGetOtpByPhone } from "@/utils/authService";
+import { useNotify } from "@/components/notife/notife";
+import SendOtpByInvoice from "@/components/login-components/send-otp-by-invoice";
+
 const LoginPage = () => {
-  const [loginLoading, setLoginLoading] = useState<boolean>(false);
-  const [getOtpLoading, setGetOtpLoading] = useState<boolean>(false);
-
-  const [activeStep, setActiveStep] = useState<number>(0);
+  const [getOtpLoading, setGetOtpLoading] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const [phone, setPhone] = useState("");
-  const [errMessage, setErrMessage] = useState<unknown | undefined>(undefined);
 
+  const { notify } = useNotify();
   const dispatch = useDispatch();
-  // const loginToast = useRef<Toast>(null);
   const navigate = useRouter();
-  const onGetOtpCode = (phone: string) => {
-    setActiveStep(1);
+  const searchParams = useSearchParams();
+  const backUrl = searchParams.get("backUrl");
+
+  const handleSendOtp = async (phone) => {
+    setGetOtpLoading(true);
+    try {
+      const response = await onGetOtpByPhone({ mobile: phone });
+      if (response.status) {
+        notify("success", response.statusMessage);
+        console.log("OTP sent successfully:", response.result);
+        setActiveStep(1);
+      } else {
+        console.warn("Failed to send OTP:", response.statusMessage);
+      }
+    } catch (error) {
+      console.error(error.message);
+      notify("error", "در ارسال کد تایید خطایی رخ داده است");
+    } finally {
+      setGetOtpLoading(false);
+    }
   };
+
+  const handleSendOtpByInvoiceId = async () => {
+    setGetOtpLoading(true);
+    try {
+      const response = await onGetOtpByInvoiceId({ invoiceId: backUrl });
+      if (response.status) {
+        notify("success", response.statusMessage);
+        setPhone(() => response.result);
+        console.log("OTP sent successfully:", response.result);
+        setActiveStep(1);
+      } else {
+        console.warn("Failed to send OTP:", response.statusMessage);
+      }
+    } catch (error) {
+      console.error(error.message);
+      notify("error", "در ارسال کد تایید خطایی رخ داده است");
+      setGetOtpLoading(false);
+    } finally {
+      setGetOtpLoading(false);
+    }
+  };
+
+  const onGetOtpCode = (phone) => handleSendOtp(phone);
+
   return (
     <PagesContainer>
       <div dir="rtl" className="w-full h-full font-Medium p-8">
@@ -108,27 +151,48 @@ const LoginPage = () => {
           </div>
           <p className="w-full flex flex-col items-center text-Secondary2 justify-center gap-[10px] font-Medium mt-4">
             <span className="bold-16">خوش آمدید به باشگاه مشتریان حسینی</span>
-            {activeStep == 0 ? (
-              <span className="w-1/2 flex flex-col gap-2 text-tertiary regular-14 text-center">
-                برای ادامه شماره خود را وارد نمایید
-              </span>
+            {activeStep === 0 ? (
+              !backUrl ? (
+                <span className="w-1/2 flex flex-col gap-2 text-tertiary regular-14 text-center">
+                  برای ادامه شماره خود را وارد نمایید
+                </span>
+              ) : null
             ) : (
-              <span dir="rtl" className="regular-16 w-4/5 text-center">
-                {`لطفا کد تایید 4 رقمی ارسال شده به شماره همراه ${phone} زیر را وارد
-                نمایید.`}
+              <span
+                dir="rtl"
+                className="regular-16 w-4/5 flex flex-wrap justify-center items-center gap-1"
+              >
+                <span>لطفا کد تایید 4 رقمی ارسال شده به شماره همراه</span>
+                <span dir="ltr">{phone}</span>
+                <span>زیر را وارد نمایید.</span>
               </span>
             )}
           </p>
         </div>
-        {activeStep == 0 ? (
-          <GetPhoneNumberComponent
-            onGetOtpCode={onGetOtpCode}
-            setPhone={setPhone}
-            phone={phone}
-            loading={getOtpLoading}
-          />
+        {activeStep === 0 ? (
+          !backUrl ? (
+            <GetPhoneNumberComponent
+              onGetOtpCode={onGetOtpCode}
+              setPhone={setPhone}
+              phone={phone}
+              loading={getOtpLoading}
+            />
+          ) : (
+            <SendOtpByInvoice
+              loading={getOtpLoading}
+              handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
+            />
+          )
         ) : (
-          <GetOtpCodeComponent />
+          <GetOtpCodeComponent
+            onGetOtpCode={onGetOtpCode}
+            handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
+            setActiveStep={setActiveStep}
+            phone={phone}
+            loadingResend={getOtpLoading}
+            isWithInvoiceId={!!backUrl}
+            invoiceId={backUrl}
+          />
         )}
       </div>
     </PagesContainer>

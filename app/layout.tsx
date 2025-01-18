@@ -9,6 +9,7 @@ import logo from "@/publicimages/hosseiniLogo.png";
 import { Suspense } from "react";
 import AppLoading from "./loading";
 import { LoadingIndicator } from "@/components/loadingIndicator/loading-indicator";
+import { NotifyProvider } from "@/components/notife/notife";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -74,17 +75,19 @@ export default function RootLayout({
       >
         <AppProvider>
           <AntdRegistry>
-            <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden">
-              <LoadingIndicator
-                component={
-                  <Suspense fallback={<AppLoading />}>
-                    <Header />
-                    {children}
-                    <FooterContainer />
-                  </Suspense>
-                }
-              ></LoadingIndicator>
-            </div>
+            <NotifyProvider>
+              <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden">
+                <LoadingIndicator
+                  component={
+                    <Suspense fallback={<AppLoading />}>
+                      <Header />
+                      {children}
+                      <FooterContainer />
+                    </Suspense>
+                  }
+                ></LoadingIndicator>
+              </div>
+            </NotifyProvider>
           </AntdRegistry>
         </AppProvider>
       </body>

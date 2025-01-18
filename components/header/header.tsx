@@ -17,7 +17,7 @@ const Header = () => {
   const router = useRouter();
 
   const isSurveyPage = pathname.includes("survey");
-
+  const isLoginPage = pathname.includes("login");
   useEffect(() => {
     setIsModalOpen(false);
   }, [pathname]);
@@ -35,7 +35,7 @@ const Header = () => {
           >
             <Icon icon="stash:times" width="2.5rem" />
           </button>
-        ) : (
+        ) : !isLoginPage ? (
           <div className="w-full flex items-center justify-between px-4 py-5 relative">
             <div className="flex items-center gap-8">
               {pathname !== "/" && (
@@ -62,6 +62,12 @@ const Header = () => {
               <Image src={logo} alt="لوگو" priority />
             </Link>
             <Sidebar logo={logo} />
+          </div>
+        ) : (
+          <div className="w-full flex items-center justify-center px-4 py-3 relative">
+            <div className=" m-auto w-max h-max -translate-y-2">
+              <Image src={logo} alt="لوگو" priority />
+            </div>
           </div>
         )}
       </div>
