@@ -7,14 +7,18 @@ import Image from "next/image";
 import logo from "../../public/images/hosseiniLogo.png";
 import { usePathname, useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
+import useAuth from "@/hooks/useAuth";
+import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
 
 const Sidebar = React.lazy(() => import("./side-bar"));
 const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
 
 const Header = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  const { invoiceDetail, loadingInvoice, showInvoice, setShowInvoice } =
+    useAuth();
 
   const isSurveyPage = pathname.includes("survey");
   const isLoginPage = pathname.includes("login");
@@ -72,6 +76,11 @@ const Header = () => {
         )}
       </div>
       <CancelSurveyModal setOpen={setIsModalOpen} open={isModalOpen} />
+      <InvoiceModalDetail
+        setOpen={setShowInvoice}
+        open={showInvoice}
+        loadingInvoice={loadingInvoice}
+      />
     </header>
   );
 };

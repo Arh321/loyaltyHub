@@ -5,9 +5,11 @@ import { Input } from "antd";
 import clsx from "clsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useNotify } from "../notife/notife";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SyncOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { onSetToken } from "@/redux/profile/profileSlice";
 interface GetOtpCodeComponentProps {
   onGetOtpCode: (phone: string) => void;
   setActiveStep: Dispatch<SetStateAction<number>>;
@@ -33,6 +35,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   const [active, setActive] = useState(true);
   const { notify } = useNotify();
   const navigate = useRouter();
+  const dispatch = useDispatch();
   // Update the timer every second if active
   useInterval(() => setSeconds((prev) => Math.max(prev - 1, 0)), 1000, active);
 
@@ -46,7 +49,11 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   const handleResendClick = () => {
     if (seconds === 0) {
       setOtp("");
-      onGetOtpCode(phone);
+      if (isWithInvoiceId) {
+        handleSendOtpByInvoiceId();
+      } else {
+        onGetOtpCode(phone);
+      }
       setSeconds(120); // Reset timer
       setActive(true); // Reactivate the timer
     }
@@ -66,11 +73,13 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
         : await onLoginWithOtp({ mobile: phone, otp });
       if (response.status) {
         notify("success", response.statusMessage);
-        Cookies.set("token", response.result, {
-          path: "/",
-          secure: true,
-          sameSite: "Strict",
-        });
+
+        dispatch(
+          onSetToken({
+            expireMinute: response.result.expiresIn,
+            token: response.result.token,
+          })
+        );
         if (isWithInvoiceId) {
           navigate.push(`/?invoiceId=${invoiceId}`); // Include backUrl as a query parameter
         } else {
@@ -104,22 +113,21 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
       {/* Resend Timer and Actions */}
       <div className="w-full flex items-center justify-between">
         <p className="flex items-center gap-4 mt-4">
-          <button
-            role="button"
-            className={clsx(
-              seconds === 0
-                ? "text-cta"
-                : "text-cta-hover cursor-not-allowed opacity-70",
-              "flex items-center gap-2"
-            )}
-            disabled={loadingResend || seconds > 0}
-            onClick={() =>
-              isWithInvoiceId ? handleSendOtpByInvoiceId() : handleResendClick()
-            }
-          >
-            ارسال مجدد
-            {loadingResend && <LoadingOutlined />}
-          </button>
+          <span>{seconds == 0 ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
+          {seconds == 0 && (
+            <button
+              role="button"
+              className={clsx(
+                seconds === 0
+                  ? "text-cta"
+                  : "text-Secondary cursor-not-allowed opacity-70",
+                "flex items-center gap-2"
+              )}
+              onClick={() => handleResendClick()}
+            >
+              {loadingResend ? <LoadingOutlined /> : <SyncOutlined />}
+            </button>
+          )}
           <span
             dir="ltr"
             className={clsx(
@@ -146,6 +154,11 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
           </p>
         )}
       </div>
+      {loading && (
+        <div className="relative animate-fadeIn">
+          <span className="loader-otp !text-Secondary2"></span>
+        </div>
+      )}
     </div>
   );
 };

@@ -32,3 +32,22 @@ export interface IInvoice {
   isComplete: boolean;
   transactionID: string;
 }
+
+///////////////////////////////////////
+
+export interface IInvoiceId {
+  id: 1;
+  sourceId: string;
+  purchaseDate: string;
+  payAmount: number;
+  vat: number;
+  fullAddress: string;
+  giftUsedAmount: number;
+  discountPercent: number;
+  discountPrice: number;
+  additionalAmount: number;
+  customerId: number;
+  totalPrice: number;
+  vatPrice: number;
+  finalPrice: number;
+}

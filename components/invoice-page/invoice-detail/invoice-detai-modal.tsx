@@ -6,13 +6,15 @@ import InvoiceIdPage from "./invoice-detail-component";
 interface InvoiceModalDetailProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
-  showServayButton?: boolean;
+  showSurveyButton?: boolean;
+  loadingInvoice: boolean;
 }
 
 const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
   open,
   setOpen,
-  showServayButton,
+  showSurveyButton,
+  loadingInvoice,
 }) => {
   const handleCancel = () => {
     setOpen(false);
@@ -50,8 +52,9 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
     >
       <InvoiceIdPage
         onClose={setOpen}
-        showServayButton={showServayButton}
+        showServayButton={showSurveyButton}
         transactionID="1234567"
+        loadingInvoice={!!loadingInvoice}
       />
     </Modal>
   );

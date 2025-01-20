@@ -1,6 +1,12 @@
 import { IHttpResult } from "@/types/http-result";
 import axiosInstance, { controlers } from "./apiConfig";
 
+interface IAuthResult {
+  token: string;
+  expiresIn: number;
+  tokenType: string;
+}
+
 const onGetOtpByPhone = async (payLoad: {
   mobile: string;
 }): Promise<IHttpResult<boolean>> => {
@@ -38,17 +44,12 @@ const onGetOtpByInvoiceId = async (payLoad: {
 const onLoginWithOtp = async (payLoad: {
   mobile: string;
   otp: string;
-}): Promise<
-  IHttpResult<{
-    token: string;
-  }>
-> => {
+}): Promise<IHttpResult<IAuthResult>> => {
   try {
-    const response = await axiosInstance.post<
-      IHttpResult<{
-        token: string;
-      }>
-    >(`${controlers.Auth}/LoginWithOtp`, payLoad);
+    const response = await axiosInstance.post<IHttpResult<IAuthResult>>(
+      `${controlers.Auth}/LoginWithOtp`,
+      payLoad
+    );
     return response.data; // Return only the data part of the response
   } catch (error: unknown) {
     console.error("Error sending OTP:", error);
@@ -61,9 +62,9 @@ const onLoginWithOtp = async (payLoad: {
 const onLoginWithOtpByInvoiceID = async (payLoad: {
   invoiceId: string;
   otp: string;
-}): Promise<IHttpResult<boolean>> => {
+}): Promise<IHttpResult<IAuthResult>> => {
   try {
-    const response = await axiosInstance.post<IHttpResult<boolean>>(
+    const response = await axiosInstance.post<IHttpResult<IAuthResult>>(
       `${controlers.Auth}/LoginWithOtpByInvoice`,
       payLoad
     );

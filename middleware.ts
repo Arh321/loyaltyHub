@@ -11,7 +11,8 @@ export function middleware(request) {
 
   // Redirect to login if accessing '/' with 'invoiceId' query parameter
   if (url.pathname === "/" && url.searchParams.has("invoiceId")) {
-    return redirectToLoginWithInvoiceId(request);
+    // redirectToLoginWithInvoiceId(request);
+    return;
   }
 
   console.log("Route change started:", url.pathname);

@@ -3,7 +3,7 @@ export type IValidateUser = {
   mobile: string;
   hasFactor: boolean;
   address: string;
-  birthDate: null | Date;
+  birthDate: null | string;
   firstName: null | string;
   lastName: string;
   provinceID: number;

@@ -4,6 +4,10 @@ import Cookies from "universal-cookie";
 
 const cookies = new Cookies();
 
+const convertMinuteToDate = (expirationMinutes: number) => {
+  return new Date(Date.now() + expirationMinutes * 60 * 1000);
+};
+
 interface ProfileNotifeProps {
   show: boolean;
   content: {
@@ -20,11 +24,6 @@ export interface ProfileSliceType {
   info: IValidateUser;
   customerToken: unknown;
   hasToken: boolean;
-  loadingProfile: boolean;
-  profileNotifeProps: ProfileNotifeProps;
-  profileMissedFields: ProfileMissedFieldsProps;
-
-  profileCompleteDialog: boolean;
 }
 
 const initialState: ProfileSliceType = {
@@ -33,7 +32,7 @@ const initialState: ProfileSliceType = {
     lastName: "حسن زاده",
     mobile: "09123456789",
     job: "",
-    birthDate: new Date(),
+    birthDate: new Date().toDateString(),
     nationalCode: "0",
     address: "",
     customerKey: 0,
@@ -58,48 +57,37 @@ const initialState: ProfileSliceType = {
     usedCreditPrice: 0,
     zipCode: "",
   },
-  profileCompleteDialog: false,
-  customerToken: {
-    expires: "",
-    issuedAt: "",
-    refreshToken: "",
-    token: "",
-    tokenType: "Bearer",
-  },
+
+  customerToken: "",
   hasToken: false,
-  loadingProfile: false,
-  profileNotifeProps: {
-    show: false,
-    content: {
-      detail: "",
-      severity: undefined,
-      summary: "",
-    },
-  },
-  profileMissedFields: {
-    fields: [],
-    isRequierdMissed: false,
-  },
 };
 
 const profileSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    onSetToken: () => {
-      // state.customerToken = payload.payload;
-      // cookies.set("token", payload.payload, {
-      //   path: "/",
-      //   expires: new Date(payload.payload.expires),
-      // });
-      // state.hasToken = true;
+    onSetToken: (
+      state,
+      payload: PayloadAction<{
+        token: string;
+        expireMinute: number;
+      }>
+    ) => {
+      state.customerToken = payload.payload.token;
+      cookies.set("token", payload.payload.token, {
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+        expires: convertMinuteToDate(payload.payload.expireMinute),
+      });
+      state.hasToken = true;
     },
-    onProfileCompleteDialog: (state) => {
-      state.profileCompleteDialog = !state.profileCompleteDialog;
-    },
+    // onProfileCompleteDialog: (state) => {
+    //   state.profileCompleteDialog = !state.profileCompleteDialog;
+    // },
     onCheckHasToken: (state) => {
       const token = cookies.get("token");
-      if (token) {
+      if (!!token) {
         state.customerToken = token;
         state.hasToken = true;
       } else {
@@ -116,29 +104,29 @@ const profileSlice = createSlice({
     onSetProfile: (state, payload: PayloadAction<IValidateUser>) => {
       state.info = payload.payload;
     },
-    onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
-      state.loadingProfile = payload.payload;
-    },
-    onShowNotif: (state, payload: PayloadAction<ProfileNotifeProps>) => {
-      state.profileNotifeProps = payload.payload;
-    },
+    // onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
+    //   state.loadingProfile = payload.payload;
+    // },
+    // onShowNotif: (state, payload: PayloadAction<ProfileNotifeProps>) => {
+    //   state.profileNotifeProps = payload.payload;
+    // },
 
-    onCheckProfile: (state, payload: PayloadAction<unknown>) => {
-      const fields: string[] = [];
-      const requierdItems = [
-        "nationalCode",
-        "lastName",
-        "firstName",
-        "cellPhone",
-      ];
-      Object.entries(payload.payload).forEach((i) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        i[1] == null && fields.push(i[0]);
-      });
-      state.profileMissedFields.fields = fields;
-      const tmp = fields.filter((i) => requierdItems.includes(i));
-      state.profileMissedFields.isRequierdMissed = tmp.length ? true : false;
-    },
+    // onCheckProfile: (state, payload: PayloadAction<unknown>) => {
+    //   const fields: string[] = [];
+    //   const requierdItems = [
+    //     "nationalCode",
+    //     "lastName",
+    //     "firstName",
+    //     "cellPhone",
+    //   ];
+    //   Object.entries(payload.payload).forEach((i) => {
+    //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    //     i[1] == null && fields.push(i[0]);
+    //   });
+    //   state.profileMissedFields.fields = fields;
+    //   const tmp = fields.filter((i) => requierdItems.includes(i));
+    //   state.profileMissedFields.isRequierdMissed = tmp.length ? true : false;
+    // },
   },
 });
 
@@ -147,12 +135,12 @@ export const {
   onCheckHasToken,
   onLogOut,
   onSetProfile,
-  onLoadingProfile,
-  onShowNotif,
+  // onLoadingProfile,
+  // onShowNotif,
 
-  onCheckProfile,
+  // onCheckProfile,
 
-  onProfileCompleteDialog,
+  // onProfileCompleteDialog,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

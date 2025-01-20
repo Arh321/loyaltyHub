@@ -1,66 +1,87 @@
-// import { useEffect, useCallback } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useRouter } from "next/router";
-// import Cookies from "universal-cookie";
-// import { AppDispatch, RootState } from "../redux/store"; // Update the path as necessary
-// import {
-//   onLoadingProfile,
-//   onLogOut,
-//   ProfileSliceType,
-// } from "@/redux/profile/profileSlice";
+import Cookies from "universal-cookie";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-// const useAuth = () => {
-//   const dispatch = useDispatch<AppDispatch>();
-//   const router = useRouter();
-//   const cookies = new Cookies();
+import { AppDispatch, RootState } from "@/redux/store";
+import {
+  onCheckHasToken,
+  ProfileSliceType,
+} from "@/redux/profile/profileSlice";
+import { getInvoiceById, validateInvoiceById } from "@/utils/invoiceService";
+import { useNotify } from "@/components/notife/notife";
+import { IInvoiceId } from "@/types/invoice";
 
-//   const { hasToken, customerToken, loadingProfile } = useSelector<
-//     RootState,
-//     ProfileSliceType
-//   >((state) => state.profileSlice);
+const useAuth = () => {
+  const [loadingInvoice, setLoadingInvoice] = useState(false);
+  const [invoiceDetail, setInvoiceDetail] = useState<IInvoiceId | undefined>();
+  const [showInvoice, setShowInvoice] = useState(false);
 
-//   // Function to check login and handle routing
-//   const checkLogin = useCallback(() => {
-//     const token = cookies.get("token");
-//     // Memoize the dispatch functions to prevent unnecessary re-creation
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const path = usePathname();
+  const { notify } = useNotify();
 
-//     if (!token) {
-//       const protectedPaths = ["/basket", "/profile"];
-//       const currentPath = router.pathname;
+  const invoiceId = searchParams.get("invoiceId");
+  const cookies = new Cookies();
 
-//       if (protectedPaths.some((path) => currentPath.includes(path))) {
-//         console.log("Redirecting from:", currentPath);
-//         router.push("/");
-//       }
-//     }
-//   }, [router]);
+  const { customerToken, hasToken } = useSelector<RootState, ProfileSliceType>(
+    (state) => state.profileSlice
+  );
 
-//   // Function to fetch and initialize the user's pre-invoice data
+  /**
+   * Loads the invoice details based on the invoice ID from the URL.
+   */
+  const onLoadSearchedInvoice = useCallback(async () => {
+    if (!invoiceId) return;
 
-//   // Function to load the user's profile
-//   const loadProfile = useCallback(async () => {
-//     if (hasToken && !loadingProfile) {
-//       try {
-//         dispatch(onLoadingProfile(true));
-//         // const res = await getMyProfile(customerToken.token);
-//         // dispatch(onCheckProfile(res.data.result.data));
-//         // dispatch(onSetProfile(res.data.result.data));
-//       } catch (err) {
-//         console.error("Error loading profile:", err);
-//         dispatch(onLogOut());
-//       } finally {
-//         dispatch(onLoadingProfile(false));
-//       }
-//     }
-//   }, [hasToken, loadingProfile, customerToken.token, dispatch]);
+    setLoadingInvoice(true);
+    setShowInvoice(true);
 
-//   useEffect(() => {
-//     checkLogin(); // Check login status on route change
-//   }, [router.pathname, checkLogin]);
+    try {
+      const valid = await validateInvoiceById({ invoiceId });
 
-//   useEffect(() => {
-//     loadProfile(); // Load profile when the user has a token
-//   }, [hasToken, loadProfile]);
-// };
+      if (!valid.status) {
+        notify("error", valid.statusMessage || "اطلاعات فاکتور مطابقت ندارد");
+        setShowInvoice(false);
+        return;
+      }
 
-// export default useAuth;
+      const response = await getInvoiceById({ invoiceId });
+
+      if (response.status) {
+        notify("success", response.statusMessage);
+        setInvoiceDetail(response.result);
+      } else {
+        notify("error", response.statusMessage || "خطا در دریافت فاکتور");
+        setShowInvoice(false);
+      }
+    } catch (error) {
+      notify("error", "خطا در دریافت فاکتور");
+      setShowInvoice(false);
+    } finally {
+      setLoadingInvoice(false);
+    }
+  }, [invoiceId, notify]);
+
+  /**
+   * Handles the token and invoice validation on component mount or path changes.
+   */
+  useEffect(() => {
+    if (path === "/" && hasToken && invoiceId) {
+      onLoadSearchedInvoice();
+    } else if (!hasToken) {
+      dispatch(onCheckHasToken());
+    }
+  }, [path, hasToken, invoiceId, onLoadSearchedInvoice, dispatch]);
+
+  return {
+    loadingInvoice,
+    invoiceDetail,
+    showInvoice,
+    setShowInvoice,
+  };
+};
+
+export default useAuth;
