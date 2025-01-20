@@ -38,7 +38,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
 
   const handleOtpChange = (value: string) => {
     setOtp(value);
-    if (value.length === 4) {
+    if (value.length === 5) {
       handleValidateOtp(value); // Automatically validate when OTP is 4 digits
     }
   };
@@ -66,7 +66,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
         : await onLoginWithOtp({ mobile: phone, otp });
       if (response.status) {
         notify("success", response.statusMessage);
-        Cookies.set("token", "access", {
+        Cookies.set("token", response.result, {
           path: "/",
           secure: true,
           sameSite: "Strict",
@@ -90,7 +90,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
     <div className="w-full h-max flex flex-col items-center gap-4 pt-4">
       {/* OTP Input */}
       <Input.OTP
-        length={4}
+        length={5}
         value={otp}
         onChange={(value) => handleOtpChange(value)}
         className="mt-4 !font-Medium"

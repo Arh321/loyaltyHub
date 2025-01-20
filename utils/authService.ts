@@ -38,12 +38,17 @@ const onGetOtpByInvoiceId = async (payLoad: {
 const onLoginWithOtp = async (payLoad: {
   mobile: string;
   otp: string;
-}): Promise<IHttpResult<boolean>> => {
+}): Promise<
+  IHttpResult<{
+    token: string;
+  }>
+> => {
   try {
-    const response = await axiosInstance.post<IHttpResult<boolean>>(
-      `${controlers.Auth}/LoginWithOtp`,
-      payLoad
-    );
+    const response = await axiosInstance.post<
+      IHttpResult<{
+        token: string;
+      }>
+    >(`${controlers.Auth}/LoginWithOtp`, payLoad);
     return response.data; // Return only the data part of the response
   } catch (error: unknown) {
     console.error("Error sending OTP:", error);
