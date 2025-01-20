@@ -68,7 +68,9 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
       <InvoiceModalDetail
         setOpen={setOpen}
         open={open}
-        showServayButton={invoice.hasSurvey && !invoice.isComplete}
+        showSurveyButton={invoice.hasSurvey && !invoice.isComplete}
+        loadingInvoice={false}
+        // showServayButton={}
       />
     </>
   );

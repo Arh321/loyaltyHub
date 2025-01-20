@@ -7,7 +7,8 @@ const getInvoiceById = async (payLoad: {
 }): Promise<IHttpResult<IInvoiceId>> => {
   try {
     const response = await axiosInstance.get<IHttpResult<IInvoiceId>>(
-      `${controlers.Invoice}/GetInvoiceById/${payLoad.invoiceId}`
+      `${controlers.Invoice}/GetInvoiceById/${payLoad.invoiceId}`,
+      { headers: { auth: true } }
     );
     return response.data; // Return only the data part of the response
   } catch (error: unknown) {

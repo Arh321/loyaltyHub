@@ -2,40 +2,40 @@ import { FactorDetail, IInvoiceDetail } from "@/types/invoice";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 
 const InvoiceDetailItemsTable: React.FC<{
-  items: IInvoiceDetail["factorDetail"];
+  items: IInvoiceDetail["body"];
 }> = ({ items }) => (
   <div className="w-full border-collapse font-Regular flex flex-col">
-    <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center">
+    <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center sticky top-0">
       مشخصات فاکتور
     </div>
     <div className="font-bold w-full flex ">
       <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
         <div className="w-2/5 px-2 py-1 h-full border-l border-highlighter">
           <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-            <span className="text-[10px]">نام کالا</span>
+            <span className="text-[8px]">نام کالا</span>
             <span className="border-b border-tertiary px-2 w-full"></span>
-            <span className="text-[10px]">بارکد کالا</span>
+            <span className="text-[8px]">بارکد کالا</span>
           </p>
         </div>
         <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
           <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-            <span className="text-[10px]">تعداد</span>
+            <span className="text-[8px]">تعداد</span>
             <span className="border-b border-tertiary px-2 w-full"></span>
-            <span className="text-[10px]">%تخفیف</span>
+            <span className="text-[8px]">%تخفیف</span>
           </p>
         </div>
         <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
           <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-            <span className="text-[10px]">قیمت</span>
+            <span className="text-[8px]">قیمت</span>
             <span className="border-b border-tertiary px-2 w-full"></span>
-            <span className="text-[10px]">پس از تخفیف</span>
+            <span className="text-[8px]">پس از تخفیف</span>
           </p>
         </div>
         <div className="w-1/5 px-2 py-1 h-full">
           <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-            <span className="text-[10px]">مبلغ نهایی</span>
+            <span className="text-[8px]">مبلغ نهایی</span>
             <span className="border-b border-tertiary px-2 w-full"></span>
-            <span className="text-[10px]">مبلغ تخفیف</span>
+            <span className="text-[8px]">مبلغ تخفیف</span>
           </p>
         </div>
       </div>
@@ -51,40 +51,40 @@ const InvoiceDetailItemsTable: React.FC<{
 const RowOfFactorDetail = ({ item }: { item: FactorDetail }) => {
   return (
     <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
-      <div className="w-2/5 px-2 py-1 h-full border-l border-highlighter">
+      <div className="w-2/5 px-2 py-[1px] h-full border-l border-highlighter">
         <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-          <span className="text-[10px]">{item.k_name}</span>
+          <span className="text-[8px]">{item.productName}</span>
           <span className="border-b border-tertiary px-2 w-full"></span>
-          <span className="text-[10px]">
-            {item.kbArcode ? item.kbArcode : "---"}
+          <span className="text-[8px]">
+            {item.productCode ? item.productCode : "---"}
           </span>
         </p>
       </div>
-      <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+      <div className="w-1/5 px-2 py-[1px] h-full border-l border-highlighter">
         <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-          <span className="text-[10px]">{item.k_Amount}</span>
+          <span className="text-[8px]">{item.quantity}</span>
           <span className="border-b border-tertiary px-2 w-full"></span>
-          <span className="text-[10px]">{item.reduction}</span>
+          <span className="text-[8px]">{item.discountPrice}</span>
         </p>
       </div>
-      <div className="w-1/5 px-2 py-1 h-full border-l border-highlighter">
+      <div className="w-1/5 px-2 py-[1px] h-full border-l border-highlighter">
         <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-          <span className="text-[10px]">
-            {numberToPersianPrice(item.k_Price)}
+          <span className="text-[8px]">
+            {numberToPersianPrice(item.priceBeforeDiscount)}
           </span>
           <span className="border-b border-tertiary px-2 w-full"></span>
-          <span className="text-[10px]">
-            {numberToPersianPrice(item.afterReduction)}
+          <span className="text-[8px]">
+            {numberToPersianPrice(item.priceAfterDiscount)}
           </span>
         </p>
       </div>
-      <div className="w-1/5 px-2 py-1 h-full">
+      <div className="w-1/5 px-2 py-[1px] h-full">
         <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-          <span className="text-[10px]">
-            {numberToPersianPrice(item.finallyPrice)}
+          <span className="text-[8px]">
+            {numberToPersianPrice(item.finalPrice)}
           </span>
           <span className="border-b border-tertiary px-2 w-full"></span>
-          <span className="text-[10px]"> {item.finallyReduction}</span>
+          <span className="text-[8px]"> {item.discountPercent}</span>
         </p>
       </div>
     </div>

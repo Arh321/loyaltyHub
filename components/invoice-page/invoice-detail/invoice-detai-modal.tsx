@@ -40,7 +40,7 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
         direction: "rtl",
         width: "95vw !important",
         maxWidth: "450px",
-        height: "90dvh",
+        height: "95dvh",
       }}
       classNames={{
         header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
