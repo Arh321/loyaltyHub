@@ -55,9 +55,6 @@ const Header = () => {
                   />
                 </button>
               )}
-              <button className="text-Highlighter">
-                <Icon icon="lets-icons:user-light" width="2rem" />
-              </button>
             </div>
             <Link
               href="/"

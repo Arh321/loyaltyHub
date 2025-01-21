@@ -10,6 +10,8 @@ const config: Config = {
     extend: {
       backgroundImage: {
         "custom-gradient": "linear-gradient(to top, black, transparent)", // Your custom gradient
+        "custom-gradient-white":
+          "linear-gradient(to top, rgb(0,0,0,0.5), transparent)", // Your custom gradient
       },
       fontFamily: {
         Regular: "Regular",
@@ -30,12 +32,17 @@ const config: Config = {
           "90%": { top: "100%" },
           "100%": { "z-index": "1" },
         },
+        movable: {
+          "0%": { transform: "translateY(-2px)" },
+          "50%": { transform: "translateY(2px)" },
+          "100%": { transform: "translateY(-2px)" }, // End state matches the start state
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",
         fadeUp: "fadeUp 0.5s ease-in-out forwards",
         "fadeIn-repetive": "fadeIn 2s ease-in-out",
-
+        movable: "movable 3s infinite",
         popIn: "popIn 0.7s ease-in-out",
       },
       colors: {

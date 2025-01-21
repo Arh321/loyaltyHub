@@ -28,22 +28,22 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
     order: "asc" | "desc";
     id: 1 | 2 | 3 | 4;
   }[] = [
-    { label: "کمترین مبلغ", key: "salePrice", order: "asc", id: 1 },
-    { label: "بالاترین مبلغ", key: "salePrice", order: "desc", id: 2 },
-    { label: "اولین فاکتور", key: "cusSaleDate", order: "asc", id: 3 },
-    { label: "آخرین فاکتور", key: "cusSaleDate", order: "desc", id: 4 },
+    { label: "کمترین مبلغ", key: "payAmount", order: "asc", id: 1 },
+    { label: "بالاترین مبلغ", key: "payAmount", order: "desc", id: 2 },
+    { label: "اولین فاکتور", key: "purchaseDate", order: "asc", id: 3 },
+    { label: "آخرین فاکتور", key: "purchaseDate", order: "desc", id: 4 },
   ];
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
   const sortData = (
-    key: "salePrice" | "cusSaleDate",
+    key: "payAmount" | "purchaseDate",
     order: "asc" | "desc"
   ) => {
     const sortedData = [...data].sort((a, b) => {
-      const valA = key === "cusSaleDate" ? new Date(a[key]) : a[key];
-      const valB = key === "cusSaleDate" ? new Date(b[key]) : b[key];
+      const valA = key === "purchaseDate" ? new Date(a[key]) : a[key];
+      const valB = key === "purchaseDate" ? new Date(b[key]) : b[key];
       return order === "asc" ? (valA > valB ? 1 : -1) : valA < valB ? 1 : -1;
     });
     setData(sortedData);
@@ -89,7 +89,7 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
               key={option.id}
               onClick={() => {
                 sortData(
-                  option.key as "salePrice" | "cusSaleDate",
+                  option.key as "payAmount" | "purchaseDate",
                   option.order
                 );
                 setSortType(option.id);

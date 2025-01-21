@@ -1,6 +1,24 @@
 import { IHttpResult } from "@/types/http-result";
 import axiosInstance, { controlers } from "./apiConfig";
-import { IInvoiceId } from "@/types/invoice";
+import { IInvoice, IInvoiceId, IInvoiceResult } from "@/types/invoice";
+
+const getAllInvoices = async (payLoad: {
+  page?: number;
+  size?: number;
+}): Promise<IHttpResult<IInvoiceResult>> => {
+  try {
+    const response = await axiosInstance.get<IHttpResult<IInvoiceResult>>(
+      `${controlers.Invoice}/GetAllInvoices?page=${payLoad.page}&size=${payLoad.size}`,
+      { headers: { auth: true } }
+    );
+    return response.data; // Return only the data part of the response
+  } catch (error: unknown) {
+    console.error("Error sending OTP:", error);
+    throw new Error(
+      "Failed to send OTP. Please check the mobile number and try again."
+    );
+  }
+};
 
 const getInvoiceById = async (payLoad: {
   invoiceId: string;
@@ -36,4 +54,4 @@ const validateInvoiceById = async (payLoad: {
   }
 };
 
-export { getInvoiceById, validateInvoiceById };
+export { getInvoiceById, validateInvoiceById, getAllInvoices };

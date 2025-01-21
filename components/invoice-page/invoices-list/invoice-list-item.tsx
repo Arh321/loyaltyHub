@@ -6,6 +6,7 @@ import InvoiceModalDetail from "../invoice-detail/invoice-detai-modal";
 import { useState } from "react";
 import clsx from "clsx";
 import { IInvoice } from "@/types/invoice";
+import moment from "jalali-moment";
 
 interface InoiceListItemProps {
   index: number;
@@ -37,11 +38,11 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
               height="24"
               style={{ color: "var(--Secondary)" }}
             />
-            <span>{invoice.cusDepName}</span>
+            <span>{invoice.branchName}</span>
           </span>
           <span className="px-[10px] min-w-[123px] py-1 flex items-start justify-center gap-1 bg-transparent border border-Focus rounded-[50px] text-Focus">
             <span className="font-Medium text-base">
-              {numberToPersianPrice(invoice.salePrice)}
+              {numberToPersianPrice(invoice.payAmount)}
             </span>
             <span className="font-Regular text-xs">تومان</span>
           </span>
@@ -54,21 +55,23 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
               color="var(--Secondary)"
               fill={false}
             />
-            <span>#{invoice.transactionID}</span>
+            <span>#{invoice.sourceId}</span>
           </span>
-          <span className="text-Secondary font-Regular">
-            {invoice.cusSaleDate}
+          <span dir="ltr" className="text-Secondary font-Regular">
+            {moment(invoice.purchaseDate, "YYYY/MM/DD")
+              .locale("fa")
+              .format("YYYY/MM/DD hh:mm")}
           </span>
         </div>
 
-        {invoice.hasSurvey && !invoice.isComplete && (
+        {invoice.surveyEnable && !invoice.surveyCompleted && (
           <span className="w-3 h-3 bg-Alert rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 "></span>
         )}
       </div>
       <InvoiceModalDetail
         setOpen={setOpen}
         open={open}
-        showSurveyButton={invoice.hasSurvey && !invoice.isComplete}
+        showSurveyButton={invoice.surveyEnable && !invoice.surveyCompleted}
         loadingInvoice={false}
         // showServayButton={}
       />

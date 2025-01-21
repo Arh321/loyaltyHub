@@ -7,6 +7,7 @@ import {
   UserAddIcon,
 } from "../sharedIcons/sharedIcons";
 import clsx from "clsx";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const FooterContainer = () => {
   const { navigateTo } = useNavigation();
@@ -58,8 +59,20 @@ const FooterContainer = () => {
       isActive: pathname.includes("mylevel"),
     },
     {
-      icon: <UserAddIcon width="32" height="32" color="var(--highliter)" />,
-      lable: "معرفی",
+      icon: (
+        <Icon
+          icon={
+            pathname.includes("profile")
+              ? "ix:user-profile-filled"
+              : "ix:user-profile"
+          }
+          width="2rem"
+          color="var(--highliter)"
+        />
+      ),
+      lable: "پروفایل",
+      path: "/profile",
+      isActive: pathname.includes("profile"),
     },
   ];
 

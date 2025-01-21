@@ -364,6 +364,78 @@ const HoseinyIcon: React.FC<IconsProps> = ({ height, width }) => {
   );
 };
 
+const ProfileFirstViewLeftBorder: React.FC<IconsProps> = ({
+  height,
+  width,
+}) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 23 102"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 11H22V6C22 3.23858 19.7614 1 17 1C14.2386 1 12 3.23858 12 6V11ZM12 11H-1V91H12M12 11V91M12 91H22V96C22 98.7614 19.7614 101 17 101C14.2386 101 12 98.7614 12 96V91Z"
+        stroke="#1E9C51"
+      />
+    </svg>
+  );
+};
+
+const ProfileFirstViewRightBorder: React.FC<IconsProps> = ({
+  height,
+  width,
+}) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 23 102"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M11 11H1V6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6V11ZM11 11H24V91H11M11 11V91M11 91H1V96C1 98.7614 3.23858 101 6 101C8.76142 101 11 98.7614 11 96V91Z"
+        stroke="#1E9C51"
+      />
+    </svg>
+  );
+};
+
+const ProfileEditIcon: React.FC<IconsProps> = ({ height, width, color }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 21 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_553_1529)">
+        <path
+          d="M17.8856 12.441V16.881C17.8853 17.5092 17.6252 18.1116 17.1625 18.5558C16.6998 19 16.0722 19.2497 15.4178 19.25H3.33347C3.00822 19.2499 2.68619 19.188 2.38591 19.068C2.08562 18.9481 1.81299 18.7723 1.58367 18.5509C1.35436 18.3294 1.17289 18.0667 1.04969 17.7777C0.926487 17.4887 0.863982 17.1792 0.865766 16.867V5.27898C0.863831 4.96723 0.926366 4.6582 1.04975 4.36982C1.17313 4.08144 1.3549 3.81944 1.58453 3.59899C1.81416 3.37855 2.08708 3.20404 2.38748 3.0856C2.68788 2.96715 3.00977 2.90712 3.33452 2.90898H7.95847"
+          stroke={color}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M17.8857 6.99497L13.6305 2.90897M5.12012 13.803V11.638C5.1222 11.281 5.27012 10.938 5.53158 10.685L15.4607 1.15297C15.5925 1.02507 15.7494 0.923539 15.9223 0.854244C16.0952 0.784948 16.2807 0.749268 16.468 0.749268C16.6554 0.749268 16.8409 0.784948 17.0138 0.854244C17.1867 0.923539 17.3436 1.02507 17.4753 1.15297L19.716 3.30397C19.8492 3.43045 19.9549 3.58104 20.0271 3.74702C20.0993 3.91301 20.1365 4.0911 20.1365 4.27097C20.1365 4.45084 20.0993 4.62892 20.0271 4.79491C19.9549 4.9609 19.8492 5.11149 19.716 5.23797L9.78679 14.77C9.52276 15.0217 9.16618 15.1636 8.79408 15.165H6.53887C6.35248 15.1652 6.16787 15.1302 5.99561 15.0618C5.82336 14.9935 5.66685 14.8932 5.53505 14.7666C5.40325 14.6401 5.29876 14.4899 5.22756 14.3245C5.15635 14.1591 5.11984 13.9819 5.12012 13.803Z"
+          stroke={color}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_553_1529">
+          <rect width="21" height="20" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 export {
   GiftIcon,
   CoponIcons,
@@ -372,4 +444,7 @@ export {
   LevelsIcon,
   UserAddIcon,
   HoseinyIcon,
+  ProfileFirstViewLeftBorder,
+  ProfileFirstViewRightBorder,
+  ProfileEditIcon,
 };

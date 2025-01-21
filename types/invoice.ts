@@ -41,13 +41,23 @@ export interface FactorDetail {
   finalPrice: number; // Final price including VAT and discounts
 }
 export interface IInvoice {
-  factorID: number;
-  cusDepName: string;
-  salePrice: number;
-  cusSaleDate: string;
-  hasSurvey: boolean;
-  isComplete: boolean;
-  transactionID: string;
+  id: number;
+  sourceId: string;
+  purchaseDate: string;
+  payAmount: number;
+  branchName: string;
+  surveyEnable: boolean;
+  surveyAction: boolean;
+  surveyCompleted: boolean;
+}
+
+export interface IInvoiceResult {
+  pageNumber: number;
+  maxPages: number;
+  totalCount: number;
+  hasNext: boolean;
+  hasPrevious: boolean;
+  data: IInvoice[];
 }
 
 ///////////////////////////////////////

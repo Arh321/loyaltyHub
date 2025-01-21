@@ -26,7 +26,7 @@ const InvoicesListContainer: React.FC<InvoicesListContainerProps> = ({
         {data.map((item, index) => {
           return (
             <CSSTransition
-              key={item.factorID}
+              key={item.id}
               timeout={500}
               classNames={clsx(style["fade"])}
             >

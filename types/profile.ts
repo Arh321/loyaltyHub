@@ -28,3 +28,37 @@ export type IValidateUser = {
   postalCode: null | string;
   token: string | null;
 };
+
+export interface ProfileInfo {
+  userInfo: {
+    name: string;
+    familyName: string;
+    cellPhone: string;
+    tellephone: string;
+  };
+  completeInfo: {
+    nationalCode: string;
+    birthDate: string;
+    email: string;
+    education: string;
+    job: string;
+    sexuality: "male" | "female";
+  };
+  addressInfo: {
+    province: {
+      id: number;
+      title: string;
+    };
+    city: {
+      id: number;
+      title: string;
+    };
+    address: string;
+    zipCode: string;
+  };
+  levelInfo: {
+    points: number;
+    level: string;
+    levelId: number;
+  };
+}
