@@ -80,7 +80,7 @@ const FooterContainer = () => {
     <footer
       dir="rtl"
       style={{
-        backgroundImage: `url(/images/bg-art.png)`,
+        backgroundImage: `url(/images/bg-art.webp)`,
         backgroundSize: "contain", // Ensures the image covers the element
         backgroundRepeat: "repeat", // Prevents the image from repeating
         backgroundPosition: "center", // Centers the image

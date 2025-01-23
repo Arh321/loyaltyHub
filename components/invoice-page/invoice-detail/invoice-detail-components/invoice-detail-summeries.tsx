@@ -1,14 +1,14 @@
-import { IValidateUser } from "@/types/profile";
+import { IProfileInfo, IValidateUser } from "@/types/profile";
 
 import moment from "jalali-moment";
-import logo from "@/public/images/hosseiniLogo.png";
+import logo from "@/public/images/hosseiniLogo.webp";
 import Image from "next/image";
 
 const InvoiceDetailSummary: React.FC<{
   transactionID: number;
   saleDate: string;
   departmentName: string;
-  info: IValidateUser;
+  info: IProfileInfo;
 }> = ({ transactionID, saleDate, departmentName, info }) => (
   <div className="bg-Highlighter">
     <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center">
@@ -44,9 +44,9 @@ const InvoiceDetailSummary: React.FC<{
       </span>
       <div className="col-span-3 text-sm flex items-center  justify-between p-2 bg-highlighter">
         <span className="flex items-center gap-1 font-Medium text-Primary">
-          {info.firstName} {info.lastName}
+          {info.mandatory.firstName} {info.mandatory.lastName}
         </span>
-        <span className="font-Regular">{info.mobile}</span>
+        <span className="font-Regular">{info.immutable.phone}</span>
       </div>
     </div>
   </div>

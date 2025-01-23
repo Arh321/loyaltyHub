@@ -1,5 +1,5 @@
 import Image from "next/image";
-import border from "../../../public/images/level-custom-border.png";
+import border from "../../../public/images/level-custom-border.webp";
 import LevelSlidersComponent from "./level-slider-lazy";
 
 const CurrentLevelSliderContainer = () => {

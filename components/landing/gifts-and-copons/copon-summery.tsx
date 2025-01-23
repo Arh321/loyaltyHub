@@ -52,7 +52,7 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
       <Link
         href={type == "copon" ? "/coupons" : "/gifts"}
         style={{
-          backgroundImage: "url(/images/Lines.jpg)",
+          backgroundImage: "url(/images/Lines.webp)",
         }}
         className="w-full h-full py-8 flex flex-col items-center justify-center gap-[8px]"
       >

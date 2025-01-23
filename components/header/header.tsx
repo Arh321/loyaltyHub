@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import Image from "next/image";
 
-import logo from "../../public/images/hosseiniLogo.png";
+import logo from "../../public/images/hosseiniLogo.webp";
 import { usePathname, useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
@@ -29,7 +29,7 @@ const Header = () => {
   return (
     <header
       className="w-full bg-center bg-contain bg-repeat"
-      style={{ backgroundImage: "url(/images/bg-art.png)" }}
+      style={{ backgroundImage: "url(/images/bg-art.webp)" }}
     >
       <div className="bg-gradient-to-l from-green-600 via-transparent to-green-600">
         {isSurveyPage ? (

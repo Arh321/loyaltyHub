@@ -5,16 +5,15 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import moment from "jalali-moment";
-import { DownloadOutlined, PrinterOutlined } from "@ant-design/icons";
+
 import NotFoundComponent from "@/components/not-found-page/not-found-component";
 import { RootState } from "@/redux/store";
 import { ProfileSliceType } from "@/redux/profile/profileSlice";
-import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
-import { FactorDetail, IInvoiceDetail } from "@/types/invoice";
-import Image, { StaticImageData } from "next/image";
-import { IValidateUser } from "@/types/profile";
-import logo from "@/public/images/hosseiniLogo.png";
+
+import { IInvoiceDetail } from "@/types/invoice";
+import { StaticImageData } from "next/image";
+import { IProfileInfo } from "@/types/profile";
+import logo from "@/public/images/hosseiniLogo.webp";
 import InvoiceDetailHeader from "./invoice-detail-components/invoice-detail-header";
 import InvoiceDetailSummary from "./invoice-detail-components/invoice-detail-summeries";
 import InvoiceDetailItemsTable from "./invoice-detail-components/invoice-detail-table";
@@ -283,7 +282,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
 
 const InvoiceDetails: React.FC<{
   invoice: IInvoiceDetail;
-  info: IValidateUser;
+  info: IProfileInfo;
 }> = ({ invoice, info }) => (
   <div className="flex flex-col justify-between text-xs font-Light bg-Highlighter ">
     <div id="testId">

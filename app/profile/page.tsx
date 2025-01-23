@@ -1,71 +1,80 @@
+"use client";
 import PagesContainer from "@/components/pages-container/pages-container";
-import ProfileFirstViewComponent from "@/components/profile-components/profile-first-view/profile-first-view";
-import ProfileCompleteInfoSection from "@/components/profile-components/profile-info-section/profile-complete-info-section";
-import ProfileInfoAddressSection from "@/components/profile-components/profile-info-section/profile-info-address-section";
-import ProfileInfoSection from "@/components/profile-components/profile-info-section/profile-info-section";
-import { ProfileInfo } from "@/types/profile";
 
-const profileInfo: ProfileInfo = {
-  userInfo: {
-    name: "علی رضا",
-    familyName: "حسن زاده نقدم",
-    cellPhone: "09017522794",
-    tellephone: "",
-  },
-  completeInfo: {
-    nationalCode: "",
-    birthDate: "1377/14/11",
-    email: "alirezahasanzade@gmail.com",
-    education: "لیسانس",
-    job: "برنامه نویس",
-    sexuality: "male",
-  },
-  addressInfo: {
-    province: {
-      id: 3,
-      title: "خراسان رضوی",
-    },
-    city: {
-      id: 7,
-      title: "مشهد",
-    },
-    address: "مشهد، چهارراه دانشجو، نبش معلم ۲۶، پلاک ۶۷۵، طبق دوم، واحد ۳",
-    zipCode: "",
-  },
-  levelInfo: {
-    points: 1670,
-    level: "پسته نقره ای",
-    levelId: 1,
-  },
-};
+import {
+  ProfileInfoSectionLazy,
+  ProfileInfoAddressSectionLazy,
+  ProfileCompleteInfoSectionLazy,
+  ProfileFirstViewComponentLazy,
+} from "@/components/profile-components/profile-info-section/profile-cards-lazy";
+import { ProfileSliceType } from "@/redux/profile/profileSlice";
+import { RootState } from "@/redux/store";
+import { Suspense } from "react";
+
+import { useSelector } from "react-redux";
+import AppLoading from "../loading";
+import { Skeleton } from "antd";
 
 const ProfilePage = () => {
-  return (
-    <PagesContainer>
-      <div className="w-full h-full overflow-y-auto pt-[16px]  flex flex-col pb-[100px]">
-        <ProfileFirstViewComponent
-          name={profileInfo.userInfo.name}
-          familyName={profileInfo.userInfo.familyName}
-          level={profileInfo.levelInfo.level}
-          levelId={profileInfo.levelInfo.levelId}
-        />
-        <div className="p-[32px] w-full flex flex-col gap-[10px]">
-          <ProfileInfoSection
-            headerTitle="اطلاعات کاربری"
-            userInfo={profileInfo.userInfo}
-          />
-          <ProfileCompleteInfoSection
-            headerTitle="اطلاعات تکمیلی"
-            completeInfo={profileInfo.completeInfo}
-          />
-          <ProfileInfoAddressSection
-            headerTitle="اطلاعات سکونت"
-            addressInfo={profileInfo.addressInfo}
-          />
-        </div>
-      </div>
-    </PagesContainer>
+  const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
+    (state) => state.profileSlice
   );
+  if (loadingProfile || !info)
+    return (
+      <PagesContainer>
+        <div className="w-full h-full overflow-y-auto pt-[16px]  flex flex-col pb-[100px]">
+          <div className="w-full h-[102px] flex items-center justify-between gap-[10px]">
+            <Skeleton.Node className="!flex !w-[23px] !h-[102px]" active />
+
+            <Skeleton.Node className="!flex !w-full !h-[102px]" active />
+            <Skeleton.Node className="!flex !w-[23px] !h-[102px]" active />
+          </div>
+
+          <div className="p-[32px] w-full flex flex-col gap-[10px] max-h-[1066px] overflow-hidden">
+            <div className="w-full h-[302px] rounded-[10px] p-[10px]">
+              <Skeleton.Node className="!flex !w-full !h-full" active />
+            </div>
+            <div className="w-full h-[302px] rounded-[10px] p-[10px]">
+              <Skeleton.Node className="!flex !w-full !h-full" active />
+            </div>
+            <div className="w-full h-[302px] rounded-[10px] p-[10px]">
+              <Skeleton.Node className="!flex !w-full !h-full" active />
+            </div>
+          </div>
+        </div>
+      </PagesContainer>
+    );
+
+  if (info)
+    return (
+      <PagesContainer>
+        <Suspense fallback={<AppLoading />}>
+          <div className="w-full h-full overflow-y-auto pt-[16px]  flex flex-col pb-[100px]">
+            <ProfileFirstViewComponentLazy
+              name={info.mandatory.firstName}
+              familyName={info.mandatory.lastName}
+              level={info.immutable.rankingPoints}
+              levelId={0}
+            />
+            <div className="p-[32px] w-full flex flex-col gap-[10px] max-h-[1066px] overflow-hidden">
+              <ProfileInfoSectionLazy
+                headerTitle="اطلاعات کاربری"
+                mandatory={info.mandatory}
+                cellPhone={info.immutable.phone}
+              />
+              <ProfileCompleteInfoSectionLazy
+                headerTitle="اطلاعات تکمیلی"
+                additional={info.additional}
+              />
+              <ProfileInfoAddressSectionLazy
+                headerTitle="اطلاعات سکونت"
+                defaultAddress={info.defaultAddress}
+              />
+            </div>
+          </div>
+        </Suspense>
+      </PagesContainer>
+    );
 };
 
 export default ProfilePage;

@@ -2,7 +2,7 @@
 import { Modal } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import starGroupImage from "@/publicimages/Group 366323.png";
+import starGroupImage from "@/publicimages/Group 366323.webp";
 import Image from "next/image";
 import TextArea from "antd/es/input/TextArea";
 import style from "@/styles/ant-custom-styles.module.css";

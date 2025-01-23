@@ -16,7 +16,9 @@ export function middleware(request) {
   }
 
   console.log("Route change started:", url.pathname);
-  return NextResponse.next();
+  const res = NextResponse.next();
+
+  return res;
 }
 
 function handleUnauthorizedAccess(request) {

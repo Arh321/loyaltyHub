@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image, { StaticImageData } from "next/image";
-import SilverLevel from "../../../public/images/SilverLevel.png";
-import BronzeLevel from "../../../public/images/BronzeLevel.png";
-import GoldLevel from "../../../public/images/GoldLevel.png";
+import SilverLevel from "../../../public/images/SilverLevel.webp";
+import BronzeLevel from "../../../public/images/BronzeLevel.webp";
+import GoldLevel from "../../../public/images/GoldLevel.webp";
 import { ProfileFirstViewComponentProps } from "./profile-first-view";
 
 const levelImages = [
@@ -57,8 +57,9 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
         <div className="w-[58px] flex items-center animate-movable">
           <Image
             src={hasLevelImage.src as StaticImageData}
-            alt=""
+            alt="back-ground"
             className="w-full h-auto"
+            priority
             style={{ objectFit: "contain" }}
           />
         </div>

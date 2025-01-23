@@ -3,14 +3,15 @@ import clsx from "clsx";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import style from "./banner-slider.module.css";
-import banner1 from "@/public/images/banner1.png";
-import banner2 from "@/public/images/banner2.png";
-import banner3 from "@/public/images/banner3.png";
-import Image from "next/image";
 import { memo } from "react";
+import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
 
 const BannerSlidersComponent = () => {
-  const images = [banner1, banner2, banner3];
+  const images = [
+    "https://s8.uupload.ir/files/banner1_hx66.png",
+    "https://s8.uupload.ir/files/banner2_il4z.png",
+    "https://s8.uupload.ir/files/banner3_0b8.png",
+  ];
   return (
     <div className="w-full h-full relative animate-fadeIn">
       <Swiper
@@ -25,9 +26,15 @@ const BannerSlidersComponent = () => {
           return (
             <SwiperSlide
               key={index}
-              className="w-full flex justify-center items-center "
+              className="w-full aspect-[16/6] rounded-[10px] overflow-hidden flex justify-center items-center "
             >
-              <Image src={item} alt="" />
+              <ImageWithLoader
+                src={item}
+                alt="index"
+                imageClass="!w-full !h-full object-cover"
+                width={406}
+                height={100}
+              />
             </SwiperSlide>
           );
         })}

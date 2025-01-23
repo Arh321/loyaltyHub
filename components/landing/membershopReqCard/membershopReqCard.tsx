@@ -9,7 +9,7 @@ const MembershopReqCardComponent = () => {
       >
         <div
           style={{
-            backgroundImage: "url(/images/Vector.png)",
+            backgroundImage: "url(/images/Vector.webp)",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
           }}

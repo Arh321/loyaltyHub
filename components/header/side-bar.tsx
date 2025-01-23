@@ -115,7 +115,7 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
           </div>
           <div
             style={{
-              backgroundImage: `url(/images/bg-art.png)`,
+              backgroundImage: `url(/images/bg-art.webp)`,
               backgroundSize: "cover", // Ensures the image covers the element
               backgroundRepeat: "no-repeat", // Prevents the image from repeating
               backgroundPosition: "center", // Centers the image

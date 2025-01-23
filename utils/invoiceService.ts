@@ -1,6 +1,6 @@
 import { IHttpResult } from "@/types/http-result";
 import axiosInstance, { controlers } from "./apiConfig";
-import { IInvoice, IInvoiceId, IInvoiceResult } from "@/types/invoice";
+import { IInvoiceId, IInvoiceResult } from "@/types/invoice";
 
 const getAllInvoices = async (payLoad: {
   page?: number;

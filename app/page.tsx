@@ -4,7 +4,8 @@ import GiftsAndCoponsContainerLAzy from "@/components/landing/gifts-and-copons/g
 import SurveySubmitModal from "@/components/landing/modals/survey-submit-modal";
 
 import PagesContainer from "@/components/pages-container/pages-container";
-import React from "react";
+import React, { Suspense } from "react";
+import AppLoading from "./loading";
 
 const CurrentLevelSliderContainer = React.lazy(
   () =>
@@ -14,12 +15,14 @@ const CurrentLevelSliderContainer = React.lazy(
 export default function Home() {
   return (
     <PagesContainer>
-      <div className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]">
-        <CurrentLevelSliderContainer />
-        <BannerSlidersComponent />
-        <GiftsAndCoponsContainerLAzy />
-      </div>
-      <SurveySubmitModal />
+      <Suspense fallback={<AppLoading />}>
+        <div className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]">
+          <CurrentLevelSliderContainer />
+          <BannerSlidersComponent />
+          <GiftsAndCoponsContainerLAzy />
+        </div>
+        <SurveySubmitModal />
+      </Suspense>
     </PagesContainer>
   );
 }

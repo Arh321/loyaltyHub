@@ -2,29 +2,41 @@
 import ProfileOneRowInfo from "./profile-each-row";
 
 interface ProfileInfoAddressSectionProps {
-  addressInfo: {
-    province: {
-      id: number;
-      title: string;
-    };
-    city: {
-      id: number;
-      title: string;
-    };
-    address: string;
-    zipCode: string;
+  defaultAddress: {
+    cityId: number;
+    provinceId: number;
+    cityName: string;
+    provinceName: string;
+    id: number;
+    title: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    tel: string;
+    address2: string;
+    addressLine: string;
+    postalCode: string;
+    no: string;
+    doorNo: string;
+    latitude: string;
+    longitude: string;
   };
   headerTitle: string;
 }
 
 const ProfileInfoAddressSection: React.FC<ProfileInfoAddressSectionProps> = ({
   headerTitle,
-  addressInfo,
+  defaultAddress,
 }) => {
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col gap-[10px] bg-Highlighter rounded-[10px] p-[10px]"
+      style={{
+        animationDelay: `0.2s`,
+        animationFillMode: "forwards",
+        transform: "translateY(150px)",
+      }}
+      className="w-full flex flex-col opacity-0 gap-[10px] bg-Highlighter rounded-[10px] p-[10px]  animate-fadeUp !duration-500"
     >
       <h2 className="text-Secondary2 text-lg font-Medium mb-[10px]">
         {headerTitle}
@@ -33,11 +45,11 @@ const ProfileInfoAddressSection: React.FC<ProfileInfoAddressSectionProps> = ({
         items={[
           {
             title: "استان",
-            value: addressInfo.province.title,
+            value: defaultAddress.provinceName,
           },
           {
             title: "شهر",
-            value: addressInfo.city.title,
+            value: defaultAddress.cityName,
           },
         ]}
         onEditMethod={function (): void {
@@ -48,7 +60,7 @@ const ProfileInfoAddressSection: React.FC<ProfileInfoAddressSectionProps> = ({
         items={[
           {
             title: "آدرس",
-            value: addressInfo.address,
+            value: defaultAddress.addressLine,
           },
         ]}
         onEditMethod={() => console.log("miad")}
@@ -57,7 +69,7 @@ const ProfileInfoAddressSection: React.FC<ProfileInfoAddressSectionProps> = ({
         items={[
           {
             title: "کدپشتی",
-            value: addressInfo.zipCode,
+            value: defaultAddress.doorNo,
           },
         ]}
         onEditMethod={() => console.log("miad")}

@@ -10,7 +10,12 @@ const PagesContainer = ({
 }>) => {
   return (
     <Suspense fallback={<AppLoading />}>
-      <div className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[12px]">
+      <div
+        style={{
+          userSelect: "none",
+        }}
+        className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[12px]"
+      >
         <div className=" w-full min-h-[calc(100vh-80px)] relative  flex flex-col  ">
           <ErrorBoundaryWrapper
             fallback={

@@ -1,4 +1,4 @@
-import { IValidateUser } from "@/types/profile";
+import { IProfileInfo, IValidateUser } from "@/types/profile";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 
@@ -21,45 +21,17 @@ interface ProfileMissedFieldsProps {
   isRequierdMissed: boolean;
 }
 export interface ProfileSliceType {
-  info: IValidateUser;
+  info: IProfileInfo | undefined;
   customerToken: unknown;
   hasToken: boolean;
+  loadingProfile: boolean;
 }
 
 const initialState: ProfileSliceType = {
-  info: {
-    firstName: "علیرضا",
-    lastName: "حسن زاده",
-    mobile: "09123456789",
-    job: "",
-    birthDate: new Date().toDateString(),
-    nationalCode: "0",
-    address: "",
-    customerKey: 0,
-    buyPriceInYear: 0,
-    cityID: 0,
-    partnerShipCode: "",
-    provinceID: 0,
-    customerGroupName: "",
-    customerZone: "",
-    hasFactor: false,
-    educationDegree: "",
-    followCommission: 0,
-    inviteTypeID: 0,
-    marriageDate: null,
-    nextLevelPrice: 0,
-    sexuality: false,
-    tell: "",
-    title: "",
-    token: null,
-    partnerBirthDate: null,
-    postalCode: "",
-    usedCreditPrice: 0,
-    zipCode: "",
-  },
-
+  info: undefined,
   customerToken: "",
   hasToken: false,
+  loadingProfile: false,
 };
 
 const profileSlice = createSlice({
@@ -101,12 +73,12 @@ const profileSlice = createSlice({
       });
       state.hasToken = false;
     },
-    onSetProfile: (state, payload: PayloadAction<IValidateUser>) => {
+    onSetProfile: (state, payload: PayloadAction<IProfileInfo>) => {
       state.info = payload.payload;
     },
-    // onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
-    //   state.loadingProfile = payload.payload;
-    // },
+    onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
+      state.loadingProfile = payload.payload;
+    },
     // onShowNotif: (state, payload: PayloadAction<ProfileNotifeProps>) => {
     //   state.profileNotifeProps = payload.payload;
     // },
@@ -135,7 +107,7 @@ export const {
   onCheckHasToken,
   onLogOut,
   onSetProfile,
-  // onLoadingProfile,
+  onLoadingProfile,
   // onShowNotif,
 
   // onCheckProfile,

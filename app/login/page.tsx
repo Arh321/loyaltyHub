@@ -12,6 +12,7 @@ import { useNotify } from "@/components/notife/notife";
 import SendOtpByInvoice from "@/components/login-components/send-otp-by-invoice";
 import "../../components/login-components/get-phone-styles.css";
 import { Alert } from "antd";
+import AppLoading from "../loading";
 
 const LoginPage = () => {
   const [getOtpLoading, setGetOtpLoading] = useState(false);
@@ -77,8 +78,8 @@ const LoginPage = () => {
 
   return (
     <PagesContainer>
-      <div dir="rtl" className="w-full h-full font-Medium p-8">
-        <Suspense fallback={<div>لطفا صبر کنید...</div>}>
+      <Suspense fallback={<AppLoading />}>
+        <div dir="rtl" className="w-full h-full font-Medium p-8">
           {/* Header Section */}
           <div className="w-full flex flex-col gap-4">
             <div className="w-full flex flex-col gap-4 items-center">
@@ -112,36 +113,36 @@ const LoginPage = () => {
               )}
             </div>
           </div>
-        </Suspense>
 
-        {/* Step Components */}
-        {activeStep === 0 ? (
-          backUrl ? (
-            <SendOtpByInvoice
-              loading={getOtpLoading}
-              getOtpError={getOtpError}
-              handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
-            />
+          {/* Step Components */}
+          {activeStep === 0 ? (
+            backUrl ? (
+              <SendOtpByInvoice
+                loading={getOtpLoading}
+                getOtpError={getOtpError}
+                handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
+              />
+            ) : (
+              <GetPhoneNumberComponent
+                onGetOtpCode={handleSendOtp}
+                setPhone={setPhone}
+                phone={phone}
+                loading={getOtpLoading}
+              />
+            )
           ) : (
-            <GetPhoneNumberComponent
+            <GetOtpCodeComponent
               onGetOtpCode={handleSendOtp}
-              setPhone={setPhone}
+              handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
+              setActiveStep={setActiveStep}
               phone={phone}
-              loading={getOtpLoading}
+              loadingResend={getOtpLoading}
+              isWithInvoiceId={!!backUrl}
+              invoiceId={backUrl}
             />
-          )
-        ) : (
-          <GetOtpCodeComponent
-            onGetOtpCode={handleSendOtp}
-            handleSendOtpByInvoiceId={handleSendOtpByInvoiceId}
-            setActiveStep={setActiveStep}
-            phone={phone}
-            loadingResend={getOtpLoading}
-            isWithInvoiceId={!!backUrl}
-            invoiceId={backUrl}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      </Suspense>
     </PagesContainer>
   );
 };

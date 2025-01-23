@@ -18,6 +18,7 @@ const axiosInstance = axios.create({
 export const controlers = {
   Auth: "api/Auth",
   Invoice: "api/Invoice",
+  EndUser: "api/EndUser",
 };
 
 // Ensure you have js-cookie or a similar library installed

@@ -1,8 +1,8 @@
 import { IClubStatusNew } from "@/types/club-status";
 import Image, { StaticImageData } from "next/image";
-import SilverLevel from "../../../public/images/SilverLevel.png";
-import BronzeLevel from "../../../public/images/BronzeLevel.png";
-import GoldLevel from "../../../public/images/GoldLevel.png";
+import SilverLevel from "../../../public/images/SilverLevel.webp";
+import BronzeLevel from "../../../public/images/BronzeLevel.webp";
+import GoldLevel from "../../../public/images/GoldLevel.webp";
 
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { Progress } from "antd";

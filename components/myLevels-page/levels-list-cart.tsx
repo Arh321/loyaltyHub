@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import clsx from "clsx";
 import BronzeLevel from "@/publicimages/image 1372.png";
 import GoldLevel from "@/publicimages/goldPeste.png";
-import SilverLevel from "@/publicimages/silverPeste.png";
+import SilverLevel from "@/publicimages/silverPeste.webp";
 import Image from "next/image";
 import { useState } from "react";
 import Modal from "antd/es/modal/Modal";

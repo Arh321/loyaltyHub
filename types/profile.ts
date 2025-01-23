@@ -62,3 +62,46 @@ export interface ProfileInfo {
     levelId: number;
   };
 }
+
+export interface IProfileInfo {
+  immutable: {
+    phone: string;
+    referralCode: string;
+    rankingPoints: null;
+  };
+  mandatory: {
+    firstName: string;
+    lastName: string;
+    gender: boolean;
+    birthdate: string;
+  };
+  additional: {
+    profilePhoto: string;
+    lastNameEn: string;
+    firstNameEn: string;
+    email: string;
+    nationalCode: number;
+    marriage: boolean;
+    spouseBirthdate: string;
+  };
+  defaultAddress: {
+    cityId: number;
+    provinceId: number;
+    cityName: string;
+    provinceName: string;
+    id: number;
+    title: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    tel: string;
+    address2: string;
+    addressLine: string;
+    postalCode: string;
+    no: string;
+    doorNo: string;
+    latitude: string;
+    longitude: string;
+  };
+  isActive: boolean;
+}

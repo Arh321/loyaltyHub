@@ -1,5 +1,6 @@
 import { IHttpResult } from "@/types/http-result";
 import axiosInstance, { controlers } from "./apiConfig";
+import { IProfileInfo } from "@/types/profile";
 
 interface IAuthResult {
   token: string;

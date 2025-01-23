@@ -5,52 +5,31 @@ import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 interface ProfileCompleteInfoSectionProps {
-  completeInfo: {
-    nationalCode: string;
-    birthDate: string;
+  additional: {
+    profilePhoto: string;
+    lastNameEn: string;
+    firstNameEn: string;
     email: string;
-    education: string;
-    job: string;
-    sexuality: "male" | "female";
+    nationalCode: number;
+    marriage: boolean;
+    spouseBirthdate: string;
   };
   headerTitle: string;
 }
 
 const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
   headerTitle,
-  completeInfo,
+  additional,
 }) => {
-  const [value, setValue] = useState(completeInfo.sexuality);
-
-  const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
-  };
-
-  const options = [
-    {
-      value: "male",
-      label: (
-        <span dir="rtl" className="flex items-center gap-2 font-Medium ">
-          <Icon icon="material-symbols-light:male" width="24" height="24" />
-          <span>آقا</span>
-        </span>
-      ),
-    },
-    {
-      value: "female",
-      label: (
-        <span dir="rtl" className="flex items-center gap-2 font-Medium ">
-          <Icon icon="icons8:female" width="24" height="24" />
-          <span>خانم</span>
-        </span>
-      ),
-    },
-  ];
-
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col gap-[10px] bg-Highlighter rounded-[10px] p-[10px]"
+      style={{
+        animationDelay: `0.1s`,
+        animationFillMode: "forwards",
+        transform: "translateY(150px)",
+      }}
+      className="w-full flex flex-col opacity-0 gap-[10px] bg-Highlighter rounded-[10px] p-[10px] animate-fadeUp !duration-500"
     >
       <h2 className="text-Secondary2 text-lg font-Medium mb-[10px]">
         {headerTitle}
@@ -59,11 +38,13 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
         items={[
           {
             title: "کد ملی",
-            value: completeInfo.nationalCode,
+            value: additional.nationalCode
+              ? additional.nationalCode.toString()
+              : "",
           },
           {
             title: "تاریخ تولد",
-            value: completeInfo.birthDate,
+            value: additional.spouseBirthdate,
           },
         ]}
         onEditMethod={function (): void {
@@ -75,7 +56,7 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
         items={[
           {
             title: "ایمیل",
-            value: completeInfo.email,
+            value: additional.email,
           },
         ]}
         onEditMethod={() => console.log("miad")}
@@ -83,38 +64,18 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
       <ProfileOneRowInfo
         items={[
           {
-            title: "تحصیلات",
-            value: completeInfo.education,
+            title: "ازدواج",
+            value: additional.marriage ? "متاهل" : "مجرد",
           },
           {
             title: "شغل",
-            value: completeInfo.job,
+            value: additional.firstNameEn,
           },
         ]}
         onEditMethod={function (): void {
           throw new Error("Function not implemented.");
         }}
       />
-      <div className="w-full relative border border-Highlighter-Faded rounded-[10px] flex ">
-        <Radio.Group
-          onChange={onChange}
-          defaultValue={value}
-          buttonStyle="solid"
-          className="!w-full !flex !items-center gap-[10px] !p-[10px] [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2"
-        >
-          {options.map((option, index) => {
-            return (
-              <Radio.Button
-                className="!w-full !border-none !shadow-none before:!hidden !rounded-[6px]"
-                key={index}
-                value={option.value}
-              >
-                {option.label}
-              </Radio.Button>
-            );
-          })}
-        </Radio.Group>
-      </div>
     </div>
   );
 };

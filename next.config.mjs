@@ -1,11 +1,27 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "barcode.tec-it.com",
-      "anotherdomain.com",
-      "s8.uupload.ir",
-      "uupload.ir",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "barcode.tec-it.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "anotherdomain.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s8.uupload.ir",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "uupload.ir",
+        pathname: "/**",
+      },
     ],
   },
 };

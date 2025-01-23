@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import styles from "./ImageWithLoader.module.css"; // CSS for transitions
-import logo from "../../public/images/hosseiniLogo.png";
+import logo from "../../public/images/hosseiniLogo.webp";
 import clsx from "clsx";
 import { Skeleton } from "antd";
 const ImageWithLoader = ({

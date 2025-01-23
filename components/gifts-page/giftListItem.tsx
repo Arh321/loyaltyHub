@@ -119,7 +119,7 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
       </p>
       <div
         style={{
-          backgroundImage: "url(/images/Vector.png)",
+          backgroundImage: "url(/images/Vector.webp)",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
