@@ -1,10 +1,17 @@
 /** @type {import('postcss-load-config').Config} */
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import compression from "compression";
+// Import necessary plugins
+
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+// Next.js configuration
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
 const config = {
   plugins: {
     tailwindcss: {},
   },
 };
 
-export default config;
+export default withBundleAnalyzer(config);

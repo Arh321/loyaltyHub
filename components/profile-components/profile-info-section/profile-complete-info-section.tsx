@@ -13,7 +13,10 @@ interface ProfileCompleteInfoSectionProps {
     nationalCode: number;
     marriage: boolean;
     spouseBirthdate: string;
+    educationTitle: string;
+    jobTitle: string;
   };
+
   headerTitle: string;
 }
 
@@ -69,7 +72,7 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
           },
           {
             title: "شغل",
-            value: additional.firstNameEn,
+            value: additional.jobTitle,
           },
         ]}
         onEditMethod={function (): void {

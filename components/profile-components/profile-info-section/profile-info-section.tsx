@@ -3,6 +3,7 @@ import { Radio, RadioChangeEvent } from "antd";
 import ProfileOneRowInfo from "./profile-each-row";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
+import { OpenEditPayload } from "@/hooks/useEditProfile";
 
 interface ProfileInfoSectionProps {
   mandatory: {
@@ -13,12 +14,14 @@ interface ProfileInfoSectionProps {
   };
   cellPhone: string;
   headerTitle: string;
+  showEditModal: (payload: OpenEditPayload) => void;
 }
 
 const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   headerTitle,
   mandatory,
   cellPhone,
+  showEditModal,
 }) => {
   const [value, setValue] = useState(mandatory.gender);
 
@@ -69,9 +72,13 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
             value: mandatory.lastName,
           },
         ]}
-        onEditMethod={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        onEditMethod={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "mandatory",
+            show: true,
+          })
+        }
       />
       <ProfileOneRowInfo
         items={[

@@ -14,8 +14,11 @@ import { Suspense } from "react";
 import { useSelector } from "react-redux";
 import AppLoading from "../loading";
 import { Skeleton } from "antd";
+import useEditProfile from "@/hooks/useEditProfile";
+import ProfileEditInfoContainer from "@/components/profile-components/profile-edit-info/profile-edit-info-container";
 
 const ProfilePage = () => {
+  const { onClose, open, showEditModal } = useEditProfile();
   const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
@@ -61,6 +64,7 @@ const ProfilePage = () => {
                 headerTitle="اطلاعات کاربری"
                 mandatory={info.mandatory}
                 cellPhone={info.immutable.phone}
+                showEditModal={showEditModal}
               />
               <ProfileCompleteInfoSectionLazy
                 headerTitle="اطلاعات تکمیلی"
@@ -71,6 +75,11 @@ const ProfilePage = () => {
                 defaultAddress={info.defaultAddress}
               />
             </div>
+            <ProfileEditInfoContainer
+              open={open}
+              onClose={onClose}
+              info={info}
+            />
           </div>
         </Suspense>
       </PagesContainer>

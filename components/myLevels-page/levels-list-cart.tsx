@@ -3,9 +3,9 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import clsx from "clsx";
 import BronzeLevel from "@/publicimages/image 1372.png";
 import GoldLevel from "@/publicimages/goldPeste.png";
-import SilverLevel from "@/publicimages/silverPeste.webp";
+
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Modal from "antd/es/modal/Modal";
 import { CloseOutlined } from "@ant-design/icons";
 import LevelDetailPopUp from "./level-list-cart-detail";
@@ -13,26 +13,12 @@ import LevelDetailPopUp from "./level-list-cart-detail";
 interface LevelsListCartProps {
   level: IClubStatusNew;
 }
-const levelImages = [
-  {
-    id: 0,
-    src: BronzeLevel,
-  },
-  {
-    id: 1,
-    src: SilverLevel,
-  },
-  ,
-  {
-    id: 2,
-    src: GoldLevel,
-  },
-];
+
 const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setOpen(false);
-  };
+  }, [open]);
   return (
     <div
       style={{

@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
 import "./get-phone-styles.css";
 import { Input } from "antd";
-import { onGetOtpByPhone } from "@/utils/authService";
+
 import { LoadingOutlined } from "@ant-design/icons";
 const phoneValidationSchema = yup.object().shape({
   phone: yup

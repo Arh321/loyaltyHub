@@ -83,6 +83,8 @@ export interface IProfileInfo {
     nationalCode: number;
     marriage: boolean;
     spouseBirthdate: string;
+    educationTitle: string;
+    jobTitle: string;
   };
   defaultAddress: {
     cityId: number;
