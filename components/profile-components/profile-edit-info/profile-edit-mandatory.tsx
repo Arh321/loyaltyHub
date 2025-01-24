@@ -67,9 +67,9 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
       label: (
         <span
           dir="rtl"
-          className="flex items-center gap-2 font-Medium text-lg  "
+          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
         >
-          <Icon icon="material-symbols-light:male" width="24" height="24" />
+          <Icon icon="fontisto:male" width="24" height="24" />
           <span>آقا</span>
         </span>
       ),
@@ -79,9 +79,9 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
       label: (
         <span
           dir="rtl"
-          className="flex items-center gap-2 font-Medium text-lg  "
+          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
         >
-          <Icon icon="icons8:female" width="24" height="24" />
+          <Icon icon="foundation:torso-female" width="26" height="26" />
           <span>خانم</span>
         </span>
       ),
@@ -152,7 +152,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
               <Input
                 {...field}
                 placeholder="نام خانوادگی"
-                className="!font-Medium placeholder:!text-secondary"
+                className="!font-Medium placeholder:!text-secondary !p-1"
               />
             )}
           />

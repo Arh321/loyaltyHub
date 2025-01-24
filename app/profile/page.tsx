@@ -18,7 +18,7 @@ import useEditProfile from "@/hooks/useEditProfile";
 import ProfileEditInfoContainer from "@/components/profile-components/profile-edit-info/profile-edit-info-container";
 
 const ProfilePage = () => {
-  const { onClose, open, showEditModal } = useEditProfile();
+  const { onClose, open, showEditModal, sectionNameToEdit } = useEditProfile();
   const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
@@ -69,6 +69,7 @@ const ProfilePage = () => {
               <ProfileCompleteInfoSectionLazy
                 headerTitle="اطلاعات تکمیلی"
                 additional={info.additional}
+                showEditModal={showEditModal}
               />
               <ProfileInfoAddressSectionLazy
                 headerTitle="اطلاعات سکونت"
@@ -79,6 +80,7 @@ const ProfilePage = () => {
               open={open}
               onClose={onClose}
               info={info}
+              sectionNameToEdit={sectionNameToEdit}
             />
           </div>
         </Suspense>

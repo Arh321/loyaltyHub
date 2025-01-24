@@ -3,6 +3,7 @@ import { Radio, RadioChangeEvent } from "antd";
 import ProfileOneRowInfo from "./profile-each-row";
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { OpenEditPayload } from "@/hooks/useEditProfile";
 
 interface ProfileCompleteInfoSectionProps {
   additional: {
@@ -10,19 +11,20 @@ interface ProfileCompleteInfoSectionProps {
     lastNameEn: string;
     firstNameEn: string;
     email: string;
-    nationalCode: number;
+    nationalCode: string;
     marriage: boolean;
     spouseBirthdate: string;
     educationTitle: string;
     jobTitle: string;
   };
-
+  showEditModal: (payload: OpenEditPayload) => void;
   headerTitle: string;
 }
 
 const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
   headerTitle,
   additional,
+  showEditModal,
 }) => {
   return (
     <div
@@ -50,9 +52,13 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
             value: additional.spouseBirthdate,
           },
         ]}
-        onEditMethod={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        onEditMethod={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "additional",
+            show: true,
+          })
+        }
       />
 
       <ProfileOneRowInfo
@@ -62,7 +68,13 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
             value: additional.email,
           },
         ]}
-        onEditMethod={() => console.log("miad")}
+        onEditMethod={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "additional",
+            show: true,
+          })
+        }
       />
       <ProfileOneRowInfo
         items={[
@@ -75,9 +87,13 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
             value: additional.jobTitle,
           },
         ]}
-        onEditMethod={function (): void {
-          throw new Error("Function not implemented.");
-        }}
+        onEditMethod={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "additional",
+            show: true,
+          })
+        }
       />
     </div>
   );

@@ -80,7 +80,7 @@ export interface IProfileInfo {
     lastNameEn: string;
     firstNameEn: string;
     email: string;
-    nationalCode: number;
+    nationalCode: string;
     marriage: boolean;
     spouseBirthdate: string;
     educationTitle: string;

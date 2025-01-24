@@ -26,7 +26,11 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   const [value, setValue] = useState(mandatory.gender);
 
   const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+    showEditModal({
+      inputId: "",
+      sectionName: "mandatory",
+      show: true,
+    });
   };
 
   const options = [
@@ -91,7 +95,13 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
             value: mandatory.birthdate,
           },
         ]}
-        onEditMethod={() => console.log("miad")}
+        onEditMethod={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "mandatory",
+            show: true,
+          })
+        }
       />
       <div className="w-full relative border border-Highlighter-Faded rounded-[10px] flex ">
         <Radio.Group

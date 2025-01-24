@@ -40,7 +40,7 @@ const PersianDatePicker: React.FC<PersianDatePickerProps> = ({
         locale={persianLocale}
         format={(value) => dayjs(value).calendar("jalali").format("YYYY/MM/DD")}
         placeholder="تاریخ انتخاب"
-        className="!font-Regular placeholder:!text-secondary"
+        className="!font-Regular placeholder:!text-secondary !p-1"
         dropdownClassName="!font-Regular"
       />
     </ConfigProvider>
