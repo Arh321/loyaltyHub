@@ -91,7 +91,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
     <form
       dir="rtl"
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-[15px] p-[10px]"
+      className="w-full flex flex-col gap-[15px] p-[4px]"
     >
       <h3 className="text-Secondary2 text-lg font-Medium mb-[10px]">
         {headerTitle}
@@ -185,7 +185,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
           </span>
         )}
       </div>
-      <div className="w-full relative  flex ">
+      <div className="w-full relative  flex border border-gray-300 rounded-[6px]">
         <Radio.Group
           onChange={onChangeGender}
           defaultValue={mandatory.gender}

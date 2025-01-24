@@ -25,6 +25,7 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
           content:
             "!h-full rounded-t-[10px] !p-0 !max-h-[80dvh] overflow-y-auto",
           header: "!hidden",
+          body: "!p-[10px]",
         }}
         onClose={onClose}
         open={open}
