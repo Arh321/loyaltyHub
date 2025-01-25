@@ -47,11 +47,11 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
       <p className="text-center w-full text-Secondary font-Regular">
         {survayDescription}
       </p>
-      <InvoiceModalDetail
+      {/* <InvoiceModalDetail
         setOpen={setOpen}
         open={open}
         loadingInvoice={false}
-      />
+      /> */}
     </div>
   );
 };

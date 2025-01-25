@@ -156,7 +156,7 @@ const ErrorState: React.FC<{
 }> = ({ onClose, onLoadSearchedInvoice, downloadPdf, print }) => (
   <div
     dir="rtl"
-    className="w-full flex flex-col h-full overflow-hidden animate-fadeIn"
+    className="w-full flex flex-col gap-20 h-[50dvh] overflow-hidden animate-fadeIn"
   >
     <InvoiceDetailHeader
       onClose={onClose}

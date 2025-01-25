@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 60px;
+  left: 30px;
   margin: auto 0;
   transform: rotate(90deg);
   cursor: pointer;
@@ -10,12 +10,12 @@
 
 .arrow span {
   display: block;
-  width: 1.5vw;
-  height: 1.5vw;
+  width: 13px;
+  height: 13px;
   border-bottom: 5px solid white;
   border-right: 5px solid white;
   transform: rotate(45deg);
-  margin: -10px;
+  margin: -10px 0;
   animation: animate 2s infinite;
 }
 

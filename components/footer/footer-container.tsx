@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react";
 import Image from "next/image";
 import logo from "@/public/LOGO.png";
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";
 
 const FooterContainer = () => {
@@ -56,6 +56,15 @@ const FooterContainer = () => {
     },
     {
       icon: (
+        <Image src={logo} alt="فروشگاه برادران حسینی" width={60} height={60} />
+      ),
+      label: "",
+      path: "https://hosseinibrothers.ir/",
+      isActive: false,
+      shop: true,
+    },
+    {
+      icon: (
         <LevelsIcon
           width="32"
           height="32"
@@ -83,66 +92,77 @@ const FooterContainer = () => {
       path: "/profile",
       isActive: pathname.includes("profile"),
     },
-    {
-      icon: (
-        <Image src={logo} alt="فروشگاه برادران حسینی" width={60} height={60} />
-      ),
-      label: "فروشگاه",
-      path: "https://hosseinibrothers.ir/",
-      isActive: false,
-      shop: true,
-    },
   ];
 
+  // Reset modal when leaving the tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        setOpenRedirectModal(false); // Close the modal when the tab is not visible
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup event listener on unmount
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
   return (
-    <footer
-      dir="rtl"
-      style={{
-        backgroundImage: `url(/images/bg-art.webp)`,
-        backgroundSize: "contain",
-        backgroundRepeat: "repeat",
-        backgroundPosition: "center",
-      }}
-      className={clsx(
-        "w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto rounded-t-[20px] overflow-hidden z-50",
-        {
-          hidden: pathname.includes("survey") || pathname.includes("login"),
-        }
-      )}
-    >
-      <nav
-        aria-label="Footer Navigation"
+    <footer>
+      <div
+        dir="rtl"
         style={{
-          background:
-            "linear-gradient(to left, #198D41, transparent, transparent, #198D41)",
+          backgroundImage: `url(/images/bg-art.webp)`,
+          backgroundSize: "contain",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "center",
         }}
-        className="w-full h-[80px] grid grid-cols-5 px-[16px] py-[10px] relative"
+        className={clsx(
+          "w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto rounded-t-[20px] overflow-hidden z-50",
+          {
+            hidden: pathname.includes("survey") || pathname.includes("login"),
+          }
+        )}
       >
-        {footerItems.map((item, index) => (
-          <button
-            key={index}
-            onClick={() =>
-              item.shop ? onRedirectToShop() : handleNavigation(item.path)
-            }
-            className="w-[70px] flex flex-col items-center justify-between h-full focus:outline-none"
-            aria-current={item.isActive ? "page" : undefined}
-            aria-label={item.label}
-          >
-            <span>{item.icon}</span>
-            <span
+        <nav
+          aria-label="Footer Navigation"
+          style={{
+            background:
+              "linear-gradient(to left, #198D41, transparent, transparent, #198D41)",
+          }}
+          className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px] py-[10px] relative"
+        >
+          {footerItems.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => handleNavigation(item.path)}
               className={clsx(
-                "text-Highlighter",
-                item.isActive ? "!font-Bold" : "font-Regular"
+                "col-span-1 flex flex-col items-center justify-between h-full focus:outline-none",
+                item.shop && "!justify-center"
               )}
+              aria-current={item.isActive ? "page" : undefined}
+              aria-label={item.label}
             >
-              {item.label}
-            </span>
-            {item.isActive && (
-              <span className="w-[70px] h-[6px] rounded-t-[40px] bg-Highlighter absolute bottom-0"></span>
-            )}
-          </button>
-        ))}
-      </nav>
+              <span>{item.icon}</span>
+              {!item.shop && (
+                <span
+                  className={clsx(
+                    "text-Highlighter",
+                    item.isActive ? "!font-Bold" : "font-Regular"
+                  )}
+                >
+                  {item.label}
+                </span>
+              )}
+              {item.isActive && (
+                <span className="w-[70px] h-[6px] rounded-t-[40px] bg-Highlighter absolute bottom-0"></span>
+              )}
+            </button>
+          ))}
+        </nav>
+      </div>
       <RedirectLoadingModal
         openRedirectModal={openRedirectModal}
         style={style}
