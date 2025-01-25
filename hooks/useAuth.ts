@@ -12,13 +12,15 @@ import {
 } from "@/redux/profile/profileSlice";
 import { getInvoiceById, validateInvoiceById } from "@/utils/invoiceService";
 import { useNotify } from "@/components/notife/notife";
-import { IInvoiceId } from "@/types/invoice";
+import { IInvoiceDetail, IInvoiceId } from "@/types/invoice";
 import { getProfile } from "@/utils/userServise";
 
 const useAuth = () => {
   const [loadingInvoice, setLoadingInvoice] = useState(false);
   const [profileLoading, setProfileLoading] = useState<boolean>(false);
-  const [invoiceDetail, setInvoiceDetail] = useState<IInvoiceId | undefined>();
+  const [invoiceDetail, setInvoiceDetail] = useState<
+    IInvoiceDetail | undefined
+  >();
   const [showInvoice, setShowInvoice] = useState(false);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +32,7 @@ const useAuth = () => {
   const invoiceId = searchParams.get("invoiceId");
   const cookies = new Cookies();
 
-  const { customerToken, hasToken } = useSelector<RootState, ProfileSliceType>(
+  const { hasToken } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
 
@@ -107,9 +109,7 @@ const useAuth = () => {
   }, [path, hasToken, invoiceId, onLoadSearchedInvoice, dispatch]);
 
   useEffect(() => {
-    if (path.includes("profile") || path === "/") {
-      getUserProfile();
-    }
+    getUserProfile();
   }, [path]);
 
   return {

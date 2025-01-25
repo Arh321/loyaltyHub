@@ -73,7 +73,8 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
         open={open}
         showSurveyButton={invoice.surveyEnable && !invoice.surveyCompleted}
         loadingInvoice={false}
-        // showServayButton={}
+        transactionID={invoice.sourceId.toString()}
+        invoiceDetail={undefined} // showServayButton={}
       />
     </>
   );

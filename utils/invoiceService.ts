@@ -1,6 +1,6 @@
 import { IHttpResult } from "@/types/http-result";
 import axiosInstance, { controlers } from "./apiConfig";
-import { IInvoiceId, IInvoiceResult } from "@/types/invoice";
+import { IInvoiceDetail, IInvoiceId, IInvoiceResult } from "@/types/invoice";
 
 const getAllInvoices = async (payLoad: {
   page?: number;
@@ -22,9 +22,9 @@ const getAllInvoices = async (payLoad: {
 
 const getInvoiceById = async (payLoad: {
   invoiceId: string;
-}): Promise<IHttpResult<IInvoiceId>> => {
+}): Promise<IHttpResult<IInvoiceDetail>> => {
   try {
-    const response = await axiosInstance.get<IHttpResult<IInvoiceId>>(
+    const response = await axiosInstance.get<IHttpResult<IInvoiceDetail>>(
       `${controlers.Invoice}/GetInvoiceById/${payLoad.invoiceId}`,
       { headers: { auth: true } }
     );

@@ -2,12 +2,15 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import InvoiceIdPage from "./invoice-detail-component";
+import { IInvoiceDetail, IInvoiceId } from "@/types/invoice";
 
 interface InvoiceModalDetailProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
   open: boolean;
   showSurveyButton?: boolean;
   loadingInvoice: boolean;
+  invoiceDetail: IInvoiceDetail;
+  transactionID: string;
 }
 
 const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
@@ -15,6 +18,8 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
   setOpen,
   showSurveyButton,
   loadingInvoice,
+  invoiceDetail,
+  transactionID,
 }) => {
   const handleCancel = () => {
     setOpen(false);
@@ -53,7 +58,8 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
       <InvoiceIdPage
         onClose={setOpen}
         showServayButton={showSurveyButton}
-        transactionID="1234567"
+        invoiceDetail={invoiceDetail}
+        transactionID={transactionID}
         loadingInvoice={!!loadingInvoice}
       />
     </Modal>

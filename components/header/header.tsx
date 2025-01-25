@@ -77,6 +77,8 @@ const Header = () => {
         setOpen={setShowInvoice}
         open={showInvoice}
         loadingInvoice={loadingInvoice}
+        invoiceDetail={invoiceDetail}
+        transactionID=""
       />
     </header>
   );

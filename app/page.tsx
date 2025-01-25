@@ -6,6 +6,7 @@ import SurveySubmitModal from "@/components/landing/modals/survey-submit-modal";
 import PagesContainer from "@/components/pages-container/pages-container";
 import React, { Suspense } from "react";
 import AppLoading from "./loading";
+import RedirectToShopButton from "@/components/landing/redirect-to-shop/redirect-to-shop";
 
 const CurrentLevelSliderContainer = React.lazy(
   () =>
@@ -20,6 +21,7 @@ export default function Home() {
           <CurrentLevelSliderContainer />
           <BannerSlidersComponent />
           <GiftsAndCoponsContainerLAzy />
+          <RedirectToShopButton />
         </div>
         <SurveySubmitModal />
       </Suspense>
