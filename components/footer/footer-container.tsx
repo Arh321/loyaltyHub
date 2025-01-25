@@ -137,7 +137,9 @@ const FooterContainer = () => {
           {footerItems.map((item, index) => (
             <button
               key={index}
-              onClick={() => handleNavigation(item.path)}
+              onClick={() =>
+                item.shop ? onRedirectToShop() : handleNavigation(item.path)
+              }
               className={clsx(
                 "col-span-1 flex flex-col items-center justify-between h-full focus:outline-none",
                 item.shop && "!justify-center"
