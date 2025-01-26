@@ -51,7 +51,7 @@ const RedirectToShopButton = () => {
             background:
               "linear-gradient(to left, #198D41, transparent,transparent,#198D41)",
           }}
-          className="w-full flex bg-transparent items-center justify-end pr-4 lsm:pr-12 gap-2 relative"
+          className="w-full flex bg-transparent items-center justify-end pr-16 lsm:pr-20 gap-2 relative"
         >
           <div className={style["arrow"]}>
             <span></span>
@@ -64,6 +64,7 @@ const RedirectToShopButton = () => {
             color="white"
             aria-label="آیکون برادران حسینی"
           />
+          <span className="h-[24px] border-r border-gray-300"></span>
           <Image
             src={logo}
             alt="برادران حسینی"

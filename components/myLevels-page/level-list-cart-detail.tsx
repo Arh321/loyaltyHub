@@ -51,7 +51,7 @@ const LevelDetailPopUp: React.FC<LevelStatesComponentsProps> = ({
         </p>
       </p>
 
-      <p className="regular-14 text-center">
+      <p className="font-Regular text-center">
         {status?.birthdayDiscountsDecription}
         {status?.weddingAnniversaryDiscountDecription}
       </p>

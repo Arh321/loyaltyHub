@@ -9,6 +9,9 @@ import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Skeleton } from "antd";
 import LevelsPageSkelton from "@/components/myLevels-page/levels-page-skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { ProfileSliceType } from "@/redux/profile/profileSlice";
 const levelsData: IClubStatusNew[] = [
   {
     id: 0,
@@ -98,7 +101,9 @@ export default function InvoicesPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IClubStatusNew[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-
+  const { info } = useSelector<RootState, ProfileSliceType>(
+    (state) => state.profileSlice
+  );
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -128,7 +133,8 @@ export default function InvoicesPage() {
               </div>
               <div className="w-full flex flex-col pt-4 gap-0 items-center justify-center aspect-square rounded-t-full bg-Highlighter z-[1] shadow-lg rounded-b-[999px] overflow-hidden">
                 <p className="font-Regular text-sm text-Primary">
-                  امیر حسین نظامی
+                  {info &&
+                    `${info.mandatory.firstName} ${info.mandatory.lastName}`}
                 </p>
                 <div className="w-full aspect-[16/5]">
                   <div className="w-full flex justify-center items-center">
