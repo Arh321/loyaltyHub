@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Drawer, Space } from "antd";
 import ProfileEditMandatoryForm from "./profile-edit-mandatory";
 import { IProfileInfo } from "@/types/profile";
@@ -17,6 +17,24 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
   info,
   sectionNameToEdit,
 }) => {
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (open) {
+        onClose(); // Close the modal
+        event.preventDefault(); // Prevent the default back behavior
+        window.history.pushState(null, ""); // Push state to avoid exiting the page
+      }
+    };
+
+    if (open) {
+      window.history.pushState(null, ""); // Push a new state to the history stack
+      window.addEventListener("popstate", handlePopState); // Listen for the back button
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState); // Cleanup the event listener
+    };
+  }, [open]);
   return (
     <div>
       <Drawer

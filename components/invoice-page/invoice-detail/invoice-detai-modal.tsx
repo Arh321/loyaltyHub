@@ -25,6 +25,25 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
     setOpen(false);
   };
 
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (open) {
+        handleCancel(); // Close the modal
+        event.preventDefault(); // Prevent the default back behavior
+        window.history.pushState(null, ""); // Push state to avoid exiting the page
+      }
+    };
+
+    if (open) {
+      window.history.pushState(null, ""); // Push a new state to the history stack
+      window.addEventListener("popstate", handlePopState); // Listen for the back button
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState); // Cleanup the event listener
+    };
+  }, [open]);
+
   return (
     <Modal
       open={!!open}

@@ -26,6 +26,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   const [value, setValue] = useState(mandatory.gender);
 
   const onChange = (e: RadioChangeEvent) => {
+    setValue(!e.target.value);
     showEditModal({
       inputId: "",
       sectionName: "mandatory",
@@ -103,10 +104,21 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
           })
         }
       />
-      <div className="w-full relative border border-Highlighter-Faded rounded-[10px] flex ">
+      <div
+        role="button"
+        onClick={() =>
+          showEditModal({
+            inputId: "",
+            sectionName: "mandatory",
+            show: true,
+          })
+        }
+        className="w-full relative border border-Highlighter-Faded rounded-[10px] flex "
+      >
         <Radio.Group
           onChange={onChange}
           defaultValue={value}
+          value={value}
           buttonStyle="solid"
           className="!w-full !flex !items-center gap-[10px] !p-[10px] [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2"
         >
