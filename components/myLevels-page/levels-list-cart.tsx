@@ -5,7 +5,7 @@ import BronzeLevel from "@/publicimages/image 1372.png";
 import GoldLevel from "@/publicimages/goldPeste.png";
 
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Modal from "antd/es/modal/Modal";
 import { CloseOutlined } from "@ant-design/icons";
 import LevelDetailPopUp from "./level-list-cart-detail";
@@ -19,13 +19,31 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
   const handleCancel = useCallback(() => {
     setOpen(false);
   }, [open]);
+  useEffect(() => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (open) {
+        handleCancel(); // Close the modal
+        event.preventDefault(); // Prevent the default back behavior
+        window.history.pushState(null, ""); // Push state to avoid exiting the page
+      }
+    };
+
+    if (open) {
+      window.history.pushState(null, ""); // Push a new state to the history stack
+      window.addEventListener("popstate", handlePopState); // Listen for the back button
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState); // Cleanup the event listener
+    };
+  }, [open]);
   return (
     <div
       style={{
         backgroundImage: "url(/images/Lines.png)",
         direction: "rtl",
       }}
-      className="w-full rounded-[10px] aspect-[16/7] shadow"
+      className="w-full rounded-[10px] aspect-[16/7] shadow bg-white"
     >
       <div
         onClick={() => setOpen(true)}
