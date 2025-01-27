@@ -12,16 +12,19 @@ export type ICoupon = {
 };
 
 export type IGifts = {
-  giftBalanceID: number;
+  id: number;
+  customerId: number;
+  title: string;
+  serial: string;
+  color: string;
+  minimumPurchase: number;
+  ceilingLimitation: number;
+  discountPercent: number;
   startDate: string;
   expDate: string;
-  gcBalance: number;
-  gcNum: string;
-  groupName: string;
-  customerID: number;
-  companyID: number;
-  minBuyPrice: number;
-  giftTotalPrice: number;
-  giftType: string;
-  giftOccasion: string;
+  useTimes: number;
+  missionCode: string;
+  missionTitle: string;
+  isCoupon: true;
+  isActive: true;
 };

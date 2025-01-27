@@ -9,6 +9,7 @@ import { memo } from "react";
 import logo from "@/publicLOGO.png";
 import { HoseinyIcon } from "../sharedIcons/sharedIcons";
 import Image from "next/image";
+import { hexToOpacity } from "@/utils/common-methods/colorToRGB";
 interface GiftItemProps {
   gift: IGifts;
   index: number;
@@ -54,9 +55,12 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
         animationDelay: `${(index + 10) * 0.05}s`,
         animationFillMode: "forwards",
         animationDuration: "200ms",
+        backgroundColor: hexToOpacity(gift.color)
+          ? hexToOpacity(gift.color, 0.2)
+          : "rgb(255 255 255)",
       }}
       className={clsx(
-        "w-full rounded-[10px] flex flex-col items-center bg-Highlighter p-4 gap-3 relative aspect-[22/14] overflow-hidden animate-fadeUp opacity-0 !duration-75 translate-y-[100px]"
+        "w-full rounded-[10px] flex flex-col items-center shadow p-4 gap-3 relative aspect-[22/14] overflow-hidden animate-fadeUp opacity-0 !duration-75 translate-y-[100px]"
       )}
     >
       {contextHolder}
@@ -72,7 +76,7 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
           <HoseinyIcon width="50" height="24" color="" />
         </div>
       </div>
-      {gift.gcBalance == 0 ||
+      {gift.ceilingLimitation == 0 ||
         (isExpired(gift.expDate) && (
           <div className="w-full h-full absolute top-0 right-0 flex justify-center items-center bg-[rgb(30,86,0,0.4)]">
             <Icon
@@ -84,15 +88,15 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
           </div>
         ))}
       <button
-        disabled={gift.gcBalance == 0 || isExpired(gift.expDate)}
-        onClick={() => copyToClipboard(gift.gcNum)}
+        disabled={gift.ceilingLimitation == 0 || isExpired(gift.expDate)}
+        onClick={() => copyToClipboard(gift.serial)}
         className="w-10 h-10 rounded-full border-Secondary border absolute left-4 top-4 bg-[rgb(30,156,81,0.1)] "
       >
         <CopyOutlined width={"2rem"} className="text-xl" />
       </button>
       <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-[110px] h-[110px] flex flex-col justify-center items-center gap-1 text-Secondary2">
         <span className="font-Medium text-lg">
-          <span>{numberToPersianPrice(gift.giftTotalPrice)}</span>
+          <span>{numberToPersianPrice(gift.ceilingLimitation)}</span>
           <span className="font-Regular text-xs pr-1">تومان</span>
         </span>
         <span className="text-xs font-Regular">مبلغ کارت هدیه</span>
@@ -101,17 +105,17 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
         <span className="flex flex-col items-center gap-1">
           <span className="!text-xs">باقی مانده</span>
           <span className="!text-sm">
-            {numberToPersianPrice(gift.gcBalance)}
+            {numberToPersianPrice(gift.ceilingLimitation)}
             <span className="font-Regular text-xs pr-1">تومان</span>
           </span>
         </span>
         <span className="flex flex-col items-center gap-1">
           <span className="!text-xs">حداقل خرید</span>
           <span className="!text-sm">
-            {gift.minBuyPrice != 0
-              ? numberToPersianPrice(gift.minBuyPrice)
+            {gift.minimumPurchase != 0
+              ? numberToPersianPrice(gift.minimumPurchase)
               : "بدون محدودیت"}
-            {gift.minBuyPrice != 0 && (
+            {gift.minimumPurchase != 0 && (
               <span className="font-Regular text-[10px] pr-1">تومان</span>
             )}
           </span>
@@ -126,18 +130,23 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
         }}
         className="w-full h-max flex justify-center items-center font-Bold text-sm"
       >
-        {gift.giftOccasion}
+        {gift.missionTitle}
       </div>
       <div className="w-full flex justify-between items-center gap-1 font-Medium">
         <span className="text-xs">
           <span>سریال:</span>
           <span dir="ltr" className="pr-1">
-            #{gift.gcNum}
+            #{gift.serial}
           </span>
         </span>
         <span className="text-xs">
           <span>تاریخ انقضا:</span>
-          <span className="pr-1">{gift.expDate}</span>
+          <span className="pr-1">
+            {moment
+              .from(gift.expDate, "YYYY-MM-DD")
+              .locale("fa")
+              .format("YYYY/MM/DD")}
+          </span>
         </span>
       </div>
     </div>

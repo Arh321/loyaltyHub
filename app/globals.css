@@ -146,6 +146,15 @@ button:active {
   border-radius: 4px;
   background-color: var(--Secondary2);
 }
+.ant-drawer {
+  position: fixed;
+  inset: 0;
+  max-width: 470px;
+  margin: auto;
+  z-index: 1000;
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.88);
+}
 .ant-modal-wrap {
   display: flex;
   justify-content: center;
@@ -161,6 +170,13 @@ button:active {
 
 .ant-modal-wrap .ant-modal:firstchild {
   height: 100%;
+}
+
+.ant-tabs-nav {
+  position: sticky !important;
+  top: 0;
+  z-index: 2;
+  background-color: var(--BG);
 }
 
 @layer base {

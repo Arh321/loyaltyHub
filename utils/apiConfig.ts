@@ -19,6 +19,8 @@ export const controlers = {
   Auth: "api/Auth",
   Invoice: "api/Invoice",
   EndUser: "api/EndUser",
+  Banner: "api/Banner",
+  GiftCard: "api/GiftCard",
 };
 
 // Ensure you have js-cookie or a similar library installed

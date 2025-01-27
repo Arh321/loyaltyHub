@@ -15,24 +15,24 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
       label: "حساب کاربری من",
       url: "/profile",
     },
-    {
-      icon: <Icon icon="solar:chat-line-linear" width="1.6em" height="1.6em" />,
-      label: "انتقادات و پیشنهادات",
-      // command: () => {
-      //   dispatch(triggerModal({ key: "MemberShipVisible", value: true }));
-      // },
-    },
-    {
-      icon: (
-        <Icon
-          icon="lets-icons:group-share-light"
-          width="1.6rem"
-          height="1.6rem"
-        />
-      ),
-      label: "درخواست همکاری",
-      url: "/work-request",
-    },
+    // {
+    //   icon: <Icon icon="solar:chat-line-linear" width="1.6em" height="1.6em" />,
+    //   label: "انتقادات و پیشنهادات",
+    //   // command: () => {
+    //   //   dispatch(triggerModal({ key: "MemberShipVisible", value: true }));
+    //   // },
+    // },
+    // {
+    //   icon: (
+    //     <Icon
+    //       icon="lets-icons:group-share-light"
+    //       width="1.6rem"
+    //       height="1.6rem"
+    //     />
+    //   ),
+    //   label: "درخواست همکاری",
+    //   url: "/work-request",
+    // },
 
     {
       icon: <Icon icon="fluent-mdl2:phone" width="1.6em" height="1.6em" />,
@@ -66,7 +66,7 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
           body: "!p-0 ",
 
           wrapper:
-            "!w-[70vw] rounded-tl-[50px] rounded-bl-[50px] overflow-hidden relative",
+            "!w-[70vw] !max-w-[400px] rounded-tl-[50px] rounded-bl-[50px] overflow-hidden relative",
         }}
       >
         <div className="w-full h-full flex flex-col gap-4 relative">

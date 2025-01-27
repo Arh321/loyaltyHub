@@ -1,13 +1,12 @@
-import { ICoupon } from "@/types/coupon-and-gift";
+import { ICoupon, IGifts } from "@/types/coupon-and-gift";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { CopyOutlined } from "@ant-design/icons";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { message } from "antd";
 import clsx from "clsx";
-import { useState } from "react";
 
 interface CouponItemProps {
-  coupon: ICoupon;
+  coupon: IGifts;
   index: number;
   type: "used" | "unused";
 }
@@ -72,21 +71,21 @@ const CouponItem: React.FC<CouponItemProps> = ({ coupon, index, type }) => {
         <CopyOutlined width={"2rem"} className="text-xl" />
       </button>
       <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-16 h-16 flex flex-col justify-center items-center gap-1 text-Secondary2">
-        <span className="font-Medium text-lg">{coupon.reduction}%</span>
+        <span className="font-Medium text-lg">{coupon.discountPercent}%</span>
         <span className="text-xs font-Regular">تخفیف</span>
       </div>
       <p className="font-Medium flex items-center justify-center gap-4">
         <span className="flex flex-col items-center gap-1">
           <span className="!text-xs">بیشترین مبلغ خرید:</span>
           <span className="!text-sm">
-            {numberToPersianPrice(coupon.minPrice)}
+            {numberToPersianPrice(coupon.minimumPurchase)}
           </span>
         </span>
         <span className="flex flex-col items-center gap-1">
           <span className="!text-xs">کمترین مبلغ خرید:</span>
           <span className="!text-sm">
-            {coupon.maxPrice != 0
-              ? numberToPersianPrice(coupon.maxPrice)
+            {coupon.ceilingLimitation != 0
+              ? numberToPersianPrice(coupon.ceilingLimitation)
               : "بدون محدودیت"}
           </span>
         </span>

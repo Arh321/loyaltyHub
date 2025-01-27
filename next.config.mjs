@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: "uupload.ir",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "hubapi.loyaltyhub.ir",
+        pathname: "/**",
+      },
     ],
   },
 };

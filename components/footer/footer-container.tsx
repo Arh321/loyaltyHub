@@ -1,11 +1,17 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { FactorIcon, HomeIcon, LevelsIcon } from "../sharedIcons/sharedIcons";
+import {
+  FactorIcon,
+  HomeIcon,
+  HoseinyIcon,
+  LevelsIcon,
+} from "../sharedIcons/sharedIcons";
 import clsx from "clsx";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import logo from "@/public/LOGO.png";
+import footerBg from "@/publicimages/bg-art.webp";
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
 import { useEffect, useState } from "react";
 import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";
@@ -56,7 +62,20 @@ const FooterContainer = () => {
     },
     {
       icon: (
-        <Image src={logo} alt="فروشگاه برادران حسینی" width={60} height={60} />
+        <div className="pt-[40px] flex flex-col items-center">
+          <Image
+            src={logo}
+            alt="فروشگاه برادران حسینی"
+            width={80}
+            height={80}
+          />
+          <HoseinyIcon
+            width="70"
+            height="44"
+            color="white"
+            aria-label="آیکون برادران حسینی"
+          />
+        </div>
       ),
       label: "",
       path: "https://hosseinibrothers.ir/",
@@ -110,29 +129,29 @@ const FooterContainer = () => {
     };
   }, []);
   return (
-    <footer>
+    <footer className="w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto  z-50">
       <div
         dir="rtl"
-        style={{
-          backgroundImage: `url(/images/bg-art.webp)`,
-          backgroundSize: "contain",
-          backgroundRepeat: "repeat",
-          backgroundPosition: "center",
-        }}
-        className={clsx(
-          "w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto rounded-t-[20px] overflow-hidden z-50",
-          {
-            hidden: pathname.includes("survey") || pathname.includes("login"),
-          }
-        )}
+        className={clsx("w-full relative h-[80px] ", {
+          hidden: pathname.includes("survey") || pathname.includes("login"),
+        })}
       >
+        <div
+          style={{
+            backgroundImage: `url(/images/bg-art.webp)`,
+            backgroundSize: "contain",
+            backgroundRepeat: "repeat",
+            backgroundPosition: "center",
+          }}
+          className="w-full h-full rounded-t-[20px] overflow-hidden"
+        ></div>
         <nav
           aria-label="Footer Navigation"
           style={{
             background:
               "linear-gradient(to left, #198D41, transparent, transparent, #198D41)",
           }}
-          className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px] py-[10px] relative"
+          className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px]  rounded-t-[20px] absolute top-0 right-0"
         >
           {footerItems.map((item, index) => (
             <button
@@ -141,8 +160,9 @@ const FooterContainer = () => {
                 item.shop ? onRedirectToShop() : handleNavigation(item.path)
               }
               className={clsx(
-                "col-span-1 flex flex-col items-center justify-between h-full focus:outline-none",
-                item.shop && "!justify-center"
+                "col-span-1 h-full flex flex-col items-center gap-1 py-[10px]  focus:outline-none",
+                item.shop &&
+                  "!justify-center !py-0 -translate-y-1/2 active:!scale-100"
               )}
               aria-current={item.isActive ? "page" : undefined}
               aria-label={item.label}
