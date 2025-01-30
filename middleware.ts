@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export function middleware(request) {
+export async function middleware(request) {
   const url = request.nextUrl;
   const token = request.cookies.get("token")?.value;
 
@@ -11,14 +11,27 @@ export function middleware(request) {
 
   // Redirect to login if accessing '/' with 'invoiceId' query parameter
   if (url.pathname === "/" && url.searchParams.has("invoiceId")) {
-    // redirectToLoginWithInvoiceId(request);
-    return;
+    return redirectToLoginWithInvoiceId(request);
+  }
+
+  // Cache API responses for GET requests
+  if (url.pathname.startsWith("/api/") && request.method === "GET") {
+    const cacheKey = `cache:${url.pathname}${url.search}`;
+    const cache = await caches.open("next-api-cache");
+
+    const cachedResponse = await cache.match(cacheKey);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    const response = NextResponse.next();
+    cache.put(cacheKey, response.clone());
+
+    return response;
   }
 
   console.log("Route change started:", url.pathname);
-  const res = NextResponse.next();
-
-  return res;
+  return NextResponse.next();
 }
 
 function handleUnauthorizedAccess(request) {

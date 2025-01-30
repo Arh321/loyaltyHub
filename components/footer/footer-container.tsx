@@ -24,6 +24,7 @@ const FooterContainer = () => {
   const pathname = usePathname();
 
   const handleNavigation = (pathName: string) => {
+    router.prefetch(pathName);
     router.push(pathName);
   };
 
