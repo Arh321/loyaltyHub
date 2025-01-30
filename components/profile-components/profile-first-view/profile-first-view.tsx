@@ -6,9 +6,7 @@ import {
 } from "../../sharedIcons/sharedIcons";
 import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
-import Image from "next/image";
 import ImageWithLoader from "../../image-with-loader/image-with-loader";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import ProfileFirstViewInfo from "./profile-first-view-info";
 
 export interface ProfileFirstViewComponentProps {

@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React from "react";
 import logo from "@/publicLOGO.png";
 import Link from "next/link";
@@ -9,7 +9,14 @@ const NotFoundComponent = () => {
       <div className=" w-full h-[calc(100vh-180px)] relative  flex flex-col items-center justify-center">
         <div className="w-full h-max flex flex-col items-center justify-center gap-4">
           <div className="w-full flex flex-col gap-4 items-center">
-            <Image src={logo} alt="برادران حسینی" className="" />
+            <Image
+              src={logo}
+              alt="برادران حسینی"
+              className=""
+              priority
+              width={200}
+              height={200}
+            />
             <svg
               width="184"
               height="64"
@@ -90,6 +97,7 @@ const NotFoundComponent = () => {
             </span>
           </p>
           <Link
+            prefetch
             href={"/"}
             className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-max"
           >

@@ -1,14 +1,11 @@
+"use client";
 import { IClubStatusNew } from "@/types/club-status";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import SilverLevel from "../../../public/images/SilverLevel.webp";
-import BronzeLevel from "../../../public/images/BronzeLevel.webp";
-import GoldLevel from "../../../public/images/GoldLevel.webp";
-
-import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
-import { Modal, Progress } from "antd";
+import { Modal } from "antd";
 import styles from "../../../styles/ant-custom-styles.module.css";
-import clsx from "clsx";
-import { FC, useMemo, useState } from "react";
+
+import { FC, useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import LevelDetailPopUp from "@/components/myLevels-page/level-list-cart-detail";
 import { LevelState } from "@/hooks/useLevels";

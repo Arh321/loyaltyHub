@@ -9,10 +9,8 @@ import {
   ProfileIcon,
 } from "../sharedIcons/sharedIcons";
 import clsx from "clsx";
-import { Icon } from "@iconify/react";
 import Image from "next/image";
 import logo from "@/public/LOGO.png";
-import footerBg from "@/publicimages/bg-art.webp";
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
 import { useEffect, useState } from "react";
 import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";

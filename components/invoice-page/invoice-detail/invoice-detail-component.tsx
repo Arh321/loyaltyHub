@@ -5,15 +5,12 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
-import NotFoundComponent from "@/components/not-found-page/not-found-component";
 import { RootState } from "@/redux/store";
 import { ProfileSliceType } from "@/redux/profile/profileSlice";
 
-import { IInvoice, IInvoiceDetail, IInvoiceId } from "@/types/invoice";
-import { StaticImageData } from "next/image";
+import { IInvoiceDetail } from "@/types/invoice";
+
 import { IProfileInfo } from "@/types/profile";
-import logo from "@/public/images/hosseiniLogo.webp";
 import InvoiceDetailHeader from "./invoice-detail-components/invoice-detail-header";
 import InvoiceDetailSummary from "./invoice-detail-components/invoice-detail-summeries";
 import InvoiceDetailItemsTable from "./invoice-detail-components/invoice-detail-table";

@@ -40,6 +40,7 @@ const ImageWithLoader = ({
         onLoadingComplete={handleImageLoad}
         className={`${styles.image} ${isLoaded ? styles.visible : ""}`} // Show actual image once loaded
         loading="lazy" // Enable lazy loading
+        priority
       />
     </div>
   );

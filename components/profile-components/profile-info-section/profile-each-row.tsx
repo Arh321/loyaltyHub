@@ -1,3 +1,4 @@
+"use client";
 import { ProfileEditIcon } from "@/components/sharedIcons/sharedIcons";
 import clsx from "clsx";
 

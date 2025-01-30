@@ -1,5 +1,4 @@
 import { LevelState } from "@/hooks/useLevels";
-import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { Progress } from "antd";
 import clsx from "clsx";
 

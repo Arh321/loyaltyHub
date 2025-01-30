@@ -1,3 +1,4 @@
+"use client";
 import { DownloadOutlined, PrinterOutlined } from "@ant-design/icons";
 
 const InvoiceDetailHeader: React.FC<{

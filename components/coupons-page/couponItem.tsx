@@ -1,4 +1,5 @@
-import { ICoupon, IGifts } from "@/types/coupon-and-gift";
+"use client";
+import { IGifts } from "@/types/coupon-and-gift";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { CopyOutlined } from "@ant-design/icons";
 import { Icon } from "@iconify/react/dist/iconify.js";

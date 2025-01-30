@@ -11,6 +11,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 const config = {
   plugins: {
     tailwindcss: {},
+    autoprefixer: {},
   },
 };
 

@@ -22,6 +22,7 @@ const NotFoundComponent: React.FC<NotFoundComponentProps> = ({
           className=""
           width={200}
           height={200}
+          priority
         />
         <svg
           width="184"

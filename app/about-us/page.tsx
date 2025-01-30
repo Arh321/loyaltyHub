@@ -35,13 +35,18 @@ const AboutUsPage = () => {
           است.
         </p>
 
-        <Link href={"/"} className="w-full flex flex-col gap-1 items-center">
+        <Link
+          prefetch
+          href={"/"}
+          className="w-full flex flex-col gap-1 items-center"
+        >
           <Image
             src={logo}
             alt="برادران حسینی"
             className="w-auto"
             width={200}
             height={200}
+            priority
           />
           <HoseinyIcon width="184" height="64" color="" />
         </Link>

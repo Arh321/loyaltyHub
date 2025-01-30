@@ -1,7 +1,6 @@
 "use client";
 import { LoadingOutlined } from "@ant-design/icons";
 import clsx from "clsx";
-import { error } from "console";
 import React, { useEffect } from "react";
 
 interface SendOtpByInvoiceProps {

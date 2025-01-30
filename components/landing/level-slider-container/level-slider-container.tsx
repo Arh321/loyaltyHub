@@ -9,7 +9,7 @@ import { Skeleton } from "antd";
 import { Suspense } from "react";
 
 const CurrentLevelSliderContainer = () => {
-  const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
+  const { info } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
   return (
@@ -26,7 +26,7 @@ const CurrentLevelSliderContainer = () => {
       >
         <div className="w-full aspect-[8/6] relative sm:px-5 sm:pt-3 lsm:px-4 lsm:pt-3 flex flex-col justify-end">
           <div className="w-full h-full absolute top-0 right-0 z-0">
-            <Image src={border} className="w-full" alt="border" />
+            <Image src={border} className="w-full" alt="border" priority />
           </div>
           <div className="w-full flex flex-col pt-4 gap-0 items-center justify-center aspect-square rounded-t-full bg-Highlighter z-[1] shadow-lg rounded-b-[999px] overflow-hidden">
             {info && (

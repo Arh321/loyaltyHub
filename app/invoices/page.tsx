@@ -6,7 +6,7 @@ import PagesContainer from "@/components/pages-container/pages-container";
 import { IInvoice } from "@/types/invoice";
 import { getAllInvoices } from "@/utils/invoiceService";
 import { Skeleton } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function InvoicesPAge() {
   const [loading, setLoading] = useState<boolean>(false);

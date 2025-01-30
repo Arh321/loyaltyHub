@@ -1,3 +1,4 @@
+"use client";
 import useInterval from "@/hooks/useTimer";
 import { onLoginWithOtp, onLoginWithOtpByInvoiceID } from "@/utils/authService";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -6,7 +7,6 @@ import clsx from "clsx";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useNotify } from "../notife/notife";
 import { LoadingOutlined, SyncOutlined } from "@ant-design/icons";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { onSetToken } from "@/redux/profile/profileSlice";

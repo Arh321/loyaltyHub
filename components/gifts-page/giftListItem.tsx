@@ -1,3 +1,4 @@
+"use client";
 import { IGifts } from "@/types/coupon-and-gift";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { CopyOutlined } from "@ant-design/icons";

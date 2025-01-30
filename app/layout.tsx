@@ -24,6 +24,8 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   manifest: "/manifest.json",
   title: "باشگاه مشتریان",
+
+  metadataBase: new URL("https://hosseinibrothers.loyaltyhub.ir/"), // Replace with your actual domain
   description: "توسعه یافته توسط تیم LoyalityHub.ir",
   icons: {
     icon: [
@@ -61,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="theme-color" content="#fff" />
+        <meta name="theme-color" content="#1E9C51" />
         <link
           rel="icon"
           href="icons/icon-72x72.png"

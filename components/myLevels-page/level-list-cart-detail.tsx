@@ -1,5 +1,6 @@
+"use client";
+
 import { IClubStatusNew } from "@/types/club-status";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import Image, { StaticImageData } from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
