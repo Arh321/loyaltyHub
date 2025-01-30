@@ -56,7 +56,11 @@ const ProfilePage = () => {
             <ProfileFirstViewComponentLazy
               name={info.mandatory.firstName}
               familyName={info.mandatory.lastName}
-              level={info.immutable.rankingPoints}
+              level={
+                info.immutable.rankingPoints
+                  ? info.immutable.rankingPoints.points.toString()
+                  : "0"
+              }
               levelId={0}
             />
             <div className="p-[32px] w-full flex flex-col gap-[10px] max-h-[1066px] overflow-hidden">
