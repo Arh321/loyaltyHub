@@ -57,7 +57,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
     resolver: yupResolver(validationSchema),
     mode: "all",
   });
-  const [selectedDate, setSelectedDate] = useState<string>("2025-01-01");
+  const [selectedDate, setSelectedDate] = useState<string>(mandatory.birthdate);
   // Reset form values when `mandatory` changes
   useEffect(() => {
     reset(mandatory);

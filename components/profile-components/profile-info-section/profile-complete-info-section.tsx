@@ -47,8 +47,8 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
               : "",
           },
           {
-            title: "تاریخ ازدواج",
-            value: additional.spouseBirthdate,
+            title: "تحصیلات",
+            value: additional.educationTitle,
           },
         ]}
         onEditMethod={() =>

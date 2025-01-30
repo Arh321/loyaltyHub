@@ -37,19 +37,25 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
 
   const options = [
     {
-      value: true,
+      value: false,
       label: (
-        <span dir="rtl" className="flex items-center gap-2 font-Medium ">
-          <Icon icon="material-symbols-light:male" width="24" height="24" />
+        <span
+          dir="rtl"
+          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
+        >
+          <Icon icon="fontisto:male" width="24" height="24" />
           <span>آقا</span>
         </span>
       ),
     },
     {
-      value: false,
+      value: true,
       label: (
-        <span dir="rtl" className="flex items-center gap-2 font-Medium ">
-          <Icon icon="icons8:female" width="24" height="24" />
+        <span
+          dir="rtl"
+          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
+        >
+          <Icon icon="foundation:torso-female" width="26" height="26" />
           <span>خانم</span>
         </span>
       ),
@@ -124,7 +130,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
           defaultValue={value}
           value={value}
           buttonStyle="solid"
-          className="!w-full !flex !items-center gap-[10px] !p-[10px] [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2"
+          className="!w-full !flex !items-center gap-[10px] !p-[10px] [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2 [&_.ant-radio-button-wrapper]:text-Secondary2"
         >
           {options.map((option, index) => {
             return (
