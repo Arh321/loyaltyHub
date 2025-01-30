@@ -72,7 +72,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
         ? await onLoginWithOtpByInvoiceID({ invoiceId: invoiceId, otp })
         : await onLoginWithOtp({ mobile: phone, otp });
       if (response.status) {
-        notify("success", response.statusMessage);
+        notify("success", "موفق خوش آمدید");
 
         dispatch(
           onSetToken({
@@ -111,8 +111,8 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
       />
 
       {/* Resend Timer and Actions */}
-      <div className="w-full flex items-center justify-between">
-        <p className="flex items-center gap-4 mt-4">
+      <div className="w-full flex items-center justify-between mt-4">
+        <p className="flex items-center gap-4 ">
           <span>{seconds == 0 ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
           {seconds == 0 && (
             <button

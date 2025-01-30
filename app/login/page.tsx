@@ -41,7 +41,7 @@ const LoginPage = () => {
       try {
         const response = await onGetOtpByPhone({ mobile: phone });
         if (response.status) {
-          notify("success", response.statusMessage);
+          notify("success", "کد تایید با موفقیت ارسال شد");
           setActiveStep(1);
         } else {
           notify("error", response.statusMessage || "خطا در ارسال کد تایید");
@@ -104,11 +104,11 @@ const LoginPage = () => {
               {activeStep === 1 && (
                 <span
                   dir="rtl"
-                  className="regular-16 w-4/5 flex flex-wrap justify-center items-center gap-2 mt-2"
+                  className="regular-16 w-full flex flex-wrap justify-center items-center gap-2 mt-2"
                 >
                   <span>لطفا کد تایید 5 رقمی ارسال شده به شماره همراه</span>
                   <span dir="ltr">{phone}</span>
-                  <span>زیر را وارد نمایید.</span>
+                  <span> را وارد نمایید.</span>
                 </span>
               )}
             </div>
