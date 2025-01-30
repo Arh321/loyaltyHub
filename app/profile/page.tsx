@@ -18,7 +18,14 @@ import useEditProfile from "@/hooks/useEditProfile";
 import ProfileEditInfoContainer from "@/components/profile-components/profile-edit-info/profile-edit-info-container";
 
 const ProfilePage = () => {
-  const { onClose, open, showEditModal, sectionNameToEdit } = useEditProfile();
+  const {
+    onClose,
+    open,
+    showEditModal,
+    sectionNameToEdit,
+    loadingUpdate,
+    updateProfileInfo,
+  } = useEditProfile();
   const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
@@ -85,6 +92,8 @@ const ProfilePage = () => {
               onClose={onClose}
               info={info}
               sectionNameToEdit={sectionNameToEdit}
+              loading={loadingUpdate}
+              updateProfileInfo={updateProfileInfo}
             />
           </div>
         </Suspense>

@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import Modal from "antd/es/modal/Modal";
 import { CloseOutlined } from "@ant-design/icons";
 import LevelDetailPopUp from "./level-list-cart-detail";
-
+import style from "./levels-list-style.module.css";
 interface LevelsListCartProps {
   level: IClubStatusNew;
   levelsStatus: [string, string][];
@@ -45,11 +45,14 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
   }, [open]);
   return (
     <div
+      dir="rtl"
+      className={clsx(
+        style["animate-glow"],
+        "w-full rounded-[10px] aspect-[16/7] shadow bg-white"
+      )}
       style={{
-        backgroundImage: "url(/images/Lines.png)",
-        direction: "rtl",
+        boxShadow: "0 0 10px -1px rgba(30,156,81,0.5)",
       }}
-      className="w-full rounded-[10px] aspect-[16/7] shadow bg-white"
     >
       <div
         onClick={() => setOpen(true)}
@@ -132,6 +135,30 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
         open={!!open}
         title={
           <div className="w-full flex items-center justify-center relative">
+            <span className="!absolute top-0 bottom-0 my-auto right-2">
+              {levelsStatus.find((item) => +item[0] == level.id)[1] ==
+                "Done" && (
+                <span className="w-max ">
+                  <Icon
+                    icon="simple-line-icons:check"
+                    width="24"
+                    height="24"
+                    style={{ color: "var(--Secondary2)" }}
+                  />
+                </span>
+              )}
+              {levelsStatus.find((item) => +item[0] == level.id)[1] ==
+                "Next" && (
+                <span className="w-max ">
+                  <Icon
+                    icon="lets-icons:lock-light"
+                    width="28"
+                    height="28"
+                    style={{ color: "var(--Alert)" }}
+                  />
+                </span>
+              )}
+            </span>
             <span>{level.title}</span>
             <CloseOutlined
               className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"

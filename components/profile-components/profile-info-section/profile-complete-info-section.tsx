@@ -1,21 +1,20 @@
 "use client";
-import { Radio, RadioChangeEvent } from "antd";
+
 import ProfileOneRowInfo from "./profile-each-row";
-import { useState } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
+
 import { OpenEditPayload } from "@/hooks/useEditProfile";
 
 interface ProfileCompleteInfoSectionProps {
   additional: {
-    profilePhoto: string;
-    lastNameEn: string;
-    firstNameEn: string;
-    email: string;
-    nationalCode: string;
-    marriage: boolean;
-    spouseBirthdate: string;
-    educationTitle: string;
-    jobTitle: string;
+    profilePhoto?: string;
+    lastNameEn?: string;
+    firstNameEn?: string;
+    email?: string;
+    nationalCode?: string;
+    marriage?: boolean;
+    spouseBirthdate?: string;
+    educationTitle?: string;
+    jobTitle?: string;
   };
   showEditModal: (payload: OpenEditPayload) => void;
   headerTitle: string;
@@ -48,7 +47,7 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
               : "",
           },
           {
-            title: "تاریخ تولد",
+            title: "تاریخ ازدواج",
             value: additional.spouseBirthdate,
           },
         ]}

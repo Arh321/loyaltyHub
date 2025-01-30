@@ -62,7 +62,6 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
             aria-valuemin={0}
             aria-valuemax={100}
           >
-            <span className="text-Secondary2 text-xs">%</span>
             {remainingPercent}
           </span>
 

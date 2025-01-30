@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Button, Drawer, Space } from "antd";
+import React, { useEffect } from "react";
+import { Drawer } from "antd";
 import ProfileEditMandatoryForm from "./profile-edit-mandatory";
-import { IProfileInfo } from "@/types/profile";
+import { IadditionalInfo, IMandatory, IProfileInfo } from "@/types/profile";
 import style from "./profile-edit-info.module.css";
 import ProfileEditAdditionalForm from "./profile-complete-info-edit";
+
 interface ProfileEditInfoContainerProps {
   open: boolean;
   onClose: () => void;
   info: IProfileInfo;
   sectionNameToEdit: "defaultAddress" | "additional" | "mandatory" | string;
+  updateProfileInfo: (
+    mandatory?: IMandatory,
+    additional?: IadditionalInfo
+  ) => Promise<void>;
+  loading: boolean;
 }
 
 const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
@@ -16,6 +22,8 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
   open,
   info,
   sectionNameToEdit,
+  loading,
+  updateProfileInfo,
 }) => {
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
@@ -35,6 +43,7 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
       window.removeEventListener("popstate", handlePopState); // Cleanup the event listener
     };
   }, [open]);
+
   return (
     <div>
       <Drawer
@@ -56,6 +65,8 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
             headerTitle={"ویرایش اطلاعات کاربری"}
             mandatory={info.mandatory}
             style={style}
+            loading={loading}
+            updateProfileInfo={updateProfileInfo}
           />
         )}
         {sectionNameToEdit == "additional" && (
@@ -63,6 +74,8 @@ const ProfileEditInfoContainer: React.FC<ProfileEditInfoContainerProps> = ({
             headerTitle={"ویرایش اطلاعات تکمیلی"}
             additional={info.additional}
             style={style}
+            loading={loading}
+            updateProfileInfo={updateProfileInfo}
           />
         )}
       </Drawer>

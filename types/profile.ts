@@ -71,23 +71,8 @@ export interface IProfileInfo {
       points: number;
     };
   };
-  mandatory: {
-    firstName: string;
-    lastName: string;
-    gender: boolean;
-    birthdate: string;
-  };
-  additional: {
-    profilePhoto: string;
-    lastNameEn: string;
-    firstNameEn: string;
-    email: string;
-    nationalCode: string;
-    marriage: boolean;
-    spouseBirthdate: string;
-    educationTitle: string;
-    jobTitle: string;
-  };
+  mandatory: IMandatory;
+  additional: IadditionalInfo;
   defaultAddress: {
     cityId: number;
     provinceId: number;
@@ -108,4 +93,28 @@ export interface IProfileInfo {
     longitude: string;
   };
   isActive: boolean;
+}
+
+export interface IUpdateProfilePayload {
+  mandatory?: IMandatory;
+  additional?: IadditionalInfo;
+}
+
+export interface IMandatory {
+  firstName?: string;
+  lastName?: string;
+  gender?: boolean;
+  birthdate?: string;
+}
+
+export interface IadditionalInfo {
+  profilePhoto?: string;
+  lastNameEn?: string;
+  firstNameEn?: string;
+  email?: string;
+  nationalCode?: string;
+  marriage?: boolean;
+  spouseBirthdate?: string;
+  educationTitle?: string;
+  jobTitle?: string;
 }

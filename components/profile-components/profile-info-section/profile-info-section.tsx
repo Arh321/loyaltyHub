@@ -4,13 +4,14 @@ import ProfileOneRowInfo from "./profile-each-row";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import { OpenEditPayload } from "@/hooks/useEditProfile";
+import moment from "jalali-moment";
 
 interface ProfileInfoSectionProps {
   mandatory: {
-    firstName: string;
-    lastName: string;
-    gender: boolean;
-    birthdate: string;
+    firstName?: string;
+    lastName?: string;
+    gender?: boolean;
+    birthdate?: string;
   };
   cellPhone: string;
   headerTitle: string;
@@ -92,8 +93,11 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
             value: cellPhone,
           },
           {
-            title: "تلفن ثابت",
-            value: mandatory.birthdate,
+            title: "تاریخ تولد",
+            value: moment
+              .from(mandatory.birthdate, "YYYY-MM-DD")
+              .locale("fa")
+              .format("YYYY/MM/DD"),
           },
         ]}
         onEditMethod={() =>

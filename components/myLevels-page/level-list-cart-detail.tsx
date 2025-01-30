@@ -18,26 +18,6 @@ const LevelDetailPopUp: React.FC<LevelStatesComponentsProps> = ({
 }) => {
   return (
     <div className="w-full flex flex-col items-center gap-4 grow pt-[10px] pb-[20px] px-4 rounded-[6px] relative ">
-      {levelsStatus.find((item) => +item[0] == status.id)[1] == "Done" && (
-        <span className="w-max absolute top-4 right-6 z-10">
-          <Icon
-            icon="simple-line-icons:check"
-            width="24"
-            height="24"
-            style={{ color: "var(--Secondary2)" }}
-          />
-        </span>
-      )}
-      {levelsStatus.find((item) => +item[0] == status.id)[1] == "Next" && (
-        <span className="w-max absolute top-4 right-6 z-10">
-          <Icon
-            icon="lets-icons:lock-light"
-            width="28"
-            height="28"
-            style={{ color: "var(--Alert)" }}
-          />
-        </span>
-      )}
       {onClose && (
         <button
           onClick={() => onClose(false)}

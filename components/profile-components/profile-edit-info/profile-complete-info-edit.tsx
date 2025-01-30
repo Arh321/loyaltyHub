@@ -1,63 +1,28 @@
+import { IadditionalInfo, IMandatory } from "@/types/profile";
+import { LoadingOutlined } from "@ant-design/icons";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import { Input, Radio, RadioChangeEvent } from "antd";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 
-import PersianDatePicker from "./persian-date-picker";
-// Define the shape of the form data
-
-interface ProfileFormValues {
-  profilePhoto?: string;
-  lastNameEn?: string;
-  firstNameEn?: string;
-  email?: string;
-  nationalCode?: string;
-  marriage?: boolean;
-  spouseBirthdate?: string;
-  educationTitle?: string;
-  jobTitle?: string;
-}
-
-interface ProfileEditAdditionalFormProps {
-  headerTitle: string;
-  additional: ProfileFormValues;
-  style: {
-    readonly [key: string]: string;
-  };
-}
-
-const validateNationalCode = (value: string | undefined): boolean => {
-  if (!value) return false;
-
-  // Step 1: Validate length and digits with regex
-  const nationalCodePattern = /^\d{10}$/;
-  if (!nationalCodePattern.test(value)) {
-    return false;
-  }
-
-  // Step 2: Checksum validation for Persian national code
-  const digits = value.split("").map(Number); // Convert code to array of digits
-  const checkDigit = digits[9]; // 10th digit (check digit)
-
-  // Calculate the sum for the first 9 digits
-  let sum = 0;
-  for (let i = 0; i < 9; i++) {
-    sum += digits[i] * (10 - i);
-  }
-
+// Validation helper function
+const validateNationalCode = (value?: string): boolean => {
+  if (!value || !/^\d{10}$/.test(value)) return false;
+  const digits = value.split("").map(Number);
+  const checkDigit = digits[9];
+  const sum = digits
+    .slice(0, 9)
+    .reduce((acc, digit, index) => acc + digit * (10 - index), 0);
   const remainder = sum % 11;
-
-  // Step 3: Check if the checksum is valid
-  return (
-    (remainder < 2 && checkDigit === remainder) ||
-    (remainder >= 2 && checkDigit === 11 - remainder)
-  );
+  return remainder < 2
+    ? checkDigit === remainder
+    : checkDigit === 11 - remainder;
 };
 
-const validationSchema = yup.object().shape({
+// Validation Schema
+const validationSchema = yup.object({
   profilePhoto: yup.string().nullable(),
   lastNameEn: yup
     .string()
@@ -71,8 +36,10 @@ const validationSchema = yup.object().shape({
   nationalCode: yup
     .string()
     .required("کد ملی الزامی است")
-    .test("is-valid-national-code", "کد ملی وارد شده معتبر نیست", (value) =>
-      validateNationalCode(value)
+    .test(
+      "is-valid-national-code",
+      "کد ملی وارد شده معتبر نیست",
+      validateNationalCode
     ),
   marriage: yup.boolean().nullable(),
   spouseBirthdate: yup
@@ -86,11 +53,66 @@ const validationSchema = yup.object().shape({
   jobTitle: yup.string().nullable(),
 });
 
-const ProfileEditAdditionalForm: React.FC<ProfileEditAdditionalFormProps> = ({
+// Form Field Component
+
+const FormField = ({
+  label,
+  name,
+  placeholder,
+  control,
+  errors,
+  length,
+  type,
+  loading,
+}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
+any) => (
+  <div className="col-span-1 relative w-full flex">
+    {!loading && (
+      <label className="absolute text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text">
+        {label}
+      </label>
+    )}
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Input
+          {...field}
+          maxLength={length}
+          type={type}
+          dir="rtl"
+          disabled={loading}
+          placeholder={placeholder}
+          className="!font-Medium placeholder:!text-gray-300 placeholder:!text-secondary !p-[6px]"
+        />
+      )}
+    />
+    {errors[name] && (
+      <span className="text-red-500 text-xs absolute top-full right-0 !font-Light">
+        {errors[name].message}
+      </span>
+    )}
+  </div>
+);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ProfileEditAdditionalForm = ({
   headerTitle,
   additional,
-
   style,
+  loading,
+  updateProfileInfo,
+}: {
+  headerTitle: string;
+  additional: IadditionalInfo;
+  style: {
+    readonly [key: string]: string;
+  };
+  updateProfileInfo: (
+    mandatory?: IMandatory,
+    additional?: IadditionalInfo
+  ) => Promise<void>;
+  loading: boolean;
 }) => {
   const {
     register,
@@ -99,220 +121,113 @@ const ProfileEditAdditionalForm: React.FC<ProfileEditAdditionalFormProps> = ({
     reset,
     control,
     formState: { errors, isValid },
-  } = useForm<ProfileFormValues>({
+  } = useForm({
     defaultValues: additional,
     resolver: yupResolver(validationSchema),
     mode: "all",
   });
-  const [selectedDate, setSelectedDate] = useState<string>("2025-01-01");
-  // Reset form values when `mandatory` changes
+
   useEffect(() => {
     reset(additional);
   }, [additional, reset]);
 
-  const onChangeGender = (e: RadioChangeEvent) => {
-    setValue("marriage", e.target.value);
-  };
-  const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
-    console.log(data);
-  };
-  const options = [
-    {
-      value: false,
-      label: (
-        <span
-          dir="rtl"
-          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
-        >
-          <span>مجرد</span>
-        </span>
-      ),
-    },
-    {
-      value: true,
-      label: (
-        <span
-          dir="rtl"
-          className="w-full justify-center flex items-center gap-2 font-Medium text-lg  "
-        >
-          <span>متاهل</span>
-        </span>
-      ),
-    },
-  ];
+  const onChangeMarriage = useCallback(
+    (e: RadioChangeEvent) => setValue("marriage", e.target.value),
+    [setValue]
+  );
+  const onSubmit: SubmitHandler<unknown> = (data) =>
+    updateProfileInfo(undefined, data);
+
   return (
     <form
       dir="rtl"
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-[15px] p-[4px]"
+      className="w-full flex flex-col gap-[20px] p-[4px]"
     >
       <h3 className="text-Secondary2 text-lg font-Medium mb-[10px]">
         {headerTitle}
       </h3>
-      <div className="w-full grid grid-cols-2 gap-2">
-        {/* First Name Input */}
-        <div
-          className={clsx(
-            "col-span-1 relative w-full flex",
-            style["input-wrapper"]
-          )}
-        >
-          <label
-            htmlFor="nationalCode"
-            className={clsx(
-              "absolute text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
-            )}
-          >
-            کد ملی
-          </label>
-          <Controller
-            name="nationalCode"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="کدملی"
-                type="text"
-                className="!font-Medium placeholder:!text-secondary !p-[6px]"
-              />
-            )}
-          />
-          {errors.nationalCode && (
-            <span className="text-red-500 text-xs absolute top-full right-0 !font-Light">
-              {errors.nationalCode.message}
-            </span>
-          )}
-        </div>
 
-        {/* Last Name Input */}
-        <div
-          className={clsx(
-            "col-span-1 relative w-full flex",
-            style["input-wrapper"]
-          )}
-        >
-          <label
-            htmlFor="email"
-            className={clsx(
-              "absolute text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
-            )}
-          >
-            ایمیل
-          </label>
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="example@gmail.com..."
-                type="email"
-                className="!font-Medium placeholder:!text-secondary !p-[6px]"
-              />
-            )}
-          />
-          {errors.email && (
-            <span className="text-red-500 text-xs absolute top-full right-0 !font-Light">
-              {errors.email.message}
-            </span>
-          )}
-        </div>
-      </div>
       <div className="w-full grid grid-cols-2 gap-2">
-        {/* First Name Input */}
-        <div
-          className={clsx(
-            "col-span-1 relative w-full flex",
-            style["input-wrapper"]
-          )}
-        >
-          <label
-            htmlFor="educationTitle"
-            className={clsx(
-              "absolute text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
-            )}
-          >
-            تحصیلات
-          </label>
-          <Controller
-            name="educationTitle"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="تحصیلات"
-                className="!font-Medium placeholder:!text-secondary !p-[6px]"
-              />
-            )}
-          />
-          {errors.educationTitle && (
-            <span className="text-red-500 text-xs absolute top-full right-0 !font-Light">
-              {errors.educationTitle.message}
-            </span>
-          )}
-        </div>
-
-        {/* Last Name Input */}
-        <div
-          className={clsx(
-            "col-span-1 relative w-full flex",
-            style["input-wrapper"]
-          )}
-        >
-          <label
-            htmlFor="jobTitle"
-            className={clsx(
-              "absolute text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
-            )}
-          >
-            شغل
-          </label>
-          <Controller
-            name="jobTitle"
-            control={control}
-            render={({ field }) => (
-              <Input
-                {...field}
-                placeholder="شغل"
-                className="!font-Medium placeholder:!text-secondary !p-[6px]"
-              />
-            )}
-          />
-          {errors.jobTitle && (
-            <span className="text-red-500 text-xs absolute top-full right-0 !font-Light">
-              {errors.jobTitle.message}
-            </span>
-          )}
-        </div>
+        <FormField
+          loading={loading}
+          label="کد ملی"
+          name="nationalCode"
+          placeholder="کدملی..."
+          control={control}
+          errors={errors}
+          length={10}
+          type={"tel"}
+        />
+        <FormField
+          loading={loading}
+          label="ایمیل"
+          name="email"
+          placeholder="...example@gmail.com"
+          control={control}
+          errors={errors}
+        />
       </div>
-      <div className="w-full relative  flex border border-gray-300 rounded-[6px]">
+
+      <div className="w-full grid grid-cols-2 gap-2">
+        <FormField
+          loading={loading}
+          label="تحصیلات"
+          name="educationTitle"
+          placeholder="تحصیلات..."
+          control={control}
+          errors={errors}
+        />
+        <FormField
+          loading={loading}
+          label="شغل"
+          name="jobTitle"
+          placeholder="شغل..."
+          control={control}
+          errors={errors}
+        />
+      </div>
+
+      {/* Marriage Selection */}
+      <div className="w-full relative flex border border-gray-300 rounded-[6px]">
         <Radio.Group
-          onChange={onChangeGender}
+          disabled={loading}
+          onChange={onChangeMarriage}
           defaultValue={additional.marriage}
           buttonStyle="solid"
-          className="!w-full !flex !items-center gap-[10px]  [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2 [&_.ant-radio-button-wrapper]:text-Secondary2"
+          className="!w-full !flex !items-center gap-[10px] [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2 [&_.ant-radio-button-wrapper-disabled]:!opacity-50 [&_.ant-radio-button-wrapper]:text-Secondary2"
         >
-          {options.map((option, index) => {
-            return (
-              <Radio.Button
-                className="!w-full !border-none !shadow-none before:!hidden !rounded-[6px] !p-1 !h-auto "
-                key={index}
-                value={option.value}
+          {[
+            { value: false, label: "مجرد" },
+            { value: true, label: "متاهل" },
+          ].map((option, index) => (
+            <Radio.Button
+              key={index}
+              className="!w-full !border-none !shadow-none before:!hidden !rounded-[6px] !p-1 !h-auto"
+              value={option.value}
+            >
+              <span
+                dir="rtl"
+                className="w-full justify-center flex items-center gap-2 font-Medium text-lg"
               >
                 {option.label}
-              </Radio.Button>
-            );
-          })}
+              </span>
+            </Radio.Button>
+          ))}
         </Radio.Group>
       </div>
+
       <hr className="border border-gradient-secondary" />
+
       {/* Submit Button */}
       <div className="w-full flex justify-center">
         <button
           type="submit"
-          className="font-Medium bg-Secondary2  disabled:opacity-70 text-Highlighter py-2 w-full text-lg rounded-lg"
+          disabled={loading}
+          className="font-Medium bg-Secondary2 disabled:opacity-70 text-Highlighter py-2 w-full text-lg rounded-lg"
         >
           ثبت اطلاعات
+          {loading && <LoadingOutlined />}
         </button>
       </div>
     </form>

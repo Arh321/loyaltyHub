@@ -6,6 +6,7 @@ import {
   HomeIcon,
   HoseinyIcon,
   LevelsIcon,
+  ProfileIcon,
 } from "../sharedIcons/sharedIcons";
 import clsx from "clsx";
 import { Icon } from "@iconify/react";
@@ -97,14 +98,11 @@ const FooterContainer = () => {
     },
     {
       icon: (
-        <Icon
-          icon={
-            pathname.includes("profile")
-              ? "ix:user-profile-filled"
-              : "ix:user-profile"
-          }
-          width="2rem"
+        <ProfileIcon
+          width="32"
+          height="32"
           color="var(--highlighter)"
+          fill={pathname.includes("profile")}
         />
       ),
       label: "پروفایل",

@@ -29,6 +29,8 @@ const PersianDatePicker: React.FC<PersianDatePickerProps> = ({
       const gregorianDate = value.calendar("gregory").format("YYYY-MM-DD");
       setDate(gregorianDate);
       console.log("Gregorian Output:", gregorianDate);
+    } else {
+      setDateState(dayjs(defaultValue, "YYYY-MM-DD").calendar("jalali"));
     }
   };
 

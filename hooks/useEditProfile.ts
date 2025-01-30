@@ -1,4 +1,11 @@
-import { useState } from "react";
+import { useNotify } from "@/components/notife/notife";
+import { onLoadingProfile, onSetProfile } from "@/redux/profile/profileSlice";
+import { IadditionalInfo, IMandatory } from "@/types/profile";
+import { getProfile, updateProfile } from "@/utils/userServise";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
 
 export interface OpenEditPayload {
   sectionName: "defaultAddress" | "additional" | "mandatory";
@@ -7,23 +14,88 @@ export interface OpenEditPayload {
 }
 
 const useEditProfile = () => {
-  const [sectionNameToEdit, setSectionNameToEdit] = useState<
-    "defaultAddress" | "additional" | "mandatory" | string
-  >("");
+  const [sectionNameToEdit, setSectionNameToEdit] = useState<string>("");
   const [open, setOpen] = useState(false);
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
 
-  const showEditModal = (payload: OpenEditPayload) => {
-    setSectionNameToEdit(() => payload.sectionName);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { notify } = useNotify();
+  const cookies = new Cookies();
+
+  /**
+   * Fetch the latest user profile and update Redux state.
+   */
+  const getUserProfile = useCallback(async () => {
+    dispatch(onLoadingProfile(true));
+    try {
+      const response = await getProfile();
+      if (response.status) {
+        dispatch(onSetProfile(response.result));
+      } else {
+        throw new Error(
+          response.statusMessage || "خطا در دریافت اطلاعات کاربر"
+        );
+      }
+    } catch (error) {
+      notify("error", error.message);
+      cookies.remove("token");
+      router.push("/login");
+    } finally {
+      dispatch(onLoadingProfile(false));
+    }
+  }, [dispatch, router, notify, cookies]);
+
+  /**
+   * Update profile information.
+   * @param mandatory Updated mandatory user data.
+   * @param additional Updated additional user data.
+   */
+  const updateProfileInfo = async (
+    mandatory?: IMandatory,
+    additional?: IadditionalInfo
+  ) => {
+    setLoadingUpdate(true);
+    try {
+      const payload =
+        sectionNameToEdit === "mandatory" ? { mandatory } : { additional };
+      const response = await updateProfile(payload);
+
+      if (response.status) {
+        notify("success", response.statusMessage);
+        getUserProfile();
+        onClose();
+      } else {
+        throw new Error(
+          response.statusMessage || "ویرایش اطلاعات کاربری با خطا مواجه شد"
+        );
+      }
+    } catch (error) {
+      notify("error", error.message);
+    } finally {
+      setLoadingUpdate(false);
+    }
+  };
+
+  /**
+   * Open the edit modal.
+   * @param payload Payload containing section name and input ID.
+   */
+  const showEditModal = ({ sectionName }: OpenEditPayload) => {
+    setSectionNameToEdit(sectionName);
     setOpen(true);
   };
 
-  const onClose = () => {
-    setOpen(false);
-  };
+  /**
+   * Close the edit modal.
+   */
+  const onClose = () => setOpen(false);
 
   return {
     open,
     sectionNameToEdit,
+    loadingUpdate,
+    updateProfileInfo,
     showEditModal,
     onClose,
   };

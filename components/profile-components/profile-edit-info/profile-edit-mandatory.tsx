@@ -7,6 +7,8 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import * as yup from "yup";
 
 import PersianDatePicker from "./persian-date-picker";
+import { IadditionalInfo, IMandatory } from "@/types/profile";
+import { LoadingOutlined } from "@ant-design/icons";
 // Define the shape of the form data
 interface ProfileFormValues {
   firstName?: string;
@@ -21,6 +23,11 @@ interface ProfileEditMandatoryFormProps {
   style: {
     readonly [key: string]: string;
   };
+  updateProfileInfo: (
+    mandatory?: IMandatory,
+    additional?: IadditionalInfo
+  ) => Promise<void>;
+  loading: boolean;
 }
 
 // Define a validation schema using Yup
@@ -36,9 +43,10 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
   headerTitle,
   mandatory,
   style,
+  loading,
+  updateProfileInfo,
 }) => {
   const {
-    register,
     handleSubmit,
     setValue,
     reset,
@@ -59,7 +67,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
     setValue("gender", e.target.value);
   };
   const onSubmit: SubmitHandler<ProfileFormValues> = (data) => {
-    console.log(data);
+    updateProfileInfo(data, undefined);
   };
   const options = [
     {
@@ -118,6 +126,8 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
             render={({ field }) => (
               <Input
                 {...field}
+                maxLength={20}
+                disabled={loading}
                 placeholder="نام"
                 className="!font-Medium placeholder:!text-secondary"
               />
@@ -150,7 +160,9 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
             control={control}
             render={({ field }) => (
               <Input
+                maxLength={20}
                 {...field}
+                disabled={loading}
                 placeholder="نام خانوادگی"
                 className="!font-Medium placeholder:!text-secondary !p-1"
               />
@@ -187,6 +199,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
       </div>
       <div className="w-full relative  flex border border-gray-300 rounded-[6px]">
         <Radio.Group
+          disabled={loading}
           onChange={onChangeGender}
           defaultValue={mandatory.gender}
           buttonStyle="solid"
@@ -210,9 +223,11 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
       <div className="w-full flex justify-center">
         <button
           type="submit"
+          disabled={loading}
           className="font-Medium bg-Secondary2  disabled:opacity-70 text-Highlighter py-2 w-full text-lg rounded-lg"
         >
           ثبت اطلاعات
+          {loading && <LoadingOutlined />}
         </button>
       </div>
     </form>
