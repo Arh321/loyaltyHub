@@ -3,18 +3,27 @@ import LevelsListCart from "./levels-list-cart";
 
 interface LevelsLostContainerProps {
   levels: IClubStatusNew[];
+  levelsStatus: [string, string][];
+  getRemainingPointsAndPercent: (level: IClubStatusNew) => number[];
 }
 
 const LevelsLostContainer: React.FC<LevelsLostContainerProps> = ({
   levels,
+  levelsStatus,
+  getRemainingPointsAndPercent,
 }) => {
   return (
     <div className="w-full flex flex-col gap-4">
-      {levels
-        .filter((item) => item.customerLevelState != "Current")
-        .map((level, index) => {
-          return <LevelsListCart key={index} level={level} />;
-        })}
+      {levels.map((level, index) => {
+        return (
+          <LevelsListCart
+            levelsStatus={levelsStatus}
+            key={index}
+            level={level}
+            getRemainingPointsAndPercent={getRemainingPointsAndPercent}
+          />
+        );
+      })}
     </div>
   );
 };

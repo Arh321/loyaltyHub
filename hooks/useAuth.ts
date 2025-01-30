@@ -109,7 +109,9 @@ const useAuth = () => {
   }, [path, hasToken, invoiceId, onLoadSearchedInvoice, dispatch]);
 
   useEffect(() => {
-    getUserProfile();
+    if (!path.includes("login")) {
+      getUserProfile();
+    }
   }, [path]);
 
   return {

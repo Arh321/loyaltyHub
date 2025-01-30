@@ -12,9 +12,15 @@ import LevelDetailPopUp from "./level-list-cart-detail";
 
 interface LevelsListCartProps {
   level: IClubStatusNew;
+  levelsStatus: [string, string][];
+  getRemainingPointsAndPercent: (level: IClubStatusNew) => number[];
 }
 
-const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
+const LevelsListCart: React.FC<LevelsListCartProps> = ({
+  level,
+  levelsStatus,
+  getRemainingPointsAndPercent,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const handleCancel = useCallback(() => {
     setOpen(false);
@@ -56,12 +62,12 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
           <span
             className={clsx(
               "w-[74px] h-[34px] flex items-center rounded-r-[50px] border-r border-y pr-[10px]",
-              level.customerLevelState == "Done"
+              levelsStatus.find((item) => +item[0] == level.id)[1] == "Done"
                 ? "border-Secondary2"
                 : "border-Alert"
             )}
           >
-            {level.customerLevelState == "Done" ? (
+            {levelsStatus.find((item) => +item[0] == level.id)[1] == "Done" ? (
               <Icon
                 icon="simple-line-icons:check"
                 width="24"
@@ -82,7 +88,7 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
           <div
             className={clsx(
               "w-[132px] h-[66px] rounded-t-full bg-Highlighter  border-x border-t flex items-end justify-center",
-              level.customerLevelState == "Done"
+              levelsStatus.find((item) => +item[0] == level.id)[1] == "Done"
                 ? "border-Secondary2"
                 : "border-Alert"
             )}
@@ -90,7 +96,7 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
             <div
               style={{
                 background: `linear-gradient(to top, ${
-                  level.customerLevelState == "Done"
+                  levelsStatus.find((item) => +item[0] == level.id)[1] == "Done"
                     ? "var(--Secondary2)"
                     : "#FF0004"
                 }, transparent)`,
@@ -98,21 +104,24 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
               className="w-[120px] h-[60px]  rounded-t-full relative"
             >
               <div className="absolute bottom-full translate-y-1/2 left-0 right-0 mx-auto w-max">
-                {level.customerLevelState == "Next" && (
+                {levelsStatus.find((item) => +item[0] == level.id)[1] ==
+                  "Next" && (
                   <Image src={GoldLevel} width={60} height={60} alt="Next" />
                 )}
-                {level.customerLevelState == "Done" && (
+                {levelsStatus.find((item) => +item[0] == level.id)[1] ==
+                  "Done" && (
                   <Image src={BronzeLevel} width={60} height={60} alt="Next" />
                 )}
               </div>
-              {level.customerLevelState == "Next" && (
+              {levelsStatus.find((item) => +item[0] == level.id)[1] ==
+                "Next" && (
                 <span
                   style={{
                     boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
                   }}
                   className="w-[34px] h-[34px] bg-Highlighter text-Alert rounded-full p-2 text-sm font-Bold flex justify-center items-center absolute top-0 left-0 right-0 mx-auto translate-y-1/2 "
                 >
-                  {level.levelPercent}%
+                  {getRemainingPointsAndPercent(level)[0]}%
                 </span>
               )}
             </div>
@@ -152,6 +161,7 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({ level }) => {
           levelImege={GoldLevel}
           status={level}
           onClose={setOpen}
+          levelsStatus={levelsStatus}
         />
       </Modal>
     </div>

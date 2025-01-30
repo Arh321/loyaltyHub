@@ -21,6 +21,8 @@ export const controlers = {
   EndUser: "api/EndUser",
   Banner: "api/Banner",
   GiftCard: "api/GiftCard",
+  Ranking: "api/Ranking",
+  Level: "api/Level",
 };
 
 // Ensure you have js-cookie or a similar library installed

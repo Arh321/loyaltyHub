@@ -67,7 +67,9 @@ export interface IProfileInfo {
   immutable: {
     phone: string;
     referralCode: string;
-    rankingPoints: null;
+    rankingPoints: {
+      points: number;
+    };
   };
   mandatory: {
     firstName: string;
