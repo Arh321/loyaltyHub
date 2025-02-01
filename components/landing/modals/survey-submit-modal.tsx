@@ -7,34 +7,59 @@ import Image from "next/image";
 import TextArea from "antd/es/input/TextArea";
 import style from "@/styles/ant-custom-styles.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useNotify } from "@/components/notife/notife";
+import { IConfirmSurveyPoints } from "@/types/survet-types";
+import { applyCompletedSurveyInvoice } from "@/utils/surveyService";
 
 const SurveySubmitModal = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const searchParams = useSearchParams();
   const navigate = useRouter();
+  const [opinion, setOpinion] = useState("");
   // Memoized values for average and survey
-  const { average, survey } = useMemo(() => {
+  const { average, survey, invoiceId, surveyId } = useMemo(() => {
     const avg = searchParams.get("average");
     const srv = searchParams.get("survey");
-    return { average: avg, survey: srv };
+    const invoiceId = searchParams.get("invoiceId");
+    const surveyId = searchParams.get("surveyId");
+    return { average: avg, survey: srv, invoiceId, surveyId };
   }, [searchParams]);
+  const { notify } = useNotify();
 
   const showModal = () => {
     setOpen(true);
   };
 
-  const handleOk = () => {
+  const onApplyPoints = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-      navigate.push("/");
-    }, 3000);
+    const payload: IConfirmSurveyPoints = {
+      additionalOpinion: opinion,
+      invoiceId: invoiceId,
+      surveyId: +surveyId,
+    };
+    try {
+      const response = await applyCompletedSurveyInvoice(payload);
+      if (response.status) {
+        notify("success", response.statusMessage);
+        setOpen(false);
+        navigate.push("/");
+      } else {
+        notify("error", response.statusMessage || "خطا در ثبت پاسخ");
+      }
+    } catch (error) {
+      notify("error", "خطا در ثبت پاسخ");
+    } finally {
+    }
+    setLoading(false);
+  };
+
+  const handleOk = () => {
+    onApplyPoints();
   };
 
   const handleCancel = () => {
-    setOpen(false);
+    onApplyPoints();
   };
 
   useEffect(() => {
@@ -86,9 +111,10 @@ const SurveySubmitModal = () => {
           rows={4}
           autoFocus={true}
           autoSize={true}
+          onChange={(e) => setOpinion(e.target.value)}
           disabled={loading}
           placeholder="دیدگاه خود را اینجا بنویسید..."
-          maxLength={6}
+          maxLength={200}
           className="!h-[100px] disabled:!opacity-70 !font-Medium placeholder:text-Secondary text-Primary placeholder:font-Regular !shadow-none !border-Highlighter focus:!border-Secondary2"
         />
       </div>

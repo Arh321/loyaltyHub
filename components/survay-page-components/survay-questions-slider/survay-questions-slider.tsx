@@ -11,6 +11,7 @@ import clsx from "clsx";
 import useScore from "@/hooks/useScore";
 import style from "./survay-questions-slider.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
+import { ISurveyQuestions } from "@/types/survet-types";
 
 const survays = [
   {
@@ -46,11 +47,27 @@ const survays = [
   },
 ];
 
-const SurveyQuestionsSlider = () => {
+interface SurveyQuestionsSliderProps {
+  questions: ISurveyQuestions[];
+  surveyId: number;
+}
+
+const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
+  questions,
+  surveyId,
+}) => {
   const [loading, setLoading] = useState(true);
-  const [loadingNavigate, setLoadingNAvigate] = useState(false);
-  const { setActiveIndex, setReset, setSlides, setTempSlides, state } =
-    useScore(survays);
+
+  const {
+    setActiveIndex,
+    setReset,
+    setSlides,
+    setTempSlides,
+    state,
+    applyLoading,
+    onApplyPoints,
+    loadingNavigate,
+  } = useScore(questions);
   const [swiperInstance, setSwiperInstance] = useState(null);
   const navigate = useRouter();
 
@@ -63,32 +80,18 @@ const SurveyQuestionsSlider = () => {
   }, []);
 
   // Handle slide submission
-  const handleSubmitSurvey = useCallback(() => {
-    setLoadingNAvigate(true);
-
-    const average = state.slides.reduce((prev, curr) => prev + curr.score, 0);
-    const query = new URLSearchParams({
-      average: (average / state.slides.length).toFixed(1),
-      survey: "done",
-    }).toString();
-    setTimeout(() => {
-      navigate.push(`/?${query}`);
-      setLoadingNAvigate(false);
-    }, 750);
-  }, [state.slides, navigate]);
 
   // Navigation handlers
   const handleNext = useCallback(() => {
     if (!swiperInstance) return;
-
-    setSlides(state.tempSlides);
-    swiperInstance.slideNext();
-
-    if (state.activeIndex === state.slides.length - 1) {
-      handleSubmitSurvey();
-    }
+    console.log(state.tempSlides[state.activeIndex]);
+    onApplyPoints(
+      state.tempSlides[state.activeIndex],
+      surveyId,
+      swiperInstance
+    );
     setReset(false);
-  }, [swiperInstance, state, handleSubmitSurvey, setSlides, setReset]);
+  }, [swiperInstance, state, setSlides, setReset]);
 
   const handlePrev = useCallback(() => {
     if (swiperInstance) {
@@ -128,9 +131,9 @@ const SurveyQuestionsSlider = () => {
         {state.slides.map((item, index) => (
           <SwiperSlide key={index} className="flex flex-col gap-[20px]">
             <SurvayQuestionCartComponent
-              imageUrl={item.mediuUrl}
-              title={item.question}
-              score={item.score}
+              imageUrl={item.imageUrl}
+              title={item.title}
+              score={item.givenPoint}
               index={item.id}
               setTempSlides={setTempSlides}
               tempSlides={state.tempSlides}
@@ -142,13 +145,15 @@ const SurveyQuestionsSlider = () => {
       <div className="w-full flex flex-col gap-[20px] pt-[20px]">
         <div className="w-full flex flex-col gap-[10px] items-center h-[100px]">
           <button
+            disabled={applyLoading || loadingNavigate}
             onClick={handleNext}
             className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-[284px]"
           >
-            {loadingNavigate && <LoadingOutlined />}
+            {applyLoading || (loadingNavigate && <LoadingOutlined />)}
             ثبت و بعدی
           </button>
           <button
+            disabled={applyLoading || loadingNavigate}
             onClick={handlePrev}
             className={clsx(
               "font-Medium bg-Highlighter text-Secondary2 p-3 text-lg rounded-lg w-[284px]",

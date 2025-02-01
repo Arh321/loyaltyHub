@@ -10,7 +10,7 @@ export async function middleware(request) {
   }
 
   // Redirect to login if accessing '/' with 'invoiceId' query parameter
-  if (url.pathname === "/" && url.searchParams.has("invoiceId")) {
+  if (url.pathname === "/" && url.searchParams.has("invoiceId") && !token) {
     return redirectToLoginWithInvoiceId(request);
   }
 

@@ -93,6 +93,7 @@ export interface IProfileInfo {
     longitude: string;
   };
   isActive: boolean;
+  id: number;
 }
 
 export interface IUpdateProfilePayload {

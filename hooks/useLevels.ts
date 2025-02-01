@@ -70,7 +70,7 @@ const useLevels = () => {
     const remainingPercent =
       requiredPoints > 0 ? remainingPoints / requiredPoints : 0; // Avoid division by zero
 
-    return [(1 - remainingPercent) * 100, remainingPoints];
+    return [Math.round(1 - remainingPercent) * 100, remainingPoints];
   };
   return {
     loading,

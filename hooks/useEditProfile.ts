@@ -78,8 +78,7 @@ const useEditProfile = () => {
         }
         // console.log(response);
       }
-    } catch (error) {
-      console.log(error);
+    } catch {
       notify("error", "ویرایش اطلاعات کاربری با خطا مواجه شد");
     } finally {
       setLoadingUpdate(false);

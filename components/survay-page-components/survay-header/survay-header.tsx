@@ -1,6 +1,7 @@
 "use client";
 
 import InvoiceModalDetail from "@/components/invoice-page/invoice-detail/invoice-detai-modal";
+import { IInvoiceDetail } from "@/types/invoice";
 import moment from "jalali-moment";
 import { useState } from "react";
 
@@ -9,6 +10,7 @@ interface SurvayHeaderProps {
   invoiceId: string;
   survayDescription: string;
   survayTopic: string;
+  invoiceDetail: IInvoiceDetail;
 }
 
 const SurvayHeader: React.FC<SurvayHeaderProps> = ({
@@ -16,6 +18,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
   invoiceId,
   survayDescription,
   survayTopic,
+  invoiceDetail,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -47,11 +50,14 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
       <p className="text-center w-full text-Secondary font-Regular">
         {survayDescription}
       </p>
-      {/* <InvoiceModalDetail
+      <InvoiceModalDetail
         setOpen={setOpen}
         open={open}
         loadingInvoice={false}
-      /> */}
+        invoiceDetail={invoiceDetail}
+        transactionID={""}
+        showSurveyButton={false}
+      />
     </div>
   );
 };

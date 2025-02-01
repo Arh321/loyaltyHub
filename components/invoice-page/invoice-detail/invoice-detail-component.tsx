@@ -32,7 +32,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   loadingInvoice,
 }) => {
   const [invoice, setInvoice] = useState<IInvoiceDetail>(invoiceDetail);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(false);
   const { info } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
@@ -57,7 +57,9 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   }, [transactionID, onClose]);
 
   useEffect(() => {
-    onLoadSearchedInvoice();
+    if (!invoiceDetail) {
+      onLoadSearchedInvoice();
+    }
   }, [transactionID]);
 
   const downloadPdfDocument = () => {
@@ -106,7 +108,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
         print={print}
       />
       <InvoiceDetails invoice={invoice} info={info} />
-      {showServayButton && <SurveyButton />}
+      {showServayButton && <SurveyButton invoiceId={+invoice.sourceId} />}
     </div>
   );
 };
@@ -128,6 +130,7 @@ const InvoiceDetails: React.FC<{
         <InvoiceDetailItemsTable items={invoice.body} />
       </div>
       <InvoiceDetailsFooter
+        vatPrice={invoice.vatPrice}
         salePrice={invoice.totalPrice}
         finalPrice={invoice.totalPriceAfterDiscount}
         factorID={invoice.id}
@@ -136,9 +139,11 @@ const InvoiceDetails: React.FC<{
   </div>
 );
 
-const SurveyButton: React.FC = () => (
+const SurveyButton: React.FC<{
+  invoiceId: number;
+}> = ({ invoiceId }) => (
   <Link
-    href="/survey"
+    href={`/survey?invoiceId=${invoiceId}`}
     className=" py-3 flex justify-center rounded-md bg-Secondary2 text-Highlighter hover:!text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
   >
     ثبت نظر برای این فاکتور

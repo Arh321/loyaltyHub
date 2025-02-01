@@ -23,6 +23,8 @@ export const controlers = {
   GiftCard: "api/GiftCard",
   Ranking: "api/Ranking",
   Level: "api/Level",
+  Setting: "api/Setting",
+  Survey: "api/Survey",
 };
 
 // Ensure you have js-cookie or a similar library installed

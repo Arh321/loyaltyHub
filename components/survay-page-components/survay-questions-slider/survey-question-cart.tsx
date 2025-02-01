@@ -1,14 +1,15 @@
 import Image, { StaticImageData } from "next/image";
 import CustomRate from "./survey-stars-container";
 import { SurveySlide } from "@/hooks/useScore";
+import { ISurveyQuestions } from "@/types/survet-types";
 
 interface SurvayQuestionCartComponentProps {
   imageUrl: string | StaticImageData;
   title: string;
   score: number;
   index: number;
-  tempSlides: SurveySlide[];
-  setTempSlides: (slides: SurveySlide[]) => void;
+  tempSlides: ISurveyQuestions[];
+  setTempSlides: (slides: ISurveyQuestions[]) => void;
   reset: boolean;
 }
 
@@ -20,9 +21,10 @@ const SurvayQuestionCartComponent: React.FC<
       if (item.id == index) {
         return {
           id: item.id,
-          mediuUrl: item.mediuUrl,
-          question: item.question,
-          score: value,
+          imageUrl: item.imageUrl,
+          title: item.title,
+          givenPoint: value,
+          applyDate: item.applyDate,
         };
       } else return item;
     });
@@ -33,7 +35,7 @@ const SurvayQuestionCartComponent: React.FC<
     <>
       <div className="w-full aspect-[7/9] relative rounded-[24px] overflow-hidden">
         <Image
-          src={imageUrl}
+          src={"https://hubapi.loyaltyhub.ir" + imageUrl}
           width={200}
           height={400}
           className="w-full h-full object-cover"

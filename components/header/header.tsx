@@ -9,22 +9,33 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
+import useAppInitializer from "@/hooks/useAppInitializer";
 
 const Sidebar = React.lazy(() => import("./side-bar"));
 const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
 
 const Header = () => {
+  const {} = useAppInitializer();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [showServayButton, setShoSurveyButton] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
-  const { invoiceDetail, loadingInvoice, showInvoice, setShowInvoice } =
-    useAuth();
+  const {
+    invoiceDetail,
+    loadingInvoice,
+    showInvoice,
+    invoiceId,
+    setShowInvoice,
+  } = useAuth();
 
   const isSurveyPage = pathname.includes("survey");
   const isLoginPage = pathname.includes("login");
   useEffect(() => {
-    setIsModalOpen(false);
-  }, [pathname]);
+    setShowInvoice(false);
+    if (invoiceDetail) {
+      setShowInvoice(true);
+    }
+  }, [pathname, invoiceDetail]);
 
   return (
     <header
@@ -78,7 +89,7 @@ const Header = () => {
         open={showInvoice}
         loadingInvoice={loadingInvoice}
         invoiceDetail={invoiceDetail}
-        transactionID=""
+        transactionID={invoiceId}
       />
     </header>
   );

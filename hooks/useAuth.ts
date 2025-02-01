@@ -43,7 +43,6 @@ const useAuth = () => {
     if (!invoiceId) return;
 
     setLoadingInvoice(true);
-    setShowInvoice(true);
 
     try {
       const valid = await validateInvoiceById({ invoiceId });
@@ -58,7 +57,7 @@ const useAuth = () => {
 
       if (response.status) {
         notify("success", response.statusMessage);
-        setInvoiceDetail(response.result);
+        setInvoiceDetail(() => response.result);
       } else {
         notify("error", response.statusMessage || "خطا در دریافت فاکتور");
         setShowInvoice(false);
@@ -102,6 +101,8 @@ const useAuth = () => {
    */
   useEffect(() => {
     if (path === "/" && hasToken && invoiceId) {
+      console.log(invoiceId);
+
       onLoadSearchedInvoice();
     } else if (!hasToken) {
       dispatch(onCheckHasToken());
@@ -118,6 +119,7 @@ const useAuth = () => {
     loadingInvoice,
     invoiceDetail,
     showInvoice,
+    invoiceId,
     setShowInvoice,
   };
 };

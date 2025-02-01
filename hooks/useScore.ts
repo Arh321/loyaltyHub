@@ -1,5 +1,10 @@
+import { useNotify } from "@/components/notife/notife";
+import { IApplySurveyPoint, ISurveyQuestions } from "@/types/survet-types";
+import { applyAnswerToSurveyInvoice } from "@/utils/surveyService";
 import { StaticImageData } from "next/image";
-import { useReducer } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useReducer, useState } from "react";
+import { Swiper } from "swiper/types";
 
 export interface SurveySlide {
   id: number;
@@ -12,13 +17,13 @@ interface State {
   activeIndex: number;
 
   reset: boolean;
-  slides: SurveySlide[];
-  tempSlides: SurveySlide[];
+  slides: ISurveyQuestions[];
+  tempSlides: ISurveyQuestions[];
 }
 
 type Action =
-  | { type: "SET_SLIDES"; payload: SurveySlide[] }
-  | { type: "SET_TEMP_SLIDES"; payload: SurveySlide[] }
+  | { type: "SET_SLIDES"; payload: ISurveyQuestions[] }
+  | { type: "SET_TEMP_SLIDES"; payload: ISurveyQuestions[] }
   | { type: "SET_ACTIVE_INDEX"; payload: number }
   | { type: "SET_RESET"; payload: boolean }
   | { type: "NEXT_SLIDE" }
@@ -47,17 +52,23 @@ const reducer = (state: State, action: Action): State => {
   }
 };
 
-const useScore = (initialSlides: SurveySlide[]) => {
+const useScore = (initialSlides: ISurveyQuestions[]) => {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState,
     slides: initialSlides,
     tempSlides: initialSlides,
   });
+  const [applyLoading, setApplyLoading] = useState<boolean>(false);
+  const [loadingNavigate, setLoadingNAvigate] = useState(false);
+  const navigate = useRouter();
+  const searchParams = useSearchParams();
+  const { notify } = useNotify();
+  const invoiceId = searchParams.get("invoiceId");
 
-  const setSlides = (slides: SurveySlide[]) =>
+  const setSlides = (slides: ISurveyQuestions[]) =>
     dispatch({ type: "SET_SLIDES", payload: slides });
 
-  const setTempSlides = (slides: SurveySlide[]) =>
+  const setTempSlides = (slides: ISurveyQuestions[]) =>
     dispatch({ type: "SET_TEMP_SLIDES", payload: slides });
 
   const setActiveIndex = (index: number) =>
@@ -66,12 +77,69 @@ const useScore = (initialSlides: SurveySlide[]) => {
   const setReset = (reset: boolean) =>
     dispatch({ type: "SET_RESET", payload: reset });
 
+  const onApplyPoints = async (
+    question: ISurveyQuestions,
+    surveyId: number,
+    swiperInstance: Swiper
+  ) => {
+    setApplyLoading(true);
+    const payload: IApplySurveyPoint = {
+      givenPoint: question.givenPoint,
+      invoiceId: invoiceId,
+      surveyDetailId: question.id,
+      surveyId,
+    };
+    try {
+      const response = await applyAnswerToSurveyInvoice(payload);
+      if (response.status) {
+        notify("success", response.statusMessage);
+        setSlides(state.tempSlides);
+        swiperInstance.slideNext();
+
+        if (state.activeIndex === state.slides.length - 1) {
+          handleSubmitSurvey(surveyId.toString());
+        }
+      } else {
+        notify("error", response.statusMessage || "خطا در ثبت پاسخ");
+      }
+    } catch (error) {
+      notify("error", "خطا در ثبت پاسخ");
+    } finally {
+    }
+    setApplyLoading(false);
+  };
+
+  const handleSubmitSurvey = useCallback(
+    (surveyId: string) => {
+      setLoadingNAvigate(true);
+
+      const average = state.slides.reduce(
+        (prev, curr) => prev + curr.givenPoint,
+        0
+      );
+      const query = new URLSearchParams({
+        average: (average / state.slides.length).toFixed(1),
+        survey: "done",
+        surveyId,
+        invoiceId,
+      }).toString();
+      setTimeout(() => {
+        navigate.push(`/?${query}`);
+        setLoadingNAvigate(false);
+      }, 750);
+    },
+    [state.slides, navigate]
+  );
+
   return {
     state,
+    applyLoading,
     setSlides,
     setTempSlides,
     setActiveIndex,
     setReset,
+    onApplyPoints,
+    loadingNavigate,
   };
 };
 

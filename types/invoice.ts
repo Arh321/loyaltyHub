@@ -22,6 +22,9 @@ export interface IInvoiceDetail {
   totalPrice: number; // Total price before any adjustments
   vatPrice: number; // VAT price in currency
   finalPrice: number; // Final price after all calculations
+  surveyAction: boolean;
+  surveyCompleted: boolean;
+  surveyEnable: boolean;
 }
 
 export interface FactorDetail {
