@@ -1,8 +1,8 @@
 {
   "name": "loyalty club",
   "short_name": "loyalty club",
-  "theme_color": "#fff",
-  "background_color": "#fff",
+  "theme_color": "#1E9C51",
+  "background_color": "#1E9C51",
   "display": "browser",
   "orientation": "portrait",
   "start_url": "/",

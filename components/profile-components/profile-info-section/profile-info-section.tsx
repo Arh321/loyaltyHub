@@ -24,7 +24,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   cellPhone,
   showEditModal,
 }) => {
-  const [value, setValue] = useState(mandatory.gender);
+  const [value, setValue] = useState(!!mandatory.gender);
 
   const onChange = (e: RadioChangeEvent) => {
     setValue(!e.target.value);
@@ -61,6 +61,14 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
       ),
     },
   ];
+
+  const birthDate = mandatory.birthdate
+    ? moment
+        .from(mandatory.birthdate, "YYYY-MM-DD")
+        .locale("fa")
+        .format("YYYY/MM/DD")
+    : "";
+
   return (
     <div
       dir="rtl"
@@ -100,10 +108,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
           },
           {
             title: "تاریخ تولد",
-            value: moment
-              .from(mandatory.birthdate, "YYYY-MM-DD")
-              .locale("fa")
-              .format("YYYY/MM/DD"),
+            value: birthDate,
           },
         ]}
         onEditMethod={() =>

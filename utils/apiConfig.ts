@@ -9,7 +9,7 @@ const cookies = new Cookies();
 // Create the Axios instance
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Use environment variables for flexibility
-  timeout: 20000, // Set a timeout to handle long requests
+  timeout: 50000, // Set a timeout to handle long requests
   headers: {
     "Content-Type": "application/json",
   },

@@ -16,6 +16,6 @@ fa_IR.lang.shortMonths = [
   "اسفند",
 ];
 
-fa_IR.lang.shortWeekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+// fa_IR.lang.shortWeekDays = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 
 export default fa_IR;

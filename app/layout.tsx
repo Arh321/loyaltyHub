@@ -23,35 +23,30 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
+  metadataBase: new URL("https://hosseinibrothers.loyaltyhub.ir/"),
   title: "باشگاه مشتریان",
-
-  metadataBase: new URL("https://hosseinibrothers.loyaltyhub.ir/"), // Replace with your actual domain
   description: "توسعه یافته توسط تیم LoyalityHub.ir",
-  icons: {
-    icon: [
-      { url: "/icons/icon-72x72.png" }, // Default
-    ],
-  },
   openGraph: {
+    type: "website",
+    url: "https://hosseinibrothers.loyaltyhub.ir/",
     title: "باشگاه مشتریان",
     description: "توسعه یافته توسط تیم LoyalityHub.ir",
     images: [
       {
-        url: "/icons/icon-512x512.png", // Path to your OG image
-        width: 512, // Optional: width of the image
-        height: 512, // Optional: height of the image
-        alt: "لوگوی باشگاه مشتریان", // Optional: alt text for the image
-      },
-      {
-        url: "/icons/icon-144x144.png", // Path to your OG image
-        width: 144, // Optional: width of the image
-        height: 144, // Optional: height of the image
-        alt: "لوگوی باشگاه مشتریان", // Optional: alt text for the image
+        url: "/icons/icon-512x512.png",
+        width: 1200,
+        height: 630,
+        alt: "لوگوی باشگاه مشتریان",
       },
     ],
-    siteName: "باشگاه مشتریان آجیل حسینی", // Optional: the name of your website
-    type: "website", // Optional: type of the content
-    locale: "fa_IR", // Optional: specify locale for better SEO
+    siteName: "باشگاه مشتریان",
+    locale: "fa_IR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "باشگاه مشتریان",
+    description: "توسعه یافته توسط تیم LoyalityHub.ir",
+    images: ["/icons/icon-512x512.png"],
   },
 };
 
@@ -70,6 +65,26 @@ export default function RootLayout({
           type="image/x-icon"
           sizes="16x16"
         ></link>
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="192x192"
+          href="/icons/icon-192x192.png"
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="512x512"
+          href="/icons/icon-512x512.png"
+        />
+        <meta
+          property="og:logo"
+          content="https://hosseinibrothers.loyaltyhub.ir/icons/icon-144x144.png"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

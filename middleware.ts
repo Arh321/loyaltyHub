@@ -60,7 +60,7 @@ function redirectToLoginWithInvoiceId(request) {
 
 export const config = {
   matcher: [
-    // Protect all routes except login and public assets
-    "/((?!login|_next/static|_next/image|favicon.ico).*)",
+    // Protect all routes except login, public assets, and icons
+    "/((?!login|_next/static|_next/image|favicon.ico|icons/).*)",
   ],
 };

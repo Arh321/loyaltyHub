@@ -61,17 +61,26 @@ const useEditProfile = () => {
         sectionNameToEdit === "mandatory" ? { mandatory } : { additional };
       const response = await updateProfile(payload);
 
-      if (response.status) {
+      if (response && response.status) {
         notify("success", response.statusMessage);
         getUserProfile();
         onClose();
       } else {
-        throw new Error(
-          response.statusMessage || "ویرایش اطلاعات کاربری با خطا مواجه شد"
-        );
+        if (response.errors) {
+          Object.values(response.errors).forEach((message) =>
+            notify("error", message)
+          );
+        } else {
+          notify(
+            "error",
+            response.statusMessage || "ویرایش اطلاعات کاربری با خطا مواجه شد"
+          );
+        }
+        // console.log(response);
       }
     } catch (error) {
-      notify("error", error.message);
+      console.log(error);
+      notify("error", "ویرایش اطلاعات کاربری با خطا مواجه شد");
     } finally {
       setLoadingUpdate(false);
     }
