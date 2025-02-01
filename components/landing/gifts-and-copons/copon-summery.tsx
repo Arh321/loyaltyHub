@@ -37,16 +37,6 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
     }
   };
 
-  if (loading)
-    return (
-      <div className="col-span-1 w-full aspect-square">
-        <Skeleton.Node
-          className="!flex !w-full !h-full aspect-square rounded-[10px]"
-          active
-        />
-      </div>
-    );
-
   return (
     <div className="col-span-1  animate-fadeIn w-full aspect-[6/5] bg-Highlighter rounded-[10px] overflow-hidden">
       <Link

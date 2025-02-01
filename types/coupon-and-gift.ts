@@ -28,3 +28,12 @@ export type IGifts = {
   isCoupon: true;
   isActive: true;
 };
+
+export interface IGiftCardLabels {
+  couponsCount: number;
+  couponsMaxPercent: number;
+  couponsMinPercent: number;
+  giftCardCount: number;
+  giftCardMaxPercent: number;
+  giftCardMinPercent: number;
+}

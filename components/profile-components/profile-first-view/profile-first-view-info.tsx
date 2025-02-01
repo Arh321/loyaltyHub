@@ -38,8 +38,7 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
             <Icon icon="mingcute:user-3-line" width="24" height="24" />
           </span>
           <span className="font-Bold text-lg">
-            {name}
-            {familyName}
+            {name} {familyName}
           </span>
         </p>
         <p dir="rtl" className="flex items-center gap-1 text-Highlighter-Faded">

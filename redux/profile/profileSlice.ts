@@ -25,6 +25,7 @@ export interface ProfileSliceType {
   customerToken: unknown;
   hasToken: boolean;
   loadingProfile: boolean;
+  customerId: number;
 }
 
 const initialState: ProfileSliceType = {
@@ -32,6 +33,7 @@ const initialState: ProfileSliceType = {
   customerToken: "",
   hasToken: false,
   loadingProfile: false,
+  customerId: 0,
 };
 
 const profileSlice = createSlice({
@@ -79,9 +81,9 @@ const profileSlice = createSlice({
     onLoadingProfile: (state, payload: PayloadAction<boolean>) => {
       state.loadingProfile = payload.payload;
     },
-    // onShowNotif: (state, payload: PayloadAction<ProfileNotifeProps>) => {
-    //   state.profileNotifeProps = payload.payload;
-    // },
+    onSetCustomerID: (state, payload: PayloadAction<number>) => {
+      state.customerId = payload.payload;
+    },
 
     // onCheckProfile: (state, payload: PayloadAction<unknown>) => {
     //   const fields: string[] = [];
@@ -108,7 +110,7 @@ export const {
   onLogOut,
   onSetProfile,
   onLoadingProfile,
-  // onShowNotif,
+  onSetCustomerID,
 
   // onCheckProfile,
 

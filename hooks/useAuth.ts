@@ -121,6 +121,7 @@ const useAuth = () => {
     showInvoice,
     invoiceId,
     setShowInvoice,
+    cookies,
   };
 };
 

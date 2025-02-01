@@ -10,6 +10,7 @@ import React, { memo, useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
 import useAppInitializer from "@/hooks/useAppInitializer";
+import { LogoutOutlined } from "@ant-design/icons";
 
 const Sidebar = React.lazy(() => import("./side-bar"));
 const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
@@ -25,6 +26,7 @@ const Header = () => {
     loadingInvoice,
     showInvoice,
     invoiceId,
+    cookies,
     setShowInvoice,
   } = useAuth();
 
@@ -36,6 +38,12 @@ const Header = () => {
       setShowInvoice(true);
     }
   }, [pathname, invoiceDetail]);
+
+  const onLogOut = () => {
+    cookies.remove("token");
+
+    router.push("/login");
+  };
 
   return (
     <header
@@ -64,6 +72,15 @@ const Header = () => {
                     height="32"
                     className="text-Highlighter"
                   />
+                </button>
+              )}
+              {pathname === "/" && (
+                <button
+                  onClick={() => onLogOut()}
+                  className="text-Highlighter flex items-center gap-1"
+                >
+                  <span className="font-Regular">خروج</span>
+                  <LogoutOutlined />
                 </button>
               )}
             </div>
