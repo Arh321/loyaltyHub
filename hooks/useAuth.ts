@@ -30,6 +30,8 @@ const useAuth = () => {
   const { notify } = useNotify();
 
   const invoiceId = searchParams.get("invoiceId");
+  const avg = searchParams.get("average");
+
   const cookies = new Cookies();
 
   const { hasToken } = useSelector<RootState, ProfileSliceType>(
@@ -100,9 +102,7 @@ const useAuth = () => {
    * Handles the token and invoice validation on component mount or path changes.
    */
   useEffect(() => {
-    if (path === "/" && hasToken && invoiceId) {
-      console.log(invoiceId);
-
+    if (path === "/" && hasToken && invoiceId && !avg) {
       onLoadSearchedInvoice();
     } else if (!hasToken) {
       dispatch(onCheckHasToken());

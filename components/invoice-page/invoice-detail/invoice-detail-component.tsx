@@ -31,7 +31,9 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   showServayButton,
   loadingInvoice,
 }) => {
-  const [invoice, setInvoice] = useState<IInvoiceDetail>(invoiceDetail);
+  const [invoice, setInvoice] = useState<IInvoiceDetail>(
+    invoiceDetail ? invoiceDetail : undefined
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState(false);
   const { info } = useSelector<RootState, ProfileSliceType>(
@@ -96,21 +98,22 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
     );
   }
 
-  return (
-    <div
-      dir="rtl"
-      className="w-full flex flex-col h-full overflow-hidden animate-fadeIn bg-Highlighter p-1 rounded-lg"
-    >
-      <InvoiceDetailHeader
-        transactionID={transactionID}
-        onClose={onClose}
-        downloadPdf={downloadPdfDocument}
-        print={print}
-      />
-      <InvoiceDetails invoice={invoice} info={info} />
-      {showServayButton && <SurveyButton invoiceId={+invoice.sourceId} />}
-    </div>
-  );
+  if (invoice)
+    return (
+      <div
+        dir="rtl"
+        className="w-full flex flex-col h-full overflow-hidden animate-fadeIn bg-Highlighter p-1 rounded-lg"
+      >
+        <InvoiceDetailHeader
+          transactionID={transactionID}
+          onClose={onClose}
+          downloadPdf={downloadPdfDocument}
+          print={print}
+        />
+        <InvoiceDetails invoice={invoice} info={info} />
+        {showServayButton && <SurveyButton invoiceId={+invoice.sourceId} />}
+      </div>
+    );
 };
 
 const InvoiceDetails: React.FC<{
