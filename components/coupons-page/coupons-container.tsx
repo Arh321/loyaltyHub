@@ -23,7 +23,8 @@ const CouponsContainerList = () => {
         customerId: 2280,
       });
       if (response.status) {
-        setData(() => response.result);
+        const coupons = response.result.filter((item) => item.isCoupon);
+        setData(() => coupons);
       } else {
         setLoading(false);
 
@@ -50,7 +51,7 @@ const CouponsContainerList = () => {
         <div className="w-full flex flex-col gap-[12px]">
           <TransitionGroup component="ul" className="space-y-2">
             {data
-              .filter((item) => item.useTimes == 0)
+              .filter((item) => item.isUsed && !item.isActive)
               .map((item, index) => {
                 return (
                   <CSSTransition
@@ -81,7 +82,7 @@ const CouponsContainerList = () => {
         <div className="w-full flex flex-col gap-[12px]">
           <TransitionGroup component="ul" className="space-y-2">
             {data
-              .filter((item) => item.useTimes !== 0)
+              .filter((item) => !item.isUsed && item.isActive)
               .map((item, index) => {
                 return (
                   <CSSTransition
