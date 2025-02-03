@@ -29,7 +29,10 @@ const GiftsContainerList = () => {
         customerId: 2280,
       });
       if (response.status) {
-        setData(() => response.result);
+        const gifts = response.result.filter(
+          (item) => !item.isCoupon && item.isActive && !item.isUsed
+        );
+        setData(() => gifts);
       } else {
         setLoading(false);
 

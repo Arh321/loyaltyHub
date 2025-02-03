@@ -13,40 +13,6 @@ import style from "./survay-questions-slider.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ISurveyQuestions } from "@/types/survet-types";
 
-const survays = [
-  {
-    id: 1,
-    mediuUrl: "https://s8.uupload.ir/files/1029_(1)_(1)_jx89.jpg",
-    question: "تنوع و کیفیت کالا",
-    score: 4,
-  },
-  {
-    id: 2,
-    mediuUrl: "https://s8.uupload.ir/files/2149139388_(1)_(1)_2em5.jpg",
-    question: "سرعت و کیفیت خدمات",
-    score: 3,
-  },
-  {
-    id: 3,
-    mediuUrl: "https://s8.uupload.ir/files/hosseini_u1mo.jpg",
-    question: "محیط و تمیزی فروشگاه",
-    score: 0,
-  },
-  {
-    id: 4,
-    mediuUrl:
-      "https://s8.uupload.ir/files/peeled-almonds-clay-plate-stone-tile-wooden-background_(1)_(1)_qpd.jpg",
-    question: "امکانات و تجهیزات",
-    score: 1,
-  },
-  {
-    id: 5,
-    mediuUrl: "https://s8.uupload.ir/files/rectangle_4402_hjng.jpg",
-    question: "تجربه کلی از خرید",
-    score: 1,
-  },
-];
-
 interface SurveyQuestionsSliderProps {
   questions: ISurveyQuestions[];
   surveyId: number;
@@ -84,7 +50,6 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
   // Navigation handlers
   const handleNext = useCallback(() => {
     if (!swiperInstance) return;
-    console.log(state.tempSlides[state.activeIndex]);
     onApplyPoints(
       state.tempSlides[state.activeIndex],
       surveyId,
@@ -164,7 +129,9 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
             className=" font-Medium bg-Secondary2 text-Highlighter p-2 text-lg rounded-lg w-[284px]"
           >
             {(applyLoading || loadingNavigate) && <LoadingOutlined />}
-            ثبت و بعدی
+            {state.activeIndex === state.slides.length - 1
+              ? "ثبت و پایان"
+              : "ثبت و بعدی"}
           </button>
         </div>
       </div>

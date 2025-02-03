@@ -89,24 +89,31 @@ const useScore = (initialSlides: ISurveyQuestions[]) => {
       surveyDetailId: question.id,
       surveyId,
     };
-    try {
-      const response = await applyAnswerToSurveyInvoice(payload);
-      if (response.status) {
-        notify("success", response.statusMessage);
-        setSlides(state.tempSlides);
-        swiperInstance.slideNext();
+    if (question.givenPoint > 0) {
+      try {
+        const response = await applyAnswerToSurveyInvoice(payload);
+        if (response.status) {
+          notify("success", response.statusMessage);
+          setSlides(state.tempSlides);
+          swiperInstance.slideNext();
 
-        if (state.activeIndex === state.slides.length - 1) {
-          handleSubmitSurvey(surveyId.toString());
+          if (state.activeIndex === state.slides.length - 1) {
+            handleSubmitSurvey(surveyId.toString());
+          }
+        } else {
+          notify("error", response.statusMessage || "خطا در ثبت پاسخ");
         }
-      } else {
-        notify("error", response.statusMessage || "خطا در ثبت پاسخ");
+      } catch (error) {
+        notify("error", "خطا در ثبت پاسخ");
+      } finally {
+        setApplyLoading(false);
       }
-    } catch (error) {
-      notify("error", "خطا در ثبت پاسخ");
-    } finally {
+    } else {
+      swiperInstance.slideNext();
+      if (state.activeIndex === state.slides.length - 1) {
+        handleSubmitSurvey(surveyId.toString());
+      }
     }
-    setApplyLoading(false);
   };
 
   const handleSubmitSurvey = useCallback(

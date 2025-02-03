@@ -14,7 +14,6 @@ interface SurvayQuestionCartComponentProps {
   setTempSlides: (slides: ISurveyQuestions[]) => void;
   reset: boolean;
 }
-const CUSTOM_ITEM_LABELS = ["بـــد", "متوسط", "خوب", "خیلی خوب", "عالی"];
 
 const SurvayQuestionCartComponent: React.FC<
   SurvayQuestionCartComponentProps

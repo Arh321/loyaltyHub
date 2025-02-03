@@ -25,8 +25,9 @@ export type IGifts = {
   useTimes: number;
   missionCode: string;
   missionTitle: string;
-  isCoupon: true;
-  isActive: true;
+  isCoupon: boolean;
+  isActive: boolean;
+  isUsed: boolean;
 };
 
 export interface IGiftCardLabels {
