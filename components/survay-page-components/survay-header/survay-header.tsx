@@ -25,9 +25,9 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col gap-4 py-4 border-b border-Secondary sm:px-6"
+      className="w-full flex flex-col gap-2 py-2 border-b border-gray-300 sm:px-6"
     >
-      <h1 className="w-full font-Medium text-Primary text-center ">
+      <h1 className="w-full font-Medium text-Primary text-center !m-0">
         {survayTopic}
       </h1>
       <div className="w-full flex items-center justify-between">
@@ -42,12 +42,12 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
         </span>
         <button
           onClick={() => setOpen(true)}
-          className="w-[136px] h-[46px] text-Secondary2 font-Medium flex justify-center items-center rounded-[8px] border border-Secondary2"
+          className="w-[136px] h-[40px] text-Secondary2 font-Medium flex justify-center items-center rounded-[8px] border border-Secondary2"
         >
           مشاهده فاکتور
         </button>
       </div>
-      <p className="text-center w-full text-Secondary font-Regular">
+      <p className="text-center w-full text-Secondary font-Regular !m-0">
         {survayDescription}
       </p>
       <InvoiceModalDetail

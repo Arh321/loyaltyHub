@@ -50,7 +50,7 @@ const SurvayPage = () => {
     return (
       <PagesContainer>
         <Suspense fallback={<AppLoading />}>
-          <div className="w-full  flex flex-col pb-[100px]">
+          <div className="w-full  flex flex-col pb-[10px]">
             <SurvayHeader
               survayDescription={surveyInfo.description}
               invoiceDate={invoiceDetail.purchaseDate}

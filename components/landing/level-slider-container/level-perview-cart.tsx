@@ -16,7 +16,7 @@ interface LevelPerviewCartProps {
   inLevelPAge?: boolean;
   levelStatus: LevelState;
   levelsStatus: [string, string][];
-  getRemainingPointsAndPercent: (level: IClubStatusNew) => number[];
+  getRemainingPointsAndPercent: (level: IClubStatusNew) => [string, number];
 }
 
 const LevelPerviewCart: FC<LevelPerviewCartProps> = ({

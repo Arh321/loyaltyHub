@@ -115,7 +115,7 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
   }
 
   return (
-    <div className="w-full grow relative pt-[20px] animate-fadeIn">
+    <div className="w-full grow relative pt-[10px] animate-fadeIn">
       <Swiper
         slidesPerView={1.3}
         centeredSlides
@@ -125,11 +125,10 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
         onSwiper={setSwiperInstance}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         modules={[Pagination]}
-        allowTouchMove={false}
         className={clsx(style["survey-swiper"])}
       >
         {state.slides.map((item, index) => (
-          <SwiperSlide key={index} className="flex flex-col gap-[20px]">
+          <SwiperSlide key={index} className="flex flex-col gap-[8px]">
             <SurvayQuestionCartComponent
               imageUrl={item.imageUrl}
               title={item.title}
@@ -142,25 +141,30 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="w-full flex flex-col gap-[20px] pt-[20px]">
-        <div className="w-full flex flex-col gap-[10px] items-center h-[100px]">
-          <button
-            disabled={applyLoading || loadingNavigate}
-            onClick={handleNext}
-            className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-[284px]"
-          >
-            {applyLoading || (loadingNavigate && <LoadingOutlined />)}
-            ثبت و بعدی
-          </button>
+      <div className="w-full flex flex-col gap-[20px]">
+        <div
+          className={clsx(
+            "w-full flex gap-[10px] items-center px-4 pt-1",
+            state.activeIndex === 0 ? "justify-center" : "justify-between"
+          )}
+        >
           <button
             disabled={applyLoading || loadingNavigate}
             onClick={handlePrev}
             className={clsx(
-              "font-Medium bg-Highlighter text-Secondary2 p-3 text-lg rounded-lg w-[284px]",
+              "font-Medium bg-Highlighter text-Secondary2 p-2 text-lg rounded-lg w-[200px]",
               state.activeIndex === 0 && "hidden"
             )}
           >
             قبلی
+          </button>
+          <button
+            disabled={applyLoading || loadingNavigate}
+            onClick={handleNext}
+            className=" font-Medium bg-Secondary2 text-Highlighter p-2 text-lg rounded-lg w-[284px]"
+          >
+            {(applyLoading || loadingNavigate) && <LoadingOutlined />}
+            ثبت و بعدی
           </button>
         </div>
       </div>

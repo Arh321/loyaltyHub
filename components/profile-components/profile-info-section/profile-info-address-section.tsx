@@ -68,7 +68,7 @@ const ProfileInfoAddressSection: React.FC<ProfileInfoAddressSectionProps> = ({
       <ProfileOneRowInfo
         items={[
           {
-            title: "کدپشتی",
+            title: "کدپستی",
             value: defaultAddress.doorNo,
           },
         ]}

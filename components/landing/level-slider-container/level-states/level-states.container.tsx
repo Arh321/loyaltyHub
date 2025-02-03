@@ -7,7 +7,7 @@ interface LevelStatesContainerProps {
     readonly [key: string]: string;
   };
   levelStatus: LevelState;
-  levelDetails: number[]; // [remainingPercent, remainingPoints]
+  levelDetails: [string, number]; // [remainingPercent, remainingPoints]
 }
 
 const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
@@ -57,7 +57,7 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
             className="w-[34px] h-[34px] bg-Highlighter shadow-lg rounded-full p-2 text-sm font-Bold flex justify-center items-center absolute top-0 left-0 right-0 mx-auto -translate-y-[70%]"
             aria-label={`${remainingPercent}% Complete`}
             role="progressbar"
-            aria-valuenow={remainingPercent}
+            aria-valuenow={Number(remainingPercent)}
             aria-valuemin={0}
             aria-valuemax={100}
           >
@@ -66,7 +66,7 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
 
           <div className="absolute w-full -bottom-2">
             <Progress
-              percent={remainingPercent}
+              percent={+remainingPercent}
               strokeColor="var(--Secondary2)"
               strokeWidth={2}
               showInfo={false}

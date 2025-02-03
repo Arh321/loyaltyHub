@@ -23,7 +23,7 @@
   justify-content: center;
   gap: 2px;
   align-items: center;
-  height: 50px !important;
+  height: 20px !important;
   margin-top: 0;
   position: unset !important;
 }
@@ -74,4 +74,14 @@
   background-color: #fadb14;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   z-index: 2;
+}
+.custome-stars-container
+  [class~="ant-rate-star-zero"]
+  [class~="ant-rate-star-first"],
+.custome-stars-container
+  [class~="ant-rate-star-zero"]
+  [class~="ant-rate-star-second"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.2s;
+  user-select: none;
 }

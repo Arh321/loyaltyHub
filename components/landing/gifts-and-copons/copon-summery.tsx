@@ -21,7 +21,7 @@ const CoponsAndGiftsSummeryComponentItem: React.FC<
         return (
           <span className="flex items-center gap-1 font-Regular">
             <span className="text-lg">{value}</span>
-            <span className="text-sm">تومان</span>
+            <span className="text-sm">عدد</span>
           </span>
         );
 

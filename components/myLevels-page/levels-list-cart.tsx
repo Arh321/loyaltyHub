@@ -14,7 +14,7 @@ import style from "./levels-list-style.module.css";
 interface LevelsListCartProps {
   level: IClubStatusNew;
   levelsStatus: [string, string][];
-  getRemainingPointsAndPercent: (level: IClubStatusNew) => number[];
+  getRemainingPointsAndPercent: (level: IClubStatusNew) => [string, number];
 }
 
 const LevelsListCart: React.FC<LevelsListCartProps> = ({

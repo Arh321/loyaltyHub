@@ -82,7 +82,7 @@ const GiftsAndCoponsContainerComponent = () => {
             title={"کارت هدیه"}
             icon={<GiftIcon width="70" height="32" color="var(--Secondary2)" />}
             value={lables.giftCardCount.toString()}
-            type={"copon"}
+            type={"gift"}
             loading={loading}
           />
         </Suspense>

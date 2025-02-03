@@ -1,20 +1,60 @@
 "use client";
 import { FactorIcon } from "@/components/sharedIcons/sharedIcons";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { Icon } from "@iconify/react";
 import InvoiceModalDetail from "../invoice-detail/invoice-detai-modal";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import clsx from "clsx";
 import { IInvoice } from "@/types/invoice";
 import moment from "jalali-moment";
+import {
+  CheckCircleOutlined,
+  CheckOutlined,
+  WarningOutlined,
+} from "@ant-design/icons";
 
-interface InoiceListItemProps {
+interface InvoiceListItemProps {
   index: number;
   invoice: IInvoice;
 }
 
-const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
+const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
+  index,
+  invoice,
+}) => {
   const [open, setOpen] = useState(false);
+
+  // 🔹 Memoized survey status
+  const surveyStatus = useMemo(() => {
+    if (!invoice.surveyEnable)
+      return {
+        text: "نظرسنجی در دسترس نیست",
+        bgClass: "bg-[#ECFAF4] text-[#1EA97C] ",
+      };
+    if (invoice.surveyCompleted)
+      return {
+        text: "نظرسنجی تکمیل شده",
+        bgClass: "bg-[#ECFAF4] text-[#1EA97C] ",
+      };
+    if (invoice.surveyAction)
+      return {
+        text: "نظرسنجی در حال انجام",
+        bgClass: "bg-[#FFF6EB] text-[#CC8925]",
+      };
+    return {
+      text: "نظرسنجی شروع نشده",
+      bgClass: "bg-[#FFF6EB] text-[#CC8925]",
+    };
+  }, [invoice.surveyEnable, invoice.surveyCompleted, invoice.surveyAction]);
+
+  // 🔹 Render survey icon based on status
+  const renderSurveyIcon = () =>
+    invoice.surveyEnable && !invoice.surveyCompleted ? (
+      <WarningOutlined width={28} className="!text-[#CC8925] text-xl" />
+    ) : (
+      <CheckOutlined width={28} className="!text-[#1EA97C] text-xl" />
+    );
+
   return (
     <>
       <div
@@ -26,11 +66,10 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
           animationFillMode: "forwards",
           transform: "translateY(250px)",
         }}
-        className={clsx(
-          "w-full flex flex-col opacity-0 gap-[12px] px-[10px] py-[12px] bg-Highlighter rounded-[10px] relative animate-fadeUp"
-        )}
+        className="w-full flex flex-col opacity-0 gap-[12px] px-[10px] pt-[12px] pb-[50px] shadow bg-Highlighter rounded-[10px] relative animate-fadeUp overflow-hidden"
       >
-        <div className="w-full flex items-center justify-between ">
+        {/* 🔹 Branch Name & Payment */}
+        <div className="w-full flex items-center justify-between">
           <span className="flex items-center gap-1 text-Secondary font-Regular">
             <Icon
               icon="ph:map-pin"
@@ -47,7 +86,9 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
             <span className="font-Regular text-xs">تومان</span>
           </span>
         </div>
-        <div className="w-full flex items-center justify-between ">
+
+        {/* 🔹 Invoice ID & Purchase Date */}
+        <div className="w-full flex items-center justify-between">
           <span className="flex items-center gap-1 text-Secondary font-Regular">
             <FactorIcon
               width="24"
@@ -64,20 +105,30 @@ const InoiceListItem: React.FC<InoiceListItemProps> = ({ index, invoice }) => {
           </span>
         </div>
 
-        {invoice.surveyEnable && !invoice.surveyCompleted && (
-          <span className="w-3 h-3 bg-Alert rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 "></span>
-        )}
+        {/* 🔹 Survey Status */}
+        <div
+          className={clsx(
+            "w-full flex items-center justify-between absolute bottom-0 right-0 px-[10px] py-1",
+            surveyStatus.bgClass
+          )}
+        >
+          {renderSurveyIcon()}
+          <span className=" font-Regular">{surveyStatus.text}</span>
+          <span></span>
+        </div>
       </div>
+
+      {/* 🔹 Invoice Modal */}
       <InvoiceModalDetail
         setOpen={setOpen}
         open={open}
         showSurveyButton={invoice.surveyEnable && !invoice.surveyCompleted}
         loadingInvoice={false}
         transactionID={invoice.sourceId.toString()}
-        invoiceDetail={undefined} // showServayButton={}
+        invoiceDetail={undefined}
       />
     </>
   );
 };
 
-export default InoiceListItem;
+export default InvoiceListItem;

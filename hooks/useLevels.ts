@@ -43,24 +43,31 @@ const useLevels = () => {
    */
   const getLevelStates = useMemo(() => {
     return (levels: IClubStatusNew[]): Record<number, LevelState> => {
-      const points = info?.immutable?.rankingPoints?.points ?? 0; // Ensure points is a valid number
-      let stateSet = false; // Tracks if we've already assigned "Current"
+      const points = info?.immutable?.rankingPoints?.points ?? 0;
+      let lastDoneLevelId: number | null = null; // Store last "Done" level
 
-      return levels.reduce((acc, level) => {
+      const result = levels.reduce((acc, level) => {
         if (points >= level.requiredPoints) {
-          acc[level.id] = "Done"; // If points exceed level, it's "Done"
-        } else if (!stateSet) {
-          acc[level.id] = "Current"; // First level where points are below, set "Current"
-          stateSet = true; // Prevent multiple "Current" levels
+          acc[level.id] = "Done"; // Mark as "Done"
+          lastDoneLevelId = level.id; // Keep track of last "Done" level
         } else {
-          acc[level.id] = "Next"; // Remaining levels are "Next"
+          acc[level.id] = "Next"; // All others are "Next"
         }
         return acc;
       }, {} as Record<number, LevelState>);
+
+      // Convert the last "Done" level to "Current"
+      if (lastDoneLevelId !== null) {
+        result[lastDoneLevelId] = "Current";
+      }
+
+      return result;
     };
   }, [levels, info?.immutable?.rankingPoints?.points]);
 
-  const getRemainingPointsAndPercent = (level: IClubStatusNew) => {
+  const getRemainingPointsAndPercent = (
+    level: IClubStatusNew
+  ): [string, number] => {
     const points = info?.immutable?.rankingPoints
       ? info?.immutable?.rankingPoints.points
       : 0; // Default to 0 if null/undefined
@@ -70,7 +77,7 @@ const useLevels = () => {
     const remainingPercent =
       requiredPoints > 0 ? remainingPoints / requiredPoints : 0; // Avoid division by zero
 
-    return [Math.round(1 - remainingPercent) * 100, remainingPoints];
+    return [((1 - remainingPercent) * 100).toFixed(1), remainingPoints];
   };
   return {
     loading,

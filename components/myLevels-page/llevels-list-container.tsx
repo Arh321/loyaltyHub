@@ -4,7 +4,7 @@ import LevelsListCart from "./levels-list-cart";
 interface LevelsLostContainerProps {
   levels: IClubStatusNew[];
   levelsStatus: [string, string][];
-  getRemainingPointsAndPercent: (level: IClubStatusNew) => number[];
+  getRemainingPointsAndPercent: (level: IClubStatusNew) => [string, number];
 }
 
 const LevelsLostContainer: React.FC<LevelsLostContainerProps> = ({

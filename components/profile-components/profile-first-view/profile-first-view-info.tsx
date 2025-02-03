@@ -4,6 +4,9 @@ import SilverLevel from "../../../public/images/SilverLevel.webp";
 import BronzeLevel from "../../../public/images/BronzeLevel.webp";
 import GoldLevel from "../../../public/images/GoldLevel.webp";
 import { ProfileFirstViewComponentProps } from "./profile-first-view";
+import useLevels from "@/hooks/useLevels";
+import { useMemo } from "react";
+import { Skeleton } from "antd";
 
 const levelImages = [
   {
@@ -26,7 +29,30 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
   levelId,
   name,
 }) => {
+  const { levels, info, getLevelStates, loading } = useLevels();
+  const levelStates = useMemo(
+    () => getLevelStates(levels),
+    [levels, getLevelStates]
+  );
+  const currentLevel = useMemo(
+    () => levels.find((level) => levelStates[level.id] === "Current"),
+    [levels, levelStates]
+  );
   const hasLevelImage = levelImages.find((item) => item?.id == levelId);
+
+  if (loading)
+    return (
+      <div
+        dir="rtl"
+        className="absolute w-full h-full flex items-center justify-between px-4 right-0 top-0 bottom-0 my-auto bg-custom-gradient-white"
+      >
+        <div className="w-max h-max flex flex-col justify-center gap-1">
+          <Skeleton.Node active className="!w-6" />
+        </div>
+        <Skeleton.Node active className="!w-[58px]" />
+      </div>
+    );
+
   return (
     <div
       dir="rtl"
@@ -49,16 +75,18 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
               height="20"
             />
           </span>
-          <span className="font-Regular text-sm">{level}</span>
+          <span className="font-Regular text-sm">{level} امتیاز</span>
         </p>
       </div>
-      {!!hasLevelImage && (
-        <div className="w-[58px] flex items-center animate-movable">
+      {!!currentLevel && (
+        <div className="w-[70px] flex items-center animate-movable">
           <Image
-            src={hasLevelImage.src as StaticImageData}
+            src={"https://hubapi.loyaltyhub.ir" + currentLevel.imageUrl}
             alt="back-ground"
             className="w-full h-auto"
             priority
+            width={70}
+            height={70}
             style={{ objectFit: "contain" }}
           />
         </div>
