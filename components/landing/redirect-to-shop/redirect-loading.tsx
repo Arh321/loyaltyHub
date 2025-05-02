@@ -47,7 +47,7 @@ const RedirectLoadingModal: React.FC<openRedirectModalProps> = ({
           className="relative animate-fadeIn"
         >
           <span
-            className={clsx(style["loader-otp"], "!text-Secondary2")}
+            className={clsx(style["loader-otp"], "!text-cta")}
             aria-hidden="true"
           ></span>
         </div>

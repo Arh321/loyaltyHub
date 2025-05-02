@@ -59,7 +59,7 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
           />
         ) : (
           <span
-            className="min-w-[88px] bg-Secondary2 text-white font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center"
+            className="min-w-[88px] bg-cta text-Highlighter font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center"
             role="button"
           >
             مشاهده جزئیات

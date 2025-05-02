@@ -49,7 +49,7 @@ const Header = () => {
       className="w-full bg-center bg-contain bg-repeat"
       style={{ backgroundImage: "url(/images/bg-art.webp)" }}
     >
-      <div className="bg-gradient-to-l from-green-600 via-transparent to-green-600">
+      <div className="bg-gradient-to-l from-cta via-transparent to-cta">
         {isSurveyPage ? (
           <button
             onClick={() => setIsModalOpen(true)}

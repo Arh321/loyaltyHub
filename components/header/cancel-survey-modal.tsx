@@ -68,14 +68,14 @@ const CancelSurveyModal: React.FC<CancelSurveyModalProps> = ({
           <button
             onClick={handleOk}
             disabled={loading}
-            className="font-Bold hover:bg-SecondaryHover disabled:!opacity-50 transition-all text-xl bg-Secondary2 !text-Highlighter p-3 rounded-lg w-[202px]"
+            className="font-Bold hover:bg-cta-hover disabled:!opacity-50 transition-all text-xl bg-cta !text-Highlighter p-3 rounded-lg w-[202px]"
           >
             متوجه شدم
           </button>
           <button
             onClick={handleCancel}
             disabled={loading}
-            className="font-Bold  disabled:!opacity-50 transition-all text-xl text-Secondary2 !bg-transparent p-3 rounded-lg w-[202px]"
+            className="font-Bold  disabled:!opacity-50 transition-all text-xl text-cta !bg-transparent p-3 rounded-lg w-[202px]"
           >
             بعدا نظر می دهم
             {loading && <LoadingOutlined />}

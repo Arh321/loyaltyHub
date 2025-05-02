@@ -29,7 +29,7 @@
   [class~="swiper-pagination-bullet"] {
   width: 4px;
   height: 4px;
-  background-color: var(--secondary);
+  background-color: var(--cta);
   margin: 0;
   opacity: 1;
   transition: all 0.2s ease-in-out;
@@ -42,5 +42,5 @@
   height: 5px !important;
   border-radius: 10px;
   background-color: transparent;
-  border: 1px solid var(--Tritary);
+  border: 1px solid var(--highlighter-hover);
 }

@@ -1,13 +1,15 @@
 "use client";
 import AppLoading from "@/app/loading";
 import { usePathname } from "next/navigation";
-import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState, useTransition } from "react";
 
 export function LoadingIndicator({
   component,
 }: {
   component: React.JSX.Element;
 }) {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const pathname = usePathname(); // Reactively tracks the current route.
   const [shouldRender, setShouldRender] = React.useState(false);

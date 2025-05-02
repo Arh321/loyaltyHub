@@ -80,7 +80,7 @@ const GiftsAndCoponsContainerComponent = () => {
           />
           <CoponsAndGiftsSummeryComponentItem
             title={"کارت هدیه"}
-            icon={<GiftIcon width="70" height="32" color="var(--Secondary2)" />}
+            icon={<GiftIcon width="70" height="32" color="var(--cta)" />}
             value={lables.giftCardCount.toString()}
             type={"gift"}
             loading={loading}

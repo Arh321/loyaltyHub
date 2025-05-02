@@ -14,6 +14,7 @@ import logo from "@/public/LOGO.png";
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
 import { useEffect, useState } from "react";
 import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";
+import MemoizedCtaButton from "../shared-components/cta-button";
 
 const FooterContainer = () => {
   const [openRedirectModal, setOpenRedirectModal] = useState<boolean>(false);
@@ -39,8 +40,9 @@ const FooterContainer = () => {
         <HomeIcon
           width="32"
           height="32"
-          color="var(--highlighter)"
-          fill={pathname.length < 2}
+          color="white"
+          className="!text-Highlighter"
+          isFill={pathname.length < 2}
         />
       ),
       label: "خانه",
@@ -52,8 +54,9 @@ const FooterContainer = () => {
         <FactorIcon
           width="32"
           height="32"
-          color="var(--highlighter)"
-          fill={pathname.includes("invoices")}
+          color="white"
+          className="!text-Highlighter"
+          isFill={pathname.includes("invoices")}
         />
       ),
       label: "فاکتورها",
@@ -87,8 +90,9 @@ const FooterContainer = () => {
         <LevelsIcon
           width="32"
           height="32"
-          color="var(--highlighter)"
-          fill={pathname.includes("mylevel")}
+          color="white"
+          className="!text-Highlighter"
+          isFill={pathname.includes("mylevel")}
         />
       ),
       label: "سطح من",
@@ -100,8 +104,9 @@ const FooterContainer = () => {
         <ProfileIcon
           width="32"
           height="32"
-          color="var(--highlighter)"
-          fill={pathname.includes("profile")}
+          color="white"
+          className="!text-Highlighter"
+          isFill={pathname.includes("profile")}
         />
       ),
       label: "پروفایل",
@@ -109,6 +114,12 @@ const FooterContainer = () => {
       isActive: pathname.includes("profile"),
     },
   ];
+
+  useEffect(() => {
+    footerItems.forEach((item) => {
+      router.prefetch(item.path);
+    });
+  }, []);
 
   // Reset modal when leaving the tab
   useEffect(() => {
@@ -146,18 +157,18 @@ const FooterContainer = () => {
           aria-label="Footer Navigation"
           style={{
             background:
-              "linear-gradient(to left, #198D41, transparent, transparent, #198D41)",
+              "linear-gradient(to left, var(--cta), transparent, transparent, var(--cta))",
           }}
           className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px]  rounded-t-[20px] absolute top-0 right-0"
         >
           {footerItems.map((item, index) => (
-            <button
+            <MemoizedCtaButton
               key={index}
               onClick={() =>
                 item.shop ? onRedirectToShop() : handleNavigation(item.path)
               }
               className={clsx(
-                "col-span-1 h-full flex flex-col items-center gap-1 py-[10px]  focus:outline-none",
+                "col-span-1 !bg-transparent h-full flex flex-col items-center gap-1 py-[10px]  focus:outline-none",
                 item.shop &&
                   "!justify-center !py-0 -translate-y-1/2 active:!scale-100"
               )}
@@ -178,7 +189,7 @@ const FooterContainer = () => {
               {item.isActive && (
                 <span className="w-[70px] h-[6px] rounded-t-[40px] bg-Highlighter absolute bottom-0"></span>
               )}
-            </button>
+            </MemoizedCtaButton>
           ))}
         </nav>
       </div>

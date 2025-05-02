@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "compression": "^1.7.5",
     "dayjs": "^1.11.13",
+    "framer-motion": "^12.9.4",
     "html2canvas": "^1.4.1",
     "jalali-moment": "^3.3.11",
     "jalaliday": "^2.3.0",

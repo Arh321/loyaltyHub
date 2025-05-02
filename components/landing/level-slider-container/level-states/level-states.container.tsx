@@ -34,7 +34,7 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
 
       {isCurrentLevel && (
         <span
-          className="min-w-[88px] bg-Secondary2 text-white font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center"
+          className="min-w-[88px] bg-cta text-Highlighter font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center"
           role="status"
         >
           سطح من
@@ -44,7 +44,7 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
       {isNextLevel && (
         <div className="relative w-full pb-4">
           <span
-            className="min-w-[88px] text-Secondary2 bg-BG text-[12px] flex items-center gap-1 font-Bold px-4 py-2 rounded-[50px] text-center"
+            className="min-w-[88px] text-cta bg-BG text-[12px] flex items-center gap-1 font-Bold px-4 py-2 rounded-[50px] text-center"
             role="status"
           >
             <span className="drop-shadow-sm whitespace-nowrap">
@@ -67,7 +67,7 @@ const LevelStatesContainer: React.FC<LevelStatesContainerProps> = ({
           <div className="absolute w-full -bottom-2">
             <Progress
               percent={+remainingPercent}
-              strokeColor="var(--Secondary2)"
+              strokeColor="var(--cta)"
               strokeWidth={2}
               showInfo={false}
               trailColor="var(--BG)"
