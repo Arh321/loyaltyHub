@@ -1,22 +1,23 @@
 "use client";
-import useInterval from "@/hooks/useTimer";
-import { onLoginWithOtp, onLoginWithOtpByInvoiceID } from "@/utils/authService";
-import { Icon } from "@iconify/react/dist/iconify.js";
+
+import { useState } from "react";
 import { Input } from "antd";
-import clsx from "clsx";
-import { Dispatch, SetStateAction, useState } from "react";
-import { useNotify } from "../notife/notife";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { LoadingOutlined, SyncOutlined } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { onSetToken } from "@/redux/profile/profileSlice";
+import clsx from "clsx";
+import useInterval from "@/hooks/useTimer";
+import useValidateOtp from "@/hooks/useValidateOtp";
+
+const INITIAL_TIMER = 120;
+const OTP_LENGTH = 5;
+
 interface GetOtpCodeComponentProps {
   onGetOtpCode: (phone: string) => void;
-  setActiveStep: Dispatch<SetStateAction<number>>;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
   phone: string;
   loadingResend: boolean;
   isWithInvoiceId: boolean;
-  handleSendOtpByInvoiceId: () => Promise<void>;
+  handleSendOtpByInvoiceId: () => void;
   invoiceId: string;
 }
 
@@ -29,115 +30,64 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   handleSendOtpByInvoiceId,
   invoiceId,
 }) => {
-  const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState("");
-  const [seconds, setSeconds] = useState(120);
+  const [seconds, setSeconds] = useState(INITIAL_TIMER);
   const [active, setActive] = useState(true);
-  const { notify } = useNotify();
-  const navigate = useRouter();
-  const dispatch = useDispatch();
-  // Update the timer every second if active
+
+  const { handleValidateOtp, isLoading } = useValidateOtp(
+    isWithInvoiceId,
+    phone,
+    invoiceId
+  );
+
   useInterval(() => setSeconds((prev) => Math.max(prev - 1, 0)), 1000, active);
 
   const handleOtpChange = (value: string) => {
     setOtp(value);
-    if (value.length === 5) {
-      handleValidateOtp(value); // Automatically validate when OTP is 4 digits
+    if (value.length === OTP_LENGTH) {
+      handleValidateOtp(value);
     }
   };
 
   const handleResendClick = () => {
-    if (seconds === 0) {
-      setOtp("");
-      if (isWithInvoiceId) {
-        handleSendOtpByInvoiceId();
-      } else {
-        onGetOtpCode(phone);
-      }
-      setSeconds(120); // Reset timer
-      setActive(true); // Reactivate the timer
+    if (seconds !== 0) return;
+
+    setOtp("");
+    if (isWithInvoiceId) {
+      handleSendOtpByInvoiceId();
+    } else {
+      onGetOtpCode(phone);
     }
+    setSeconds(INITIAL_TIMER);
+    setActive(true);
   };
 
-  const formatTime = (time: number) => {
-    const minutes = `0${Math.floor(time / 60)}`.slice(-2);
-    const seconds = `0${time % 60}`.slice(-2);
-    return `${minutes}:${seconds}`;
+  const formatTime = (time: number): string => {
+    const minutes = Math.floor(time / 60)
+      .toString()
+      .padStart(2, "0");
+    const remainingSeconds = (time % 60).toString().padStart(2, "0");
+    return `${minutes}:${remainingSeconds}`;
   };
 
-  const handleValidateOtp = async (otp: string) => {
-    setLoading(true);
-    try {
-      const response = isWithInvoiceId
-        ? await onLoginWithOtpByInvoiceID({ invoiceId: invoiceId, otp })
-        : await onLoginWithOtp({ mobile: phone, otp });
-      if (response.status) {
-        notify("success", "موفق خوش آمدید");
-
-        dispatch(
-          onSetToken({
-            expireMinute: response.result.expiresIn,
-            token: response.result.token,
-          })
-        );
-        if (isWithInvoiceId) {
-          navigate.push(`/?invoiceId=${invoiceId}`); // Include backUrl as a query parameter
-        } else {
-          navigate.push("/"); // Default navigation
-        } // Proceed to the next step
-      } else {
-        notify("error", response.statusMessage || "کد تایید نادرست است");
-      }
-    } catch (error) {
-      notify("error", "در ارسال کد تایید خطایی رخ داده است");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isTimerExpired = seconds === 0;
+  const isInputDisabled = isLoading || loadingResend;
 
   return (
     <div className="w-full h-max flex flex-col items-center gap-4 pt-4">
-      {/* OTP Input */}
       <Input.OTP
-        length={5}
+        length={OTP_LENGTH}
         value={otp}
-        onChange={(value) => handleOtpChange(value)}
+        onChange={handleOtpChange}
         className="mt-4 !font-Medium"
         size="large"
         autoFocus
         dir="ltr"
         inputMode="numeric"
-        disabled={loading || loadingResend}
+        disabled={isInputDisabled}
       />
 
-      {/* Resend Timer and Actions */}
-      <div className="w-full flex items-center justify-between mt-4">
-        <p className="flex items-center gap-4 ">
-          <span>{seconds == 0 ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
-          {seconds == 0 && (
-            <button
-              role="button"
-              className={clsx(
-                seconds === 0
-                  ? "text-cta"
-                  : "text-Secondary cursor-not-allowed opacity-70",
-                "flex items-center gap-2"
-              )}
-              onClick={() => handleResendClick()}
-            >
-              {loadingResend ? <LoadingOutlined /> : <SyncOutlined />}
-            </button>
-          )}
-          <span
-            dir="ltr"
-            className={clsx(
-              seconds === 0 && "!text-Alert",
-              "w-10 text-Secondary2"
-            )}
-          >
-            {formatTime(seconds)}
-          </span>
-        </p>
+      <div className="w-full flex items-center justify-center gap-8 mt-4">
         {!isWithInvoiceId && (
           <p>
             <span
@@ -153,12 +103,37 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
             </span>
           </p>
         )}
+        <p className="flex items-center gap-4">
+          <span>{isTimerExpired ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
+          {isTimerExpired && (
+            <button
+              role="button"
+              className={clsx(
+                "flex items-center gap-2",
+                isTimerExpired
+                  ? "text-cta"
+                  : "text-Secondary cursor-not-allowed opacity-70"
+              )}
+              onClick={handleResendClick}
+            >
+              {loadingResend ? <LoadingOutlined /> : <SyncOutlined />}
+            </button>
+          )}
+          <span
+            dir="ltr"
+            className={clsx("w-10 text-cta", isTimerExpired && "!text-Alert")}
+          >
+            {formatTime(seconds)}
+          </span>
+        </p>
       </div>
-      {loading && (
-        <div className="relative animate-fadeIn">
-          <span className="loader-otp !text-Secondary2"></span>
-        </div>
-      )}
+
+      {isLoading ||
+        (loadingResend && (
+          <div className="relative animate-fadeIn">
+            <span className="loader-otp !text-Secondary2"></span>
+          </div>
+        ))}
     </div>
   );
 };

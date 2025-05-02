@@ -71,55 +71,25 @@ const config: Config = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         cta: "#1E9C51",
-        "cta-focus": "#0E843E",
+        "cta-disabled":
+          "#90CBA8" /* 40% lighter than base for disabled state */,
+        "cta-hover": "#167B40" /* 20% darker than base for hover state */,
+        "cta-focus": "#0F5C30" /* 40% darker than base for focus state */,
+        "cta-30": "#1e9c5032",
         Highlighter: "#fff",
+        "Highlighter-disabled":
+          "#FFFFFF99" /* 40% opacity for disabled state */,
+        "Highlighter-hover":
+          "#CCCCCC" /* 20% darker than base for hover state */,
+        "Highlighter-focus":
+          "#999999" /* 40% darker than base for focus state */,
         "Highlighter-Faded": "#E2EBF2",
         BG: "#F2F6FC",
         Alert: "#F7410F",
         Tritary: "#ADBAB2",
         Secondary: "#50675E",
-        Secondary2: "#1E9C51",
         Primary: "#252827",
         Focus: "#409FA6",
-        SecondaryHover: "#0E843E",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
-        },
       },
       screens: {
         sm: "320px",

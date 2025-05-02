@@ -7,6 +7,8 @@ import "./get-phone-styles.css";
 import { Input } from "antd";
 
 import { LoadingOutlined } from "@ant-design/icons";
+import MemoizedCtaButton from "../shared-components/cta-button";
+import CtaInput from "../shared-components/cta-input";
 const phoneValidationSchema = yup.object().shape({
   phone: yup
     .string()
@@ -58,28 +60,28 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
       className="w-full flex flex-col items-center gap-4 admin-panel"
       dir="rtl"
     >
-      <div className="relative w-full flex input-wrapper mt-[4vh]">
-        <Input
+      <div className="relative w-full flex input-wrapper mt-[4vh] ">
+        <CtaInput
           style={{ direction: "ltr" }}
           value={phone}
           type="number"
           inputMode="numeric"
           placeholder="مثال: ********09"
-          className="w-full !font-Medium !p-3 !border !min-w-[320px] !border-Focus !rounded-lg focus:outline-none focus:border-primary transition-all duration-300 placeholder-gray-400 pr-2 py-4 admin-panel hover:bg-highlighter-hover"
+          classNames={{
+            input:
+              "!border-cta focus-within:!border-cta-focus !p-3 transition-colors",
+            wrapper: "w-full !min-w-[320px] ",
+          }}
           autoComplete="off"
           id="userName"
           autoFocus
           {...register("phone", { required: true })}
-          onChange={(e) => handleInputChange(e.target.value)}
-          onPaste={(e) => {
-            e.preventDefault();
-            handleInputChange(e.clipboardData.getData("Text"));
-          }}
+          onChange={(e) => handleInputChange(e)}
           disabled={loading}
         />
         <label
           htmlFor="userName"
-          className="absolute !text-secondary1 bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
+          className="absolute !text-cta bottom-1/2 translate-y-1/2 right-2 transition-all cursor-text"
         >
           شماره تلفن
         </label>
@@ -90,20 +92,17 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
         </p>
       )}
 
-      <button
+      <MemoizedCtaButton
         type="submit"
         className={clsx(
-          "font-Medium bg-Secondary2 disabled:opacity-70 text-Highlighter py-3 w-2/3 text-lg rounded-lg fixed bottom-8 right-0 left-0 mx-auto max-w-[250px]",
-          {
-            "opacity-70 text-highlighter": !isValid,
-            " hover:bg-cta-hover text-highliter": isValid,
-          }
+          "py-2 w-2/3 text-lg rounded-lg fixed bottom-8 right-0 left-0 mx-auto max-w-[250px] transition-all"
         )}
+        aria-label="submit-phone"
         disabled={!isValid || loading}
       >
         دریافت کد
         {loading && <LoadingOutlined />}
-      </button>
+      </MemoizedCtaButton>
     </form>
   );
 };

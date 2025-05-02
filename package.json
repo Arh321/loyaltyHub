@@ -16,6 +16,7 @@
     "@next/bundle-analyzer": "^15.1.6",
     "@reduxjs/toolkit": "^2.3.0",
     "@smastrom/react-rating": "^1.5.0",
+    "@tanstack/react-query": "^5.75.1",
     "antd": "^5.22.2",
     "aos": "^2.3.4",
     "astro-purgecss": "^5.1.0",

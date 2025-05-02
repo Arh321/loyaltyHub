@@ -4,7 +4,7 @@ import clsx from "clsx";
 import React, { useEffect } from "react";
 
 interface SendOtpByInvoiceProps {
-  handleSendOtpByInvoiceId: () => Promise<void>;
+  handleSendOtpByInvoiceId: () => void;
   loading: boolean;
   getOtpError: boolean;
 }

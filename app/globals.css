@@ -29,48 +29,21 @@
 }
 
 :root {
-  --primary1: #1d313b;
-  --primary2: #416e86;
-  --secondary: #50675e;
-  --secondary-50: #f8fafb;
-  --call-to-action: #ff844b;
-  --call-to-action-50: #ff844b80;
-  --call-to-action-disable: #ffe0d2;
-  --backGround: #fbfeff;
-  --highliter: #ffffff;
-  --Alert: #ff0000;
-  --gold: #edf10c;
-  --social-telegram: #27a7e7;
-  --social-whatsapp: #4ecb5c;
-  --skeleton-background: #e5e7eb;
-  --main-light-silver: #e7e8e9;
-  --secondary2: #e4e7f4;
-  --primary: #202224;
-  --secondary1: #37a7bb;
-  --sec1-hover: #9bd3dd;
-  --Secondary2: #1e9c51;
-  --Secondary: #50675e;
-
-  --sec2-hover: #cdd0dc;
-  --CTA-Focus: #0e843e;
-  --cta-hover: #173461;
-  --focus: #48bb78;
-  --disable: #d3dbe8;
+  /* Base primary color */
+  --cta: #1E9C51;
+  /* 40% lighter than base for disabled state */
+  --cta-disabled: #90CBA8;
+  /* 20% darker than base for hover state */
+  --cta-hover: #167B40;
+  /* 40% darker than base for focus state */
+  --cta-focus: #0F5C30;
+    --cta-30: #1e9c5032;
+  --secondaryColor: "#50675E",
+  --textColor: "#ffffff",
   --highlighter: #ffffff;
   --highlighter-hover: #edf0f8;
   --BG: #f2f6fc;
   --alert: #c03030;
-  --alert-hover: #f6e2e2;
-  --success: #60c213;
-  --success-hover: #e6f1e3;
-  --row1: #ffffff;
-  --row2: #edeff7;
-  --row-seen: #f5f6fa;
-  --chart1: #84d2f6;
-  --chart2: #ff5a5a;
-  --chart3: #15557c;
-  --Tritary: #adbab2;
-  --Focus: "#409FA6";
 }
 
 body {

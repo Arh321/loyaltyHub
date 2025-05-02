@@ -18,7 +18,6 @@ const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
 const Header = () => {
   const {} = useAppInitializer();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [showServayButton, setShoSurveyButton] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
   const {
