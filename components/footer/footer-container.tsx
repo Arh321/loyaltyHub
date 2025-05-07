@@ -1,204 +1,84 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import {
-  FactorIcon,
-  HomeIcon,
-  HoseinyIcon,
-  LevelsIcon,
-  ProfileIcon,
-} from "../sharedIcons/sharedIcons";
 import clsx from "clsx";
-import Image from "next/image";
-import logo from "@/public/LOGO.png";
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";
-import MemoizedCtaButton from "../shared-components/cta-button";
+import { getFooterItemsData } from "./footer-items-data";
+import MemoizedFooterItemComponent from "./footer-item-component";
+
+const REDIRECT_DELAY = 1000;
+const SHOP_URL = "https://hosseinibrothers.ir/";
 
 const FooterContainer = () => {
-  const [openRedirectModal, setOpenRedirectModal] = useState<boolean>(false);
-
+  const [openRedirectModal, setOpenRedirectModal] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleNavigation = (pathName: string) => {
-    router.prefetch(pathName);
-    router.push(pathName);
-  };
+  const handleNavigation = useCallback(
+    (pathName: string) => {
+      router.push(pathName);
+    },
+    [router]
+  );
 
-  const onRedirectToShop = () => {
+  const onRedirectToShop = useCallback(() => {
     setOpenRedirectModal(true);
-    setTimeout(() => {
-      window.location.href = "https://hosseinibrothers.ir/";
-    }, 1000); // Redirect after showing the modal for 1 second
-  };
-
-  const footerItems = [
-    {
-      icon: (
-        <HomeIcon
-          width="32"
-          height="32"
-          color="white"
-          className="!text-Highlighter"
-          isFill={pathname.length < 2}
-        />
-      ),
-      label: "خانه",
-      path: "/",
-      isActive: pathname.length < 2,
-    },
-    {
-      icon: (
-        <FactorIcon
-          width="32"
-          height="32"
-          color="white"
-          className="!text-Highlighter"
-          isFill={pathname.includes("invoices")}
-        />
-      ),
-      label: "فاکتورها",
-      path: "/invoices",
-      isActive: pathname.includes("invoices"),
-    },
-    {
-      icon: (
-        <div className="pt-[40px] flex flex-col items-center">
-          <Image
-            src={logo}
-            alt="فروشگاه برادران حسینی"
-            width={80}
-            height={80}
-          />
-          <HoseinyIcon
-            width="70"
-            height="44"
-            color="white"
-            aria-label="آیکون برادران حسینی"
-          />
-        </div>
-      ),
-      label: "",
-      path: "https://hosseinibrothers.ir/",
-      isActive: false,
-      shop: true,
-    },
-    {
-      icon: (
-        <LevelsIcon
-          width="32"
-          height="32"
-          color="white"
-          className="!text-Highlighter"
-          isFill={pathname.includes("mylevel")}
-        />
-      ),
-      label: "سطح من",
-      path: "/mylevel",
-      isActive: pathname.includes("mylevel"),
-    },
-    {
-      icon: (
-        <ProfileIcon
-          width="32"
-          height="32"
-          color="white"
-          className="!text-Highlighter"
-          isFill={pathname.includes("profile")}
-        />
-      ),
-      label: "پروفایل",
-      path: "/profile",
-      isActive: pathname.includes("profile"),
-    },
-  ];
-
-  useEffect(() => {
-    footerItems.forEach((item) => {
-      router.prefetch(item.path);
-    });
+    const timeoutId = setTimeout(() => {
+      window.location.href = SHOP_URL;
+    }, REDIRECT_DELAY);
+    return () => clearTimeout(timeoutId);
   }, []);
 
-  // Reset modal when leaving the tab
+  const footerItems = useMemo(() => getFooterItemsData(pathname), [pathname]);
+
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        setOpenRedirectModal(false); // Close the modal when the tab is not visible
-      }
+    const prefetchPaths = async () => {
+      await Promise.all(footerItems.map((item) => router.prefetch(item.path)));
     };
+    prefetchPaths();
+  }, [footerItems, router]);
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+  const shouldHideFooter =
+    pathname.includes("survey") || pathname.includes("login");
 
-    // Cleanup event listener on unmount
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, []);
+  if (shouldHideFooter) return null;
+
   return (
-    <footer className="w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto  z-50">
-      <div
-        dir="rtl"
-        className={clsx("w-full relative h-[80px] ", {
-          hidden: pathname.includes("survey") || pathname.includes("login"),
-        })}
-      >
+    <footer className="w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto z-50 translate-y-[100px] opacity-0 animate-fadeUp">
+      <div dir="rtl" className="w-full relative h-[80px]">
         <div
-          style={{
-            backgroundImage: `url(/images/bg-art.webp)`,
-            backgroundSize: "contain",
-            backgroundRepeat: "repeat",
-            backgroundPosition: "center",
-          }}
-          className="w-full h-full rounded-t-[20px] overflow-hidden"
-        ></div>
+          className="w-full h-full rounded-t-[20px] overflow-hidden bg-center bg-contain bg-repeat"
+          style={{ backgroundImage: "url(/images/bg-art.webp)" }}
+        />
         <nav
           aria-label="Footer Navigation"
+          className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px] rounded-t-[20px] absolute top-0 right-0"
           style={{
             background:
               "linear-gradient(to left, var(--cta), transparent, transparent, var(--cta))",
           }}
-          className="w-full h-[80px] grid grid-cols-5 justify-between px-[4px]  rounded-t-[20px] absolute top-0 right-0"
         >
-          {footerItems.map((item, index) => (
-            <MemoizedCtaButton
-              key={index}
-              onClick={() =>
-                item.shop ? onRedirectToShop() : handleNavigation(item.path)
-              }
-              className={clsx(
-                "col-span-1 !bg-transparent h-full flex flex-col items-center gap-1 py-[10px]  focus:outline-none",
-                item.shop &&
-                  "!justify-center !py-0 -translate-y-1/2 active:!scale-100"
-              )}
-              aria-current={item.isActive ? "page" : undefined}
-              aria-label={item.label}
-            >
-              <span>{item.icon}</span>
-              {!item.shop && (
-                <span
-                  className={clsx(
-                    "text-Highlighter",
-                    item.isActive ? "!font-Bold" : "font-Regular"
-                  )}
-                >
-                  {item.label}
-                </span>
-              )}
-              {item.isActive && (
-                <span className="w-[70px] h-[6px] rounded-t-[40px] bg-Highlighter absolute bottom-0"></span>
-              )}
-            </MemoizedCtaButton>
+          {footerItems.map((item) => (
+            <MemoizedFooterItemComponent
+              key={item.id}
+              handleNavigation={handleNavigation}
+              item={item}
+              onRedirectToShop={onRedirectToShop}
+            />
           ))}
         </nav>
       </div>
       <RedirectLoadingModal
         openRedirectModal={openRedirectModal}
         style={style}
+        setOpenRedirectModal={setOpenRedirectModal}
       />
     </footer>
   );
 };
 
-export default FooterContainer;
+const MemoizedFooterContainer = memo(FooterContainer);
+
+export default MemoizedFooterContainer;

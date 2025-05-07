@@ -1,15 +1,12 @@
 "use client";
 import { IClubStatusNew } from "@/types/club-status";
-import Image from "next/image";
-import SilverLevel from "../../../public/images/SilverLevel.webp";
-import { Modal } from "antd";
 import styles from "../../../styles/ant-custom-styles.module.css";
 
 import { FC, useState } from "react";
-import { CloseOutlined } from "@ant-design/icons";
-import LevelDetailPopUp from "@/components/myLevels-page/level-list-cart-detail";
 import { LevelState } from "@/hooks/useLevels";
 import LevelStatesContainer from "./level-states/level-states.container";
+import LevelPopUpDetail from "@/components/shared-components/level-detail-popup";
+import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
 
 interface LevelPerviewCartProps {
   level: IClubStatusNew;
@@ -27,9 +24,6 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
   getRemainingPointsAndPercent,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const handleCancel = () => {
-    setOpen(false);
-  };
 
   return (
     <>
@@ -39,12 +33,11 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
         className="w-[70%] flex flex-col items-center"
       >
         <figure className="w-[158px] flex items-center">
-          <Image
+          <ImageWithLoader
             src={"https://hubapi.loyaltyhub.ir" + level.imageUrl}
-            alt={"Membership Level Badge"}
-            className="w-full h-auto"
-            style={{ objectFit: "contain" }}
-            priority={levelStatus === "Current"}
+            alt={`Membership Level Badge ${level.title}`}
+            imageClass="!w-full !h-[108px] [&_img]:!object-contain"
+            fetchPriority={levelStatus === "Current" ? "high" : "auto"}
             loading={levelStatus === "Current" ? "eager" : "lazy"}
             width={158}
             height={158}
@@ -66,42 +59,12 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
           </span>
         )}
       </section>
-      <Modal
+      <LevelPopUpDetail
+        level={level}
+        levelsStatus={levelsStatus}
         open={open}
-        title={
-          <div className="w-full flex items-center justify-center relative">
-            <span>{level.title}</span>
-            <CloseOutlined
-              className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"
-              role="button"
-              onClick={() => {
-                setOpen(() => !open);
-              }}
-            />
-          </div>
-        }
-        onCancel={handleCancel}
-        style={{
-          direction: "rtl",
-          width: "95vw !important",
-          maxWidth: "450px",
-          height: "90dvh",
-        }}
-        classNames={{
-          header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
-          content: " !p-2 !bg-BG !h-full",
-          footer: "!hidden",
-        }}
-        closeIcon={false}
-        footer={false}
-      >
-        <LevelDetailPopUp
-          levelImege={SilverLevel}
-          status={level}
-          onClose={setOpen}
-          levelsStatus={levelsStatus}
-        />
-      </Modal>
+        setOpen={setOpen}
+      />
     </>
   );
 };

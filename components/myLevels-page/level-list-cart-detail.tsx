@@ -3,35 +3,38 @@
 import { IClubStatusNew } from "@/types/club-status";
 import Image, { StaticImageData } from "next/image";
 import { Dispatch, SetStateAction } from "react";
+import ImageWithLoader from "../image-with-loader/image-with-loader";
+import MemoizedCtaButton from "../shared-components/cta-button";
 
 export type LevelStatesComponentsProps = {
   status: IClubStatusNew | undefined;
-  levelImege: StaticImageData | undefined;
+  levelImege: string | undefined;
   onClose?: Dispatch<SetStateAction<boolean>>;
   levelsStatus: [string, string][];
+  levelTitle?: string;
 };
 
 const LevelDetailPopUp: React.FC<LevelStatesComponentsProps> = ({
   status,
   levelImege,
   onClose,
-  levelsStatus,
+  levelTitle,
 }) => {
   return (
-    <div className="w-full flex flex-col items-center gap-4 grow pt-[10px] pb-[20px] px-4 rounded-[6px] relative ">
+    <div className="w-full flex flex-col items-center gap-2 grow pt-[10px] pb-[20px] px-4 rounded-[6px] relative ">
       {onClose && (
-        <button
-          onClick={() => onClose(false)}
-          className="absolute top-4 left-6 z-10 text-primary"
-        >
+        <MemoizedCtaButton className="absolute !bg-transparent  top-4 left-6 z-10 text-primary">
           <i className="pi pi-times" style={{ fontSize: "1rem" }}></i>
-        </button>
+        </MemoizedCtaButton>
       )}
       <p className="regular-16 w-full flex flex-col gap-2 items-center relative">
-        <Image src={levelImege} width={60} height={60} alt="Next" />
-        <p className="flex items-center gap-1 font-Bold">
-          <span>{status?.title}</span>
-        </p>
+        <ImageWithLoader
+          src={"https://hubapi.loyaltyhub.ir" + levelImege}
+          width={100}
+          height={100}
+          alt={levelTitle ?? "Next"}
+          imageClass={"!size-[100px] [&_img]:!object-contain"}
+        />
       </p>
 
       <p className="font-Regular text-center">{status.description}</p>

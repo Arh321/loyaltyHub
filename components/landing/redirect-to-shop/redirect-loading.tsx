@@ -1,20 +1,38 @@
+"use client";
 import Image from "next/image";
 import { HoseinyIcon } from "@/components/sharedIcons/sharedIcons";
 import logo from "@/public/LOGO.png";
 import clsx from "clsx";
-import React from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 
 interface openRedirectModalProps {
   openRedirectModal: boolean;
   style: {
     readonly [key: string]: string;
   };
+  setOpenRedirectModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const RedirectLoadingModal: React.FC<openRedirectModalProps> = ({
   openRedirectModal,
   style,
+  setOpenRedirectModal,
 }) => {
+  // Reset modal when leaving the tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        setOpenRedirectModal(false); // Close the modal when the tab is not visible
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup event listener on unmount
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
   return (
     openRedirectModal && (
       <div

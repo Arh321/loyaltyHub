@@ -4,11 +4,11 @@ import "./globals.css";
 import Header from "@/components/header/header";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AppProvider from "@/redux/provider/app-provider";
-import FooterContainer from "@/components/footer/footer-container";
 import { Suspense } from "react";
 import AppLoading from "./loading";
 import { LoadingIndicator } from "@/components/loadingIndicator/loading-indicator";
 import { NotifyProvider } from "@/components/notife/notife";
+import { LazyFooterComponent } from "@/components/footer/footer-components-index";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -98,7 +98,7 @@ export default function RootLayout({
                     <Suspense fallback={<AppLoading />}>
                       <Header />
                       {children}
-                      <FooterContainer />
+                      <LazyFooterComponent />
                     </Suspense>
                   }
                 ></LoadingIndicator>

@@ -23,7 +23,7 @@ const CtaButton: React.FC<CtaButtonProps> = ({
     <button
       type={type}
       className={clsx(
-        "font-Medium disabled:cursor-not-allowed",
+        "font-Medium disabled:cursor-not-allowed active:scale-90",
         {
           "bg-cta disabled:!bg-cta-disabled hover:bg-cta-hover text-Highlighter":
             !isOutLine,

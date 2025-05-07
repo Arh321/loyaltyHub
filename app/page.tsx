@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <PagesContainer>
       <Suspense fallback={<AppLoading />}>
-        <div className="w-full h-full overflow-hidden pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[20px]">
+        <div className="w-full h-full overflow-hidden pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]">
           <CurrentLevelSliderContainer />
           <BannerSlidersComponent />
           <GiftsAndCoponsContainerLAzy />

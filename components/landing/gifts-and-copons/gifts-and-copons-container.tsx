@@ -1,48 +1,18 @@
 "use client";
+import MemoizedErrorComponent from "@/components/shared-components/error-component";
 import { CoponIcons, GiftIcon } from "@/components/sharedIcons/sharedIcons";
-import { ProfileSliceType } from "@/redux/profile/profileSlice";
-import { RootState } from "@/redux/store";
-import { IGiftCardLabels } from "@/types/coupon-and-gift";
-import { GetGiftCardLabels } from "@/utils/giftAndCouponsService";
+import useGiftCardLabels from "@/hooks/useGetGiftCardLabels";
 import { Skeleton } from "antd";
-import React, { Suspense, useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { Suspense } from "react";
+
 const CoponsAndGiftsSummeryComponentItem = React.lazy(
   () => import("./copon-summery")
 );
 
 const GiftsAndCoponsContainerComponent = () => {
-  const [lables, setLables] = useState<IGiftCardLabels>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const { info, loadingProfile } = useSelector<RootState, ProfileSliceType>(
-    (state) => state.profileSlice
-  );
-  const onGetGiftCardLabels = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await GetGiftCardLabels({
-        customerId: info.id,
-      });
-      if (response.status) {
-        setLables(() => response.result);
-      } else {
-        setError(true);
-      }
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const { isError, isFetching, labels, refetch } = useGiftCardLabels();
 
-  useEffect(() => {
-    if (info) {
-      onGetGiftCardLabels();
-    }
-  }, [loadingProfile, info]);
-
-  if (loading || loadingProfile)
+  if (isFetching)
     return (
       <div className="w-full grid grid-cols-2 gap-[20px]">
         {Array.from({ length: 2 }).map((_, index) => {
@@ -58,35 +28,41 @@ const GiftsAndCoponsContainerComponent = () => {
       </div>
     );
 
-  if (error) return null;
-
-  if (lables)
+  if (isError)
     return (
-      <div dir="rtl" className="w-full grid grid-cols-2 gap-[20px]">
-        <Suspense
-          fallback={
-            <Skeleton.Node
-              className="!flex !w-full !h-full aspect-square rounded-[10px]"
-              active
-            />
-          }
-        >
+      <MemoizedErrorComponent
+        refetch={() => refetch()}
+        containerClass="w-full aspect-[3/1]"
+      />
+    );
+
+  if (labels)
+    return (
+      <Suspense
+        fallback={
+          <Skeleton.Node
+            className="!flex !w-full !h-full aspect-square rounded-[10px]"
+            active
+          />
+        }
+      >
+        <div dir="rtl" className="w-full grid grid-cols-2 gap-[20px]">
           <CoponsAndGiftsSummeryComponentItem
             title={"کوپـن خـریـد"}
             icon={<CoponIcons width="70" height="32" color="" />}
-            value={lables.couponsCount.toString()}
+            value={labels.couponsCount.toString()}
             type={"copon"}
-            loading={loading}
+            loading={isFetching}
           />
           <CoponsAndGiftsSummeryComponentItem
             title={"کارت هدیه"}
             icon={<GiftIcon width="70" height="32" color="var(--cta)" />}
-            value={lables.giftCardCount.toString()}
+            value={labels.giftCardCount.toString()}
             type={"gift"}
-            loading={loading}
+            loading={isFetching}
           />
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
     );
 };
 

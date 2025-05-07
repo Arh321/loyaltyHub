@@ -12,6 +12,8 @@ const ImageWithLoader = ({
   height,
   imageClass,
   placeholder = logo, // Path to your placeholder image in public folder
+  fetchPriority,
+  loading,
 }: {
   src: string;
   alt: string;
@@ -19,6 +21,8 @@ const ImageWithLoader = ({
   height: number;
   imageClass: string;
   placeholder?: StaticImageData;
+  loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -39,8 +43,8 @@ const ImageWithLoader = ({
         height={height}
         onLoadingComplete={handleImageLoad}
         className={`${styles.image} ${isLoaded ? styles.visible : ""}`} // Show actual image once loaded
-        loading="lazy" // Enable lazy loading
-        fetchPriority="high"
+        loading={loading ?? "lazy"} // Enable lazy loading
+        fetchPriority={fetchPriority ?? "high"}
       />
     </div>
   );
