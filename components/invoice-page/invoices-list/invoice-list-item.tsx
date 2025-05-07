@@ -94,7 +94,7 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
               width="24"
               height="28"
               color="var(--Secondary)"
-              fill={false}
+              fill={""}
             />
             <span>#{invoice.sourceId}</span>
           </span>

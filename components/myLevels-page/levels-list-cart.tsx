@@ -186,7 +186,7 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
         footer={false}
       >
         <LevelDetailPopUp
-          levelImege={GoldLevel}
+          levelImege={level.imageUrl}
           status={level}
           onClose={setOpen}
           levelsStatus={levelsStatus}
