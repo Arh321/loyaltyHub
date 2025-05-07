@@ -131,7 +131,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
       {isLoading ||
         (loadingResend && (
           <div className="relative animate-fadeIn">
-            <span className="loader-otp !text-Secondary2"></span>
+            <span className="loader-otp !text-cta"></span>
           </div>
         ))}
     </div>

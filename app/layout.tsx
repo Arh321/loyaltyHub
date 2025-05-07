@@ -9,6 +9,7 @@ import AppLoading from "./loading";
 import { LoadingIndicator } from "@/components/loadingIndicator/loading-indicator";
 import { NotifyProvider } from "@/components/notife/notife";
 import { LazyFooterComponent } from "@/components/footer/footer-components-index";
+import AppLayOut from "@/components/app-layout/app-layout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -92,17 +93,7 @@ export default function RootLayout({
         <AppProvider>
           <AntdRegistry>
             <NotifyProvider>
-              <div className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden">
-                <LoadingIndicator
-                  component={
-                    <Suspense fallback={<AppLoading />}>
-                      <Header />
-                      {children}
-                      <LazyFooterComponent />
-                    </Suspense>
-                  }
-                ></LoadingIndicator>
-              </div>
+              <AppLayOut>{children}</AppLayOut>
             </NotifyProvider>
           </AntdRegistry>
         </AppProvider>

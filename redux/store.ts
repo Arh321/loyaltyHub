@@ -1,9 +1,12 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import profileSlice from "./profile/profileSlice";
+import companySlice from "./companySlice/companySlice";
+
 export const store = configureStore({
   reducer: {
     profileSlice: profileSlice,
+    companySlice: companySlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

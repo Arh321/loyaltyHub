@@ -30,7 +30,7 @@ const LevelsSlider = () => {
   if (error) return <div>Error: {error}</div>;
   if (!loading && levels.length > 0)
     return (
-      <div className="w-full h-full relative ">
+      <div dir="ltr" className="w-full h-full relative ">
         <Swiper
           slidesPerView={1}
           pagination={true}

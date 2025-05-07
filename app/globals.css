@@ -70,9 +70,9 @@ body {
   width: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(farthest-side, #1e9c51 94%, #0000) top/8px 8px
+  background: radial-gradient(farthest-side, var(--cta) 94%, #0000) top/8px 8px
       no-repeat,
-    conic-gradient(#0000 30%, #1e9c51);
+    conic-gradient(#0000 30%, var(--cta));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   animation: l13 1s infinite linear;
 }
@@ -91,7 +91,7 @@ button:active {
     linear-gradient(
         90deg,
         transparent 5%,
-        rgba(10, 156, 81, 1) 50%,
+        var(--cta) 50%,
         transparent 95%
       )
       border-box;
@@ -100,7 +100,7 @@ button:active {
   border-image: linear-gradient(
       90deg,
       transparent 5%,
-      rgba(30, 156, 81, 1) 50%,
+        var(--cta) 50%,
       transparent 95%
     )
     1;
@@ -117,7 +117,7 @@ button:active {
 
 .custome-scrool-bar::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background-color: var(--Secondary2);
+  background-color: var(--cta);
 }
 .ant-drawer {
   position: fixed;
@@ -152,7 +152,7 @@ button:active {
   background-color: var(--BG);
 }
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -206,4 +206,4 @@ button:active {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
+} */

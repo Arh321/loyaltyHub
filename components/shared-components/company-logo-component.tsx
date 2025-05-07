@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import ImageWithLoader from "../image-with-loader/image-with-loader";
 import HoseinyLogoText from "../sharedIcons/hosseinyIcon";
 import logo from "@/publicLOGO.png";
 import clsx from "clsx";
+import { RootState } from "@/redux/store";
 
 interface CompanyLogoComponentProps {
   containerClass?: string;
@@ -29,6 +31,7 @@ const CompanyLogoComponent = ({
   width = DEFAULT_DIMENSIONS.width,
   logoIconSize,
 }: CompanyLogoComponentProps) => {
+  const { info } = useSelector((state: RootState) => state.companySlice);
   const containerClassName = clsx(
     containerClass ?? "w-full flex flex-col gap-4 items-center"
   );
@@ -43,18 +46,15 @@ const CompanyLogoComponent = ({
 
   return (
     <div className={containerClassName}>
-      <ImageWithLoader
-        src={logo.src}
-        alt="HoseinyLogo"
-        width={width}
-        height={height}
-        imageClass={imageClassName}
-      />
-      <HoseinyLogoText
-        color={logoIconSize?.color ?? "var(--cta)"}
-        width={logoIconSize?.width ?? ""}
-        height={logoIconSize?.height ?? ""}
-      />
+      {info && (
+        <ImageWithLoader
+          src={info.logoUrlFooter}
+          alt="HoseinyLogo"
+          width={width}
+          height={height}
+          imageClass={imageClassName}
+        />
+      )}
     </div>
   );
 };

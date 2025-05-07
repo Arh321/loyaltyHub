@@ -27,6 +27,11 @@ const nextConfig = {
         hostname: "hubapi.loyaltyhub.ir",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+        pathname: "/**",
+      },
     ],
   },
   compress: true,

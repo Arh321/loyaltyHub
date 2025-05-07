@@ -16,7 +16,6 @@ const Sidebar = React.lazy(() => import("./side-bar"));
 const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
 
 const Header = () => {
-  const {} = useAppInitializer();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
