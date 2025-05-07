@@ -1,17 +1,16 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import clsx from "clsx";
+
 import RedirectLoadingModal from "../landing/redirect-to-shop/redirect-loading";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import style from "../landing/redirect-to-shop/redirect-to-shop.module.css";
+
 import { getFooterItemsData } from "./footer-items-data";
 import MemoizedFooterItemComponent from "./footer-item-component";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
 const REDIRECT_DELAY = 1000;
-const SHOP_URL = "https://hosseinibrothers.ir/";
 
 const FooterContainer = () => {
   const { info } = useSelector((state: RootState) => state.companySlice);
@@ -77,7 +76,6 @@ const FooterContainer = () => {
       </footer>
       <RedirectLoadingModal
         openRedirectModal={openRedirectModal}
-        style={style}
         setOpenRedirectModal={setOpenRedirectModal}
       />
     </>

@@ -12,6 +12,7 @@ const useGetGiftCardLabels = (payload: { customerId: number }) => {
     queryKey: ["GiftCardLabels", payload],
     queryFn: () => GetGiftCardLabels(payload),
     enabled: !!payload.customerId, // Only run query if customerId exists
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -25,7 +26,7 @@ const useGiftCardLabels = () => {
   });
 
   const labels = useMemo(() => {
-    if (!data?.result) return {} as IGiftCardLabels;
+    if (!data?.result) return undefined;
     return data.result;
   }, [data]);
 

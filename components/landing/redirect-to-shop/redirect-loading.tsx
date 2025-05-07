@@ -4,18 +4,14 @@ import { HoseinyIcon } from "@/components/sharedIcons/sharedIcons";
 import logo from "@/public/LOGO.png";
 import clsx from "clsx";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
-
+import style from "./redirect-to-shop.module.css";
 interface openRedirectModalProps {
   openRedirectModal: boolean;
-  style: {
-    readonly [key: string]: string;
-  };
   setOpenRedirectModal: Dispatch<SetStateAction<boolean>>;
 }
 
 const RedirectLoadingModal: React.FC<openRedirectModalProps> = ({
   openRedirectModal,
-  style,
   setOpenRedirectModal,
 }) => {
   // Reset modal when leaving the tab

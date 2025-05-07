@@ -3,45 +3,31 @@ import clsx from "clsx";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import style from "./banner-slider.module.css";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
 import { getLandingBanners } from "@/utils/landingService";
 import { IBanners } from "@/types/banners-type";
 import { Skeleton } from "antd";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import MemoizedErrorComponent from "@/components/shared-components/error-component";
+import RedirectLoadingModal from "../redirect-to-shop/redirect-loading";
 
 const BannerSlidersComponent = () => {
-  const [banners, setBanners] = useState<IBanners[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const navigate = useRouter();
+  const [open, setOpen] = useState<boolean>(false);
+  const { data, isFetching, isError, refetch } = useQuery({
+    queryKey: ["BannersList"],
+    queryFn: () => getLandingBanners(),
+    refetchOnWindowFocus: false,
+  });
 
-  const getBAnners = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getLandingBanners();
-      if (response.status) {
-        setBanners(() => response.result);
-      } else {
-        setLoading(false);
+  const banners = useMemo(() => {
+    const bannersList = data?.result;
+    return bannersList ?? [];
+  }, [data]);
 
-        setError(true);
-      }
-    } catch (error) {
-      setLoading(false);
-
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  }, [banners]);
-
-  useEffect(() => {
-    getBAnners();
-  }, []);
-
-  if (loading)
+  if (isFetching)
     return (
       <div>
         <Skeleton.Node
@@ -51,38 +37,54 @@ const BannerSlidersComponent = () => {
       </div>
     );
 
-  if (error) return null;
+  if (isError)
+    return (
+      <MemoizedErrorComponent
+        refetch={() => refetch()}
+        containerClass="!w-full !h-full aspect-[16/7] rounded-[10px]"
+      />
+    );
 
   return (
-    <div className="w-full h-full relative animate-fadeIn">
-      <Swiper
-        slidesPerView={1}
-        pagination={true}
-        navigation={false}
-        autoplay={true}
-        modules={[Navigation, Pagination, Autoplay]}
-        className={clsx(style["bannersSlider-swiper"])}
-      >
-        {banners.map((item, index) => {
-          return (
-            <SwiperSlide
-              key={index}
-              className="w-full aspect-[16/6] rounded-[10px] overflow-hidden flex justify-center items-center "
-            >
-              <Link href={item.linkUrl} className="!w-full !h-full">
-                <ImageWithLoader
-                  src={"https://hubapi.loyaltyhub.ir" + item.mobileImageUrl}
-                  alt="index"
-                  imageClass="!w-full !h-full object-cover"
-                  width={406}
-                  height={100}
-                />
-              </Link>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-    </div>
+    <>
+      <div className="w-full h-full relative animate-fadeIn">
+        <Swiper
+          slidesPerView={1}
+          pagination={true}
+          navigation={false}
+          autoplay={true}
+          modules={[Navigation, Pagination, Autoplay]}
+          className={clsx(style["bannersSlider-swiper"])}
+        >
+          {banners.map((item, index) => {
+            return (
+              <SwiperSlide
+                key={index}
+                className="w-full aspect-[16/6] rounded-[10px] overflow-hidden flex justify-center items-center "
+              >
+                <Link
+                  onClick={() => setOpen(true)}
+                  href={item.linkUrl}
+                  className="!w-full !h-full"
+                >
+                  <ImageWithLoader
+                    src={"https://hubapi.loyaltyhub.ir" + item.mobileImageUrl}
+                    alt="index"
+                    imageClass="!w-full !h-full object-cover"
+                    width={406}
+                    height={100}
+                  />
+                </Link>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+      <RedirectLoadingModal
+        openRedirectModal={open}
+        setOpenRedirectModal={setOpen}
+      />
+    </>
   );
 };
 
