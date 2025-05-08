@@ -7,6 +7,8 @@ interface CtaButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
   isOutLine?: boolean;
   children?: React.ReactNode;
+  endIcon?: React.JSX.Element;
+  startIcon?: React.JSX.Element;
 }
 
 const CtaButton: React.FC<CtaButtonProps> = ({
@@ -23,7 +25,7 @@ const CtaButton: React.FC<CtaButtonProps> = ({
     <button
       type={type}
       className={clsx(
-        "font-Medium disabled:cursor-not-allowed active:scale-90 transition-all",
+        "font-Medium disabled:cursor-not-allowed active:scale-90 transition-all rounded-[10px] flex items-center gap-2 justify-center",
         {
           "bg-cta disabled:!bg-cta-disabled hover:bg-cta-hover text-Highlighter":
             !isOutLine,
@@ -34,7 +36,12 @@ const CtaButton: React.FC<CtaButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      {children}
+      {!loading && (
+        <>
+          {props.startIcon && props.startIcon} {children}
+          {props.endIcon && props.endIcon}
+        </>
+      )}
       {loading && (
         <span className="ml-2">
           <LoadingOutlined />

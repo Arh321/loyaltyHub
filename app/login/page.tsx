@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import "../../components/login-components/get-phone-styles.css";
 import AppLoading from "../loading";
 
 import LoginPageContainer from "@/components/login-components/login-container";

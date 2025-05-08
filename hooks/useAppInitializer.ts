@@ -26,7 +26,7 @@ const useAppInitializer = () => {
     isPending: appSettingLoading,
     isError: appSettingError,
   } = useGetAppSettings();
-  const { errorCompanyInfo, loadingCompanyInfo } = useInitCompany();
+
   const { notify } = useNotify();
 
   const OnInitAppSettings = () => {
@@ -54,8 +54,8 @@ const useAppInitializer = () => {
     OnInitAppSettings();
   }, []);
   return {
-    loading: loadingCompanyInfo || appSettingLoading,
-    error: errorCompanyInfo || appSettingError,
+    loading: appSettingLoading,
+    error: appSettingError,
     appSettings,
   };
 };

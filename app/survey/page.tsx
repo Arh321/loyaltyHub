@@ -5,6 +5,7 @@ import React, { Suspense } from "react";
 import AppLoading from "../loading";
 import useSurvey from "@/hooks/useSurvey";
 import NotFoundComponent from "@/components/not-found-page/not-found-component";
+import MemoizedPagesLoaderComponent from "@/components/shared-components/pages-loader-component";
 
 const SurvayHeader = React.lazy(
   () =>
@@ -28,13 +29,7 @@ const SurvayPage = () => {
   } = useSurvey();
 
   if (loadingSurvey || loadingInvoice) {
-    return (
-      <PagesContainer>
-        <div className="w-full h-full flex justify-center items-center">
-          <div className="loader"></div>
-        </div>
-      </PagesContainer>
-    );
+    return <MemoizedPagesLoaderComponent />;
   }
 
   if (errorState)

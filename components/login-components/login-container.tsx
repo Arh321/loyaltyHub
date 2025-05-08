@@ -1,6 +1,6 @@
 "use client";
 import PagesContainer from "@/components/pages-container/pages-container";
-import "../../components/login-components/get-phone-styles.css";
+
 import useLoginHandlers from "@/hooks/useLogin";
 import {
   MemoizedLoginHeaderLAzy,

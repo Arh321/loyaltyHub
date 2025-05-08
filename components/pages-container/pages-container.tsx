@@ -2,7 +2,7 @@ import AppLoading from "@/app/loading";
 import { memo, Suspense } from "react";
 import ErrorBoundaryWrapper from "../error-component/ErrorBoundary";
 import NotFoundComponent from "../not-found-page/not-found-component";
-import logo from "@/publicLOGO.png";
+
 const PagesContainer = ({
   children,
 }: Readonly<{
@@ -19,10 +19,7 @@ const PagesContainer = ({
         <div className=" w-full min-h-[calc(100vh-80px)] relative  flex flex-col  ">
           <ErrorBoundaryWrapper
             fallback={
-              <NotFoundComponent
-                image={logo}
-                title="در هنگام برقراری ارتباط خطایی رخ داده است"
-              />
+              <NotFoundComponent title="در هنگام برقراری ارتباط خطایی رخ داده است" />
             }
           >
             {children}

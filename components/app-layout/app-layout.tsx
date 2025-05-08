@@ -4,17 +4,18 @@ import { LoadingIndicator } from "../loadingIndicator/loading-indicator";
 import AppLoading from "@/app/loading";
 import Header from "../header/header";
 import { LazyFooterComponent } from "../footer/footer-components-index";
-import useAppInitializer from "@/hooks/useAppInitializer";
 import NotFoundComponent from "../not-found-page/not-found-component";
+import useInitCompany from "@/hooks/useInitCompany";
 
 const AppLayOut = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { error, loading } = useAppInitializer();
-  if (loading) return <AppLoading />;
-  if (error) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
+  const { errorCompanyInfo, loadingCompanyInfo } = useInitCompany();
+  if (loadingCompanyInfo) return <AppLoading />;
+  if (errorCompanyInfo)
+    return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
   return (
     <div
       dir="rtl"

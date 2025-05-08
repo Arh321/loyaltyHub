@@ -7,19 +7,6 @@ const cookies = new Cookies();
 const convertMinuteToDate = (expirationMinutes: number) => {
   return new Date(Date.now() + expirationMinutes * 60 * 1000);
 };
-
-interface ProfileNotifeProps {
-  show: boolean;
-  content: {
-    severity: "success" | "info" | "warn" | "error" | undefined;
-    summary: string;
-    detail: string;
-  };
-}
-interface ProfileMissedFieldsProps {
-  fields: Array<string>;
-  isRequierdMissed: boolean;
-}
 export interface ProfileSliceType {
   info: IProfileInfo | undefined;
   customerToken: unknown;
@@ -84,23 +71,6 @@ const profileSlice = createSlice({
     onSetCustomerID: (state, payload: PayloadAction<number>) => {
       state.customerId = payload.payload;
     },
-
-    // onCheckProfile: (state, payload: PayloadAction<unknown>) => {
-    //   const fields: string[] = [];
-    //   const requierdItems = [
-    //     "nationalCode",
-    //     "lastName",
-    //     "firstName",
-    //     "cellPhone",
-    //   ];
-    //   Object.entries(payload.payload).forEach((i) => {
-    //     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    //     i[1] == null && fields.push(i[0]);
-    //   });
-    //   state.profileMissedFields.fields = fields;
-    //   const tmp = fields.filter((i) => requierdItems.includes(i));
-    //   state.profileMissedFields.isRequierdMissed = tmp.length ? true : false;
-    // },
   },
 });
 

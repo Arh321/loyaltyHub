@@ -1,24 +1,25 @@
 "use client";
-import Image from "next/image";
-import "../components/login-components/get-phone-styles.css";
+
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
+import DotsLoading from "@/components/shared-components/dots-loader";
 const AppLoading = () => {
-  const logo = localStorage.getItem("logo");
+  const [logo] = useLocalStorage("logo", "", true);
+
   return (
     <div className="w-full h-dvh bg-BG fixed top-0 z-[99999999] max-w-[470px] mx-auto left-0 right-0 flex flex-col items-center justify-center gap-4 ">
       {logo && (
         <div className="w-full flex flex-col gap-4 items-center animate-flicker ">
-          <Image
+          <ImageWithLoader
             src={logo}
             alt="برادران حسینی"
-            className=""
+            imageClass=""
             width={200}
             height={200}
           />
         </div>
       )}
-      <div className="relative animate-fadeIn">
-        <span className="loader-otp !text-cta"></span>
-      </div>
+      <DotsLoading />
     </div>
   );
 };

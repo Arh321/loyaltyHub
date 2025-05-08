@@ -20,8 +20,8 @@ interface CompanyLogoComponentProps {
 const DEFAULT_DIMENSIONS = {
   width: 200,
   height: 200,
-  imageWidth: "!w-200px",
-  imageHeight: "!h-100px",
+  imageWidth: "!w-[200px]",
+  imageHeight: "!h-[100px]",
 } as const;
 
 const CompanyLogoComponent = ({
@@ -48,7 +48,7 @@ const CompanyLogoComponent = ({
     <div className={containerClassName}>
       {info && (
         <ImageWithLoader
-          src={info.logoUrlFooter}
+          src={info.logoUrl}
           alt="HoseinyLogo"
           width={width}
           height={height}

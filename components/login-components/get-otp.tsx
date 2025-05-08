@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Input } from "antd";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { LoadingOutlined, SyncOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 import useInterval from "@/hooks/useTimer";
 import useValidateOtp from "@/hooks/useValidateOtp";
+import DotsLoading from "../shared-components/dots-loader";
+import MemoizedCtaButton from "../shared-components/cta-button";
 
 const INITIAL_TIMER = 120;
 const OTP_LENGTH = 5;
@@ -71,10 +73,12 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   };
 
   const isTimerExpired = seconds === 0;
-  const isInputDisabled = isLoading || loadingResend;
+  const isInputDisabled = useMemo(() => {
+    return isLoading || loadingResend;
+  }, [isLoading, loadingResend]);
 
   return (
-    <div className="w-full h-max flex flex-col items-center gap-4 pt-4">
+    <div className="w-full h-max flex flex-col items-center gap-4 pt-4 [&_input]:!aspect-square [&_input]:!text-[1.13rem]">
       <Input.OTP
         length={OTP_LENGTH}
         value={otp}
@@ -89,19 +93,19 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
 
       <div className="w-full flex items-center justify-center gap-8 mt-4">
         {!isWithInvoiceId && (
-          <p>
-            <span
-              className="regular-18 text-cta flex items-center gap-2 cursor-pointer"
-              onClick={() => setActiveStep(0)}
-            >
-              <span>ویرایش شماره</span>
+          <MemoizedCtaButton
+            onClick={() => setActiveStep(0)}
+            className="regular-18 !bg-transparent text-cta flex items-center gap-2 cursor-pointer"
+            endIcon={
               <Icon
                 icon="lets-icons:edit-light"
                 width="1.3rem"
                 className="text-cta"
               />
-            </span>
-          </p>
+            }
+          >
+            <span>ویرایش شماره</span>
+          </MemoizedCtaButton>
         )}
         <p className="flex items-center gap-4">
           <span>{isTimerExpired ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
@@ -127,13 +131,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
           </span>
         </p>
       </div>
-
-      {isLoading ||
-        (loadingResend && (
-          <div className="relative animate-fadeIn">
-            <span className="loader-otp !text-cta"></span>
-          </div>
-        ))}
+      {isInputDisabled && <DotsLoading />}
     </div>
   );
 };

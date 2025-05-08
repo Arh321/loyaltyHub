@@ -34,7 +34,7 @@ const NotFoundComponent: React.FC<NotFoundComponentProps> = ({
       </p>
       <MemoizedCtaButton
         onClick={() => window.location.reload()}
-        className="text-Highlighter p-3 text-lg rounded-lg w-max"
+        className="!text-Highlighter p-3 text-lg !rounded-[10px] w-max"
       >
         تلاش مجدد
       </MemoizedCtaButton>

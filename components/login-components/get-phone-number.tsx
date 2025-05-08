@@ -3,9 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import clsx from "clsx";
 import { Dispatch, SetStateAction } from "react";
-import "./get-phone-styles.css";
-import { Input } from "antd";
-
+import style from "./get-phone-styles.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
 import MemoizedCtaButton from "../shared-components/cta-button";
 import CtaInput from "../shared-components/cta-input";
@@ -60,7 +58,12 @@ const GetPhoneNumberComponent: React.FC<PhoneFormProps> = ({
       className="w-full flex flex-col items-center gap-4 admin-panel"
       dir="rtl"
     >
-      <div className="relative w-full flex input-wrapper mt-[4vh] ">
+      <div
+        className={clsx(
+          style["input-wrapper"],
+          "relative w-full flex mt-[4vh]"
+        )}
+      >
         <CtaInput
           style={{ direction: "ltr" }}
           value={phone}

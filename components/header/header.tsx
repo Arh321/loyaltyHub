@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import logo from "../../public/images/hosseiniLogo.webp";
 import { usePathname, useRouter } from "next/navigation";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
 import useAppInitializer from "@/hooks/useAppInitializer";
@@ -19,6 +19,7 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
+  useAppInitializer();
   const {
     invoiceDetail,
     loadingInvoice,
@@ -43,6 +44,10 @@ const Header = () => {
     router.push("/login");
   };
 
+  const isInMAinRoute = useMemo(() => {
+    return pathname === "/";
+  }, [pathname]);
+
   return (
     <header
       className="w-full bg-center bg-contain bg-repeat"
@@ -59,7 +64,7 @@ const Header = () => {
         ) : !isLoginPage ? (
           <div className="w-full flex items-center justify-between px-4 py-5 relative">
             <div className="flex items-center gap-8">
-              {pathname !== "/" && (
+              {!isInMAinRoute ? (
                 <button
                   onClick={() => router.back()}
                   className="text-Highlighter"
@@ -71,8 +76,7 @@ const Header = () => {
                     className="text-Highlighter"
                   />
                 </button>
-              )}
-              {pathname === "/" && (
+              ) : (
                 <button
                   onClick={() => onLogOut()}
                   className="text-Highlighter flex items-center gap-1"
