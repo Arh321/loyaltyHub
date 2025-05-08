@@ -153,6 +153,10 @@ input[type="number"] {
   background-color: var(--BG);
 }
 
+.ant-skeleton-element {
+  background-color: #f0f0f0 !important;
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;

@@ -80,7 +80,7 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
   }
 
   return (
-    <div className="w-full grow relative pt-[10px] animate-fadeIn">
+    <div dir="ltr" className="w-full grow relative pt-[10px] animate-fadeIn">
       <Swiper
         slidesPerView={1.3}
         centeredSlides
@@ -117,7 +117,7 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
             disabled={applyLoading || loadingNavigate}
             onClick={handlePrev}
             className={clsx(
-              "font-Medium bg-Highlighter text-Secondary2 p-2 text-lg rounded-lg w-[200px]",
+              "font-Medium bg-Highlighter text-cta p-2 text-lg rounded-lg w-[200px]",
               state.activeIndex === 0 && "hidden"
             )}
           >
@@ -126,7 +126,7 @@ const SurveyQuestionsSlider: React.FC<SurveyQuestionsSliderProps> = ({
           <button
             disabled={applyLoading || loadingNavigate}
             onClick={handleNext}
-            className=" font-Medium bg-Secondary2 text-Highlighter p-2 text-lg rounded-lg w-[284px]"
+            className=" font-Medium bg-cta text-Highlighter p-2 text-lg rounded-lg w-[284px]"
           >
             {(applyLoading || loadingNavigate) && <LoadingOutlined />}
             {state.activeIndex === state.slides.length - 1

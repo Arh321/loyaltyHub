@@ -14,9 +14,9 @@ const PagesContainer = ({
         style={{
           userSelect: "none",
         }}
-        className="w-full grow  no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]  -mt-[12px]"
+        className="w-full grow no-scrollbar overflow-y-auto bg-BG rounded-t-[20px]"
       >
-        <div className=" w-full min-h-[calc(100vh-80px)] relative  flex flex-col  ">
+        <div className=" w-full h-max relative flex flex-col">
           <ErrorBoundaryWrapper
             fallback={
               <NotFoundComponent title="در هنگام برقراری ارتباط خطایی رخ داده است" />

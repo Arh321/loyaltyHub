@@ -2,12 +2,16 @@
 import React, { memo, useState } from "react";
 import { Drawer } from "antd";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import Image, { StaticImageData } from "next/image";
+
 // import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import ImageWithLoader from "../image-with-loader/image-with-loader";
 
-const Sidebar = ({ logo }: { logo: StaticImageData }) => {
+const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { info } = useSelector((state: RootState) => state.companySlice);
   //   const dispatch = useDispatch();
   const content = [
     {
@@ -84,9 +88,15 @@ const Sidebar = ({ logo }: { logo: StaticImageData }) => {
                 <Icon icon="stash:times" className="translate-x-1/2" />
               </span>
             </button>
-            <div className="pt-4">
-              <Image src={logo} alt="برادران حسینی" />
-            </div>
+            <ImageWithLoader
+              src={info.logoUrl}
+              height={48}
+              width={48}
+              imageClass="!object-contain pt-4"
+              alt={info.companyName}
+              fetchPriority="high"
+              loading="eager"
+            />
           </div>
           <div
             dir="rtl"

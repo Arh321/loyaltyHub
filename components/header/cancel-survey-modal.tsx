@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import style from "@/styles/ant-custom-styles.module.css";
 import { LoadingOutlined } from "@ant-design/icons";
+import MemoizedCtaButton from "../shared-components/cta-button";
 
 interface CancelSurveyModalProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -65,21 +66,21 @@ const CancelSurveyModal: React.FC<CancelSurveyModalProps> = ({
       }}
       footer={
         <div className="w-full flex flex-col gap-4 items-center">
-          <button
+          <MemoizedCtaButton
             onClick={handleOk}
             disabled={loading}
             className="font-Bold hover:bg-cta-hover disabled:!opacity-50 transition-all text-xl bg-cta !text-Highlighter p-3 rounded-lg w-[202px]"
           >
-            متوجه شدم
-          </button>
-          <button
+            <span>متوجه شدم</span>
+          </MemoizedCtaButton>
+          <MemoizedCtaButton
             onClick={handleCancel}
             disabled={loading}
+            loading={loading}
             className="font-Bold  disabled:!opacity-50 transition-all text-xl text-cta !bg-transparent p-3 rounded-lg w-[202px]"
           >
-            بعدا نظر می دهم
-            {loading && <LoadingOutlined />}
-          </button>
+            <span>بعدا نظر می دهم</span>
+          </MemoizedCtaButton>
         </div>
       }
     >

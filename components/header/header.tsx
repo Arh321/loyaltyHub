@@ -1,114 +1,76 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
 import Image from "next/image";
-
 import logo from "../../public/images/hosseiniLogo.webp";
-import { usePathname, useRouter } from "next/navigation";
-import React, { memo, useEffect, useMemo, useState } from "react";
-import useAuth from "@/hooks/useAuth";
-import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
+import { usePathname } from "next/navigation";
+import React, { memo, useMemo, useState } from "react";
 import useAppInitializer from "@/hooks/useAppInitializer";
-import { LogoutOutlined } from "@ant-design/icons";
+import MemoizedCtaButton from "../shared-components/cta-button";
+import HeaderModalsContainer from "./header-modals-container";
+import { Skeleton } from "antd";
+import MemoizedCompanyLogoComponent from "../shared-components/company-logo-component";
+import Link from "next/link";
 
-const Sidebar = React.lazy(() => import("./side-bar"));
-const CancelSurveyModal = React.lazy(() => import("./cancel-survey-modal"));
+// Dynamically import components with loading fallbacks
+const LazyHeaderLanding = dynamic(() => import("./header-landing-container"), {
+  loading: () => (
+    <div className="w-full flex items-center justify-between [&_.ant-skeleton-element]:!rounded-[4px]">
+      <Skeleton.Avatar active size={"small"} shape={"square"} />
+      <Skeleton.Image active className="!size-[50px] [&_svg]:!scale-75" />
+      <Skeleton.Avatar active size={"small"} shape={"square"} />
+    </div>
+  ),
+  ssr: false,
+});
+
+// Extracted components for better code splitting
+const SurveyButton = ({ onClick }: { onClick: () => void }) => (
+  <MemoizedCtaButton
+    onClick={onClick}
+    className="w-full flex !justify-end px-4 py-4 text-Highlighter"
+  >
+    <Icon icon="stash:times" width="2.5rem" />
+  </MemoizedCtaButton>
+);
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
-  const router = useRouter();
   useAppInitializer();
-  const {
-    invoiceDetail,
-    loadingInvoice,
-    showInvoice,
-    invoiceId,
-    cookies,
-    setShowInvoice,
-  } = useAuth();
 
-  const isSurveyPage = pathname.includes("survey");
-  const isLoginPage = pathname.includes("login");
-  useEffect(() => {
-    setShowInvoice(false);
-    if (invoiceDetail) {
-      setShowInvoice(true);
-    }
-  }, [pathname, invoiceDetail]);
-
-  const onLogOut = () => {
-    cookies.remove("token");
-
-    router.push("/login");
-  };
-
-  const isInMAinRoute = useMemo(() => {
-    return pathname === "/";
-  }, [pathname]);
+  const isSurveyPage = useMemo(() => pathname.includes("survey"), [pathname]);
+  const isLoginPage = useMemo(() => pathname.includes("login"), [pathname]);
+  const isInMainRoute = useMemo(() => pathname === "/", [pathname]);
 
   return (
     <header
-      className="w-full bg-center bg-contain bg-repeat"
+      className="w-full bg-center bg-contain bg-repeat "
       style={{ backgroundImage: "url(/images/bg-art.webp)" }}
     >
-      <div className="bg-gradient-to-l from-cta via-transparent to-cta">
+      <div className="bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3">
         {isSurveyPage ? (
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="w-full flex justify-start px-4 py-4 text-Highlighter"
-          >
-            <Icon icon="stash:times" width="2.5rem" />
-          </button>
+          <SurveyButton onClick={() => setIsModalOpen(true)} />
         ) : !isLoginPage ? (
-          <div className="w-full flex items-center justify-between px-4 py-5 relative">
-            <div className="flex items-center gap-8">
-              {!isInMAinRoute ? (
-                <button
-                  onClick={() => router.back()}
-                  className="text-Highlighter"
-                >
-                  <Icon
-                    icon="mingcute:left-fill"
-                    width="32"
-                    height="32"
-                    className="text-Highlighter"
-                  />
-                </button>
-              ) : (
-                <button
-                  onClick={() => onLogOut()}
-                  className="text-Highlighter flex items-center gap-1"
-                >
-                  <span className="font-Regular">خروج</span>
-                  <LogoutOutlined />
-                </button>
-              )}
-            </div>
-            <Link
-              href="/"
-              className="absolute inset-0 m-auto w-max h-max -translate-y-2"
-            >
-              <Image src={logo} alt="لوگو" priority />
-            </Link>
-            <Sidebar logo={logo} />
-          </div>
+          <LazyHeaderLanding isInMainRoute={isInMainRoute} />
         ) : (
-          <div className="w-full flex items-center justify-center px-4 py-3 relative">
-            <div className=" m-auto w-max h-max -translate-y-2">
-              <Image src={logo} alt="لوگو" priority />
-            </div>
+          <div className="w-full flex items-center justify-center relative">
+            <Link href="/" className="w-max h-max">
+              <MemoizedCompanyLogoComponent
+                height={48}
+                width={48}
+                imageClass="!size-[48px] [&_img]:!object-contain pt-4"
+                containerClass="w-max h-max"
+              />
+            </Link>
           </div>
         )}
       </div>
-      <CancelSurveyModal setOpen={setIsModalOpen} open={isModalOpen} />
-      <InvoiceModalDetail
-        setOpen={setShowInvoice}
-        open={showInvoice}
-        loadingInvoice={loadingInvoice}
-        invoiceDetail={invoiceDetail}
-        transactionID={invoiceId}
+      <HeaderModalsContainer
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        pathname={pathname}
       />
     </header>
   );

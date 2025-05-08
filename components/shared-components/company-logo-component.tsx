@@ -29,7 +29,6 @@ const CompanyLogoComponent = ({
   height = DEFAULT_DIMENSIONS.height,
   imageClass,
   width = DEFAULT_DIMENSIONS.width,
-  logoIconSize,
 }: CompanyLogoComponentProps) => {
   const { info } = useSelector((state: RootState) => state.companySlice);
   const containerClassName = clsx(
