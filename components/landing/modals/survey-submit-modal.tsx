@@ -11,20 +11,25 @@ import { useNotify } from "@/components/notife/notife";
 import { IConfirmSurveyPoints } from "@/types/survet-types";
 import { applyCompletedSurveyInvoice } from "@/utils/surveyService";
 
-const SurveySubmitModal = () => {
+interface SurveySubmitModalProps {
+  paramsData: {
+    average: string;
+    survey: string;
+    invoiceId: string;
+    surveyId: string;
+  };
+}
+
+const SurveySubmitModal: React.FC<SurveySubmitModalProps> = ({
+  paramsData,
+}) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const searchParams = useSearchParams();
+
   const navigate = useRouter();
   const [opinion, setOpinion] = useState("");
   // Memoized values for average and survey
-  const { average, survey, invoiceId, surveyId } = useMemo(() => {
-    const avg = searchParams.get("average");
-    const srv = searchParams.get("survey");
-    const invoiceId = searchParams.get("invoiceId");
-    const surveyId = searchParams.get("surveyId");
-    return { average: avg, survey: srv, invoiceId, surveyId };
-  }, [searchParams]);
+  const { average, survey, invoiceId, surveyId } = paramsData;
   const { notify } = useNotify();
 
   const showModal = () => {

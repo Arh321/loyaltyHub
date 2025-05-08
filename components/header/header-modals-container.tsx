@@ -1,9 +1,11 @@
 "use client";
 
 import useAuth from "@/hooks/useAuth";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import CancelSurveyModal from "./cancel-survey-modal";
 import InvoiceModalDetail from "../invoice-page/invoice-detail/invoice-detai-modal";
+import SurveySubmitModal from "../landing/modals/survey-submit-modal";
+import { useSearchParams } from "next/navigation";
 
 interface HeaderModalsContainerProps {
   isModalOpen: boolean;
@@ -16,6 +18,16 @@ const HeaderModalsContainer: React.FC<HeaderModalsContainerProps> = ({
   setIsModalOpen,
   pathname,
 }) => {
+  const searchParams = useSearchParams();
+  const paramsData = useMemo(() => {
+    const avg = searchParams.get("average");
+    const srv = searchParams.get("survey");
+    const invoiceId = searchParams.get("invoiceId");
+    const surveyId = searchParams.get("surveyId");
+    return invoiceId && surveyId
+      ? { average: avg, survey: srv, invoiceId, surveyId }
+      : undefined;
+  }, [searchParams]);
   const {
     invoiceDetail,
     loadingInvoice,
@@ -40,6 +52,7 @@ const HeaderModalsContainer: React.FC<HeaderModalsContainerProps> = ({
         invoiceDetail={invoiceDetail}
         transactionID={invoiceId}
       />
+      {paramsData && <SurveySubmitModal paramsData={paramsData} />}
     </>
   );
 };

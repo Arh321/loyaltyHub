@@ -1,11 +1,10 @@
 "use client";
-import { Suspense } from "react";
 import { LoadingIndicator } from "../loadingIndicator/loading-indicator";
 import AppLoading from "@/app/loading";
-import Header from "../header/header";
 import { LazyFooterComponent } from "../footer/footer-components-index";
 import NotFoundComponent from "../not-found-page/not-found-component";
 import useInitCompany from "@/hooks/useInitCompany";
+import LazyHeader from "../header/header-lazy-component";
 
 const AppLayOut = ({
   children,
@@ -13,7 +12,7 @@ const AppLayOut = ({
   children: React.ReactNode;
 }>) => {
   const { errorCompanyInfo, loadingCompanyInfo } = useInitCompany();
-  if (loadingCompanyInfo) return <AppLoading />;
+
   if (errorCompanyInfo)
     return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
   return (
@@ -23,12 +22,15 @@ const AppLayOut = ({
     >
       <LoadingIndicator
         component={
-          <Suspense fallback={<AppLoading />}>
-            <Header />
-            {children}
-
-            <LazyFooterComponent />
-          </Suspense>
+          loadingCompanyInfo ? (
+            <AppLoading />
+          ) : (
+            <>
+              <LazyHeader />
+              {children}
+              <LazyFooterComponent />
+            </>
+          )
         }
       ></LoadingIndicator>
     </div>

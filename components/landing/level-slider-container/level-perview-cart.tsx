@@ -27,15 +27,19 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
 
   return (
     <>
-      <section
-        role="button"
+      <button
+        type="button"
         onClick={() => setOpen(true)}
-        className="w-[70%] flex flex-col items-center"
+        className="w-[70%] flex flex-col items-center focus:outline-cta focus-visible:ring-2 focus-visible:ring-cta"
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls={`level-popup-detail-${level.id}`}
+        tabIndex={0}
       >
         <figure className="w-[158px] flex items-center">
           <ImageWithLoader
             src={"https://hubapi.loyaltyhub.ir" + level.imageUrl}
-            alt={`Membership Level Badge ${level.title}`}
+            alt={`نشان سطح عضویت ${level.title}`}
             imageClass="!w-full !h-[108px] [&_img]:!object-contain"
             fetchPriority={levelStatus === "Current" ? "high" : "auto"}
             loading={levelStatus === "Current" ? "eager" : "lazy"}
@@ -51,14 +55,11 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
             levelStatus={levelStatus}
           />
         ) : (
-          <span
-            className="min-w-[88px] bg-cta text-Highlighter font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center"
-            role="button"
-          >
+          <span className="min-w-[88px] bg-cta text-Highlighter font-Regular text-[14px] px-4 py-[0.3rem] rounded-[50px] text-center">
             مشاهده جزئیات
           </span>
         )}
-      </section>
+      </button>
       <LevelPopUpDetail
         level={level}
         levelsStatus={levelsStatus}

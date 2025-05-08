@@ -49,7 +49,7 @@ const GiftsAndCoponsContainerComponent = () => {
         <div dir="rtl" className="w-full grid grid-cols-2 gap-[20px]">
           <CoponsAndGiftsSummeryComponentItem
             title={"کوپـن خـریـد"}
-            icon={<CouponIcon width="70" height="32" color="" />}
+            icon={<CouponIcon width="70" height="32" color="var(--cta)" />}
             value={labels.couponsCount.toString()}
             type={"copon"}
             loading={isFetching}

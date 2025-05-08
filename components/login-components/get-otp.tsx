@@ -78,7 +78,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   }, [isLoading, loadingResend]);
 
   return (
-    <div className="w-full h-max flex flex-col items-center gap-4 pt-4 [&_input]:!aspect-square [&_input]:!text-[1.13rem]">
+    <div className="w-full h-max flex flex-col items-center gap-4 pt-4 [&_input]:!aspect-square [&_input]:!text-[1.13rem] [&_input]:!font-Medium">
       <Input.OTP
         length={OTP_LENGTH}
         value={otp}

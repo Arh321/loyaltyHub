@@ -7,7 +7,7 @@ import clsx from "clsx";
 import { Skeleton } from "antd";
 import LevelPerviewCart from "./level-perview-cart";
 import useLevels from "@/hooks/useLevels";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 const LevelsSlider = () => {
   const {
@@ -58,4 +58,6 @@ const LevelsSlider = () => {
     );
 };
 
-export default LevelsSlider;
+const MemoizedLevelsSlider = memo(LevelsSlider);
+
+export default MemoizedLevelsSlider;
