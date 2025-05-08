@@ -8,7 +8,8 @@ import clsx from "clsx";
 import moment from "jalali-moment";
 import { memo } from "react";
 import logo from "@/publicLOGO.png";
-import { HoseinyIcon } from "../sharedIcons/sharedIcons";
+import HoseinyLogoText from "@/components/sharedIcons/hosseinyIcon";
+
 import Image from "next/image";
 import { hexToOpacity } from "@/utils/common-methods/colorToRGB";
 interface GiftItemProps {
@@ -74,7 +75,7 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
             width={20}
             height={20}
           />
-          <HoseinyIcon width="50" height="24" color="" />
+          <HoseinyLogoText width="50" height="24" color="" />
         </div>
       </div>
       {gift.ceilingLimitation == 0 ||

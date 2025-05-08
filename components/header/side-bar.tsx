@@ -2,16 +2,15 @@
 import React, { memo, useState } from "react";
 import { Drawer } from "antd";
 import { Icon } from "@iconify/react/dist/iconify.js";
-
-// import { useDispatch } from "react-redux";
 import Link from "next/link";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import ImageWithLoader from "../image-with-loader/image-with-loader";
+
+import MemoizedCompanyLogoComponent from "../shared-components/company-logo-component";
+import MemoizedCtaButton from "../shared-components/cta-button";
+import MemoizedSideBarFooter from "./sidebar-footer";
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { info } = useSelector((state: RootState) => state.companySlice);
+
   //   const dispatch = useDispatch();
   const content = [
     {
@@ -75,9 +74,9 @@ const Sidebar = () => {
       >
         <div className="w-full h-full flex flex-col gap-4 relative">
           <div className="w-full flex items-center justify-between">
-            <button
+            <MemoizedCtaButton
               onClick={toggleCollapsed}
-              className="text-Highlighter w-[74px] h-[70px]"
+              className="text-Highlighter !bg-transparent w-[74px] h-[70px]"
             >
               <span
                 style={{
@@ -87,15 +86,12 @@ const Sidebar = () => {
               >
                 <Icon icon="stash:times" className="translate-x-1/2" />
               </span>
-            </button>
-            <ImageWithLoader
-              src={info.logoUrl}
+            </MemoizedCtaButton>
+            <MemoizedCompanyLogoComponent
               height={48}
               width={48}
-              imageClass="!object-contain pt-4"
-              alt={info.companyName}
-              fetchPriority="high"
-              loading="eager"
+              imageClass="!w-[60px] !h-[48px] [&_img]:!object-contain"
+              containerClass="w-max h-max"
             />
           </div>
           <div
@@ -123,42 +119,7 @@ const Sidebar = () => {
               );
             })}
           </div>
-          <div
-            style={{
-              backgroundImage: `url(/images/bg-art.webp)`,
-              backgroundSize: "cover", // Ensures the image covers the element
-              backgroundRepeat: "no-repeat", // Prevents the image from repeating
-              backgroundPosition: "center", // Centers the image
-            }}
-            className="absolute bottom-0 right-0 left-0 mx-auto w-full h-[250px]"
-          >
-            <div
-              style={{
-                background:
-                  "linear-gradient(165deg,#fff 20%, rgba(255,255,255,0.5) 80%)",
-              }}
-              className="w-full h-full flex items-end pb-12"
-            >
-              <div
-                style={{
-                  borderWidth: "2px",
-                  borderStyle: "solid",
-                  borderImage:
-                    "linear-gradient(to right, transparent, rgb(255,255,255,0.5),transparent) 1",
-                }}
-                className="w-full font-Regular text-Secondary2 flex flex-col gap-2 backdrop-blur-md items-center justify-center "
-              >
-                <span>طراحی و تولید توسط</span>
-                <span
-                  style={{
-                    letterSpacing: "4px",
-                  }}
-                >
-                  LoyalityHub.ir
-                </span>
-              </div>
-            </div>
-          </div>
+          <MemoizedSideBarFooter />
         </div>
       </Drawer>
     </>

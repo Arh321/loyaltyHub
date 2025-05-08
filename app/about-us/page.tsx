@@ -1,5 +1,6 @@
 import PagesContainer from "@/components/pages-container/pages-container";
-import { HoseinyIcon } from "@/components/sharedIcons/sharedIcons";
+import HoseinyLogoText from "@/components/sharedIcons/hosseinyIcon";
+
 import logo from "@/publicLOGO.png";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
@@ -48,7 +49,7 @@ const AboutUsPage = () => {
             height={200}
             priority
           />
-          <HoseinyIcon width="184" height="64" color="" />
+          <HoseinyLogoText width="184" height="64" color="" />
         </Link>
         <p className="w-full flex items-center justify-center gap-4">
           <a

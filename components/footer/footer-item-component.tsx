@@ -25,8 +25,8 @@ const FooterItemComponent: React.FC<FooterItemComponentProps> = ({
   }, [shop, onRedirectToShop, handleNavigation, path]);
 
   const buttonClassName = clsx(
-    "col-span-1 !bg-transparent h-full flex flex-col items-center gap-1 py-[10px] focus:outline-none",
-    shop && "!justify-center !py-0 -translate-y-1/2 active:!scale-100"
+    "col-span-1 !bg-transparent h-full flex flex-col items-center !gap-1 pb-[10px] focus:outline-none !rounded-none",
+    shop && "!justify-center !py-0 -translate-y-1/2 active:!scale-100 !h-max"
   );
 
   const labelClassName = clsx(

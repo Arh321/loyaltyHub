@@ -2,10 +2,9 @@ import MemoizedCompanyLogoComponent from "../shared-components/company-logo-comp
 import {
   FactorIcon,
   HomeIcon,
-  HoseinyIcon,
   LevelsIcon,
   ProfileIcon,
-} from "../sharedIcons/sharedIcons";
+} from "../sharedIcons/icons-index";
 
 export interface FooterItemType {
   icon: JSX.Element;
@@ -50,7 +49,7 @@ const getFooterItemsData = (pathname: string): FooterItemType[] => {
     {
       icon: (
         <MemoizedCompanyLogoComponent
-          containerClass="pt-[40px] flex flex-col items-center"
+          containerClass="flex flex-col items-center"
           width={80}
           height={80}
           imageClass="!w-[80px] !h-[60px] [&_img]:!object-contain"
@@ -59,6 +58,7 @@ const getFooterItemsData = (pathname: string): FooterItemType[] => {
             height: "44",
             color: "white",
           }}
+          isFooter
         />
       ),
       label: "",

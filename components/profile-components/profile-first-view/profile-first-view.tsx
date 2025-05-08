@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import {
   ProfileFirstViewLeftBorder,
   ProfileFirstViewRightBorder,
-} from "../../sharedIcons/sharedIcons";
+} from "@/components/sharedIcons/icons-index";
 import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import ImageWithLoader from "../../image-with-loader/image-with-loader";

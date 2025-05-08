@@ -1,5 +1,5 @@
 "use client";
-import { FactorIcon } from "@/components/sharedIcons/sharedIcons";
+import { FactorIcon } from "@/components/sharedIcons/icons-index";
 import { numberToPersianPrice } from "@/utils/common-methods/number-to-price";
 import { Icon } from "@iconify/react";
 import InvoiceModalDetail from "../invoice-detail/invoice-detai-modal";
@@ -7,11 +7,7 @@ import { useState, useMemo } from "react";
 import clsx from "clsx";
 import { IInvoice } from "@/types/invoice";
 import moment from "jalali-moment";
-import {
-  CheckCircleOutlined,
-  CheckOutlined,
-  WarningOutlined,
-} from "@ant-design/icons";
+import { CheckOutlined, WarningOutlined } from "@ant-design/icons";
 
 interface InvoiceListItemProps {
   index: number;

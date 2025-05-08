@@ -12,6 +12,9 @@ import HeaderModalsContainer from "./header-modals-container";
 import { Skeleton } from "antd";
 import MemoizedCompanyLogoComponent from "../shared-components/company-logo-component";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import SmartBackground from "../shared-components/smart-background";
 
 // Dynamically import components with loading fallbacks
 const LazyHeaderLanding = dynamic(() => import("./header-landing-container"), {
@@ -36,6 +39,8 @@ const SurveyButton = ({ onClick }: { onClick: () => void }) => (
 );
 
 const Header = () => {
+  const { info } = useSelector((state: RootState) => state.companySlice);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
   useAppInitializer();
@@ -45,9 +50,14 @@ const Header = () => {
   const isInMainRoute = useMemo(() => pathname === "/", [pathname]);
 
   return (
-    <header
-      className="w-full bg-center bg-contain bg-repeat "
-      style={{ backgroundImage: "url(/images/bg-art.webp)" }}
+    <SmartBackground
+      className="w-full"
+      style={{
+        backgroundRepeat: "repeat",
+        backgroundSize: "contain",
+      }}
+      externalUrl={info["Background-design"]}
+      fallbackUrl={"/images/bg-art.webp"}
     >
       <div className="bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3">
         {isSurveyPage ? (
@@ -72,7 +82,7 @@ const Header = () => {
         setIsModalOpen={setIsModalOpen}
         pathname={pathname}
       />
-    </header>
+    </SmartBackground>
   );
 };
 

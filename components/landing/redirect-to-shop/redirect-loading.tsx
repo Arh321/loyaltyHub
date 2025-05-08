@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { HoseinyIcon } from "@/components/sharedIcons/sharedIcons";
+import HoseinyLogoText from "@/components/sharedIcons/hosseinyIcon";
+
 import logo from "@/public/LOGO.png";
 import clsx from "clsx";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
@@ -43,7 +44,7 @@ const RedirectLoadingModal: React.FC<openRedirectModalProps> = ({
           role="presentation"
         >
           <Image src={logo} alt="لوگوی برادران حسینی" priority className="" />
-          <HoseinyIcon
+          <HoseinyLogoText
             width="184"
             height="64"
             color="white"

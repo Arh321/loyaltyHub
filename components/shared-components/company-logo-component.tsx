@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import ImageWithLoader from "../image-with-loader/image-with-loader";
-import HoseinyLogoText from "../sharedIcons/hosseinyIcon";
-import logo from "@/publicLOGO.png";
 import clsx from "clsx";
 import { RootState } from "@/redux/store";
 
 interface CompanyLogoComponentProps {
+  isFooter?: boolean;
   containerClass?: string;
   width?: number;
   height?: number;
@@ -29,6 +28,7 @@ const CompanyLogoComponent = ({
   height = DEFAULT_DIMENSIONS.height,
   imageClass,
   width = DEFAULT_DIMENSIONS.width,
+  isFooter,
 }: CompanyLogoComponentProps) => {
   const { info } = useSelector((state: RootState) => state.companySlice);
   const containerClassName = clsx(
@@ -47,7 +47,7 @@ const CompanyLogoComponent = ({
     <div className={containerClassName}>
       {info && (
         <ImageWithLoader
-          src={info.logoUrl}
+          src={isFooter ? info.logoUrlFooter : info.logoUrl}
           alt="HoseinyLogo"
           width={width}
           height={height}

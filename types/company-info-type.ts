@@ -28,6 +28,7 @@ export interface ICompanyInfo {
   companyName: string;
   logoUrlFooter: string;
   logoUrl: string;
+  "Background-design": string;
   phoneNumbers: string[];
   companyAddress: string;
   companyWebSiteAddress: string;

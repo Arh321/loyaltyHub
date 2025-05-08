@@ -1,5 +1,5 @@
 "use client";
-import { ProfileEditIcon } from "@/components/sharedIcons/sharedIcons";
+import { ProfileEditIcon } from "@/components/sharedIcons/icons-index";
 import clsx from "clsx";
 
 interface ProfileOneRowInfoProps {

@@ -1,6 +1,6 @@
 "use client";
 import MemoizedErrorComponent from "@/components/shared-components/error-component";
-import { CoponIcons, GiftIcon } from "@/components/sharedIcons/sharedIcons";
+import { CouponIcon, GiftIcon } from "@/components/sharedIcons/icons-index";
 import useGiftCardLabels from "@/hooks/useGetGiftCardLabels";
 import { Skeleton } from "antd";
 import React, { Suspense } from "react";
@@ -49,7 +49,7 @@ const GiftsAndCoponsContainerComponent = () => {
         <div dir="rtl" className="w-full grid grid-cols-2 gap-[20px]">
           <CoponsAndGiftsSummeryComponentItem
             title={"کوپـن خـریـد"}
-            icon={<CoponIcons width="70" height="32" color="" />}
+            icon={<CouponIcon width="70" height="32" color="" />}
             value={labels.couponsCount.toString()}
             type={"copon"}
             loading={isFetching}
