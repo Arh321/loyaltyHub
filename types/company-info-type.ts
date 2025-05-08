@@ -33,6 +33,6 @@ export interface ICompanyInfo {
   companyAddress: string;
   companyWebSiteAddress: string;
   companyEmail: string;
-  companySocialMedias: CompanySocialMedias;
-  colors: CompanyColors;
+  companySocialMedias?: CompanySocialMedias;
+  colors?: CompanyColors;
 }

@@ -6,7 +6,16 @@ export interface ICompanyInfoSlice {
 }
 
 const initialState: ICompanyInfoSlice = {
-  info: undefined,
+  info: {
+    "Background-design": "",
+    companyAddress: "",
+    companyEmail: "",
+    companyName: "",
+    companyWebSiteAddress: "",
+    logoUrl: "",
+    logoUrlFooter: "",
+    phoneNumbers: [],
+  },
 };
 
 const companySlice = createSlice({

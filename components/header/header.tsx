@@ -56,7 +56,7 @@ const Header = () => {
         backgroundRepeat: "repeat",
         backgroundSize: "contain",
       }}
-      externalUrl={info["Background-design"]}
+      externalUrl={info ? info["Background-design"] : ""}
       fallbackUrl={"/images/bg-art.webp"}
     >
       <div className="bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3">
