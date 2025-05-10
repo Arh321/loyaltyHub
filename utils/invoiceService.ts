@@ -23,35 +23,21 @@ const getAllInvoices = async (payLoad: {
 const getInvoiceById = async (payLoad: {
   invoiceId: string;
 }): Promise<IHttpResult<IInvoiceDetail>> => {
-  try {
-    const response = await axiosInstance.get<IHttpResult<IInvoiceDetail>>(
-      `${controlers.Invoice}/GetInvoiceById/${payLoad.invoiceId}`,
-      { headers: { auth: true } }
-    );
-    return response.data; // Return only the data part of the response
-  } catch (error: unknown) {
-    console.error("Error sending OTP:", error);
-    throw new Error(
-      "Failed to send OTP. Please check the mobile number and try again."
-    );
-  }
+  const response = await axiosInstance.get<IHttpResult<IInvoiceDetail>>(
+    `${controlers.Invoice}/GetInvoiceById/${payLoad.invoiceId}`,
+    { headers: { auth: true } }
+  );
+  return response.data;
 };
 
 const validateInvoiceById = async (payLoad: {
   invoiceId: string;
 }): Promise<IHttpResult<IInvoiceId>> => {
-  try {
-    const response = await axiosInstance.get<IHttpResult<IInvoiceId>>(
-      `${controlers.Auth}/ValidateInvoice?invoiceId=${payLoad.invoiceId}`,
-      { headers: { auth: true } }
-    );
-    return response.data; // Return only the data part of the response
-  } catch (error: unknown) {
-    console.error("Error sending OTP:", error);
-    throw new Error(
-      "Failed to send OTP. Please check the mobile number and try again."
-    );
-  }
+  const response = await axiosInstance.get<IHttpResult<IInvoiceId>>(
+    `${controlers.Auth}/ValidateInvoice?invoiceId=${payLoad.invoiceId}`,
+    { headers: { auth: true } }
+  );
+  return response.data;
 };
 
 export { getInvoiceById, validateInvoiceById, getAllInvoices };

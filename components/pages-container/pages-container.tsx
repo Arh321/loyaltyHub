@@ -12,7 +12,7 @@ const PagesContainer = ({
       style={{
         userSelect: "none",
       }}
-      className="w-full grow no-scrollbar overflow-y-auto bg-BG rounded-t-[20px] animate-fadeIn"
+      className="w-full grow no-scrollbar overflow-y-auto bg-BG rounded-t-[20px] animate-up"
     >
       <div className=" w-full h-max relative flex flex-col">
         <ErrorBoundaryWrapper

@@ -2,7 +2,6 @@
 import MemoizedErrorComponent from "@/components/shared-components/error-component";
 import { CouponIcon, GiftIcon } from "@/components/sharedIcons/icons-index";
 import useGiftCardLabels from "@/hooks/useGetGiftCardLabels";
-import { Skeleton } from "antd";
 import React, { Suspense } from "react";
 
 const CoponsAndGiftsSummeryComponentItem = React.lazy(
@@ -18,10 +17,7 @@ const GiftsAndCoponsContainerComponent = () => {
         {Array.from({ length: 2 }).map((_, index) => {
           return (
             <div key={index} className="col-span-1 w-full aspect-square">
-              <Skeleton.Node
-                className="!flex !w-full !h-full aspect-square rounded-[10px]"
-                active
-              />
+              <div className="!flex !w-full !h-full aspect-square rounded-[10px] animate-skeleton" />
             </div>
           );
         })}
@@ -40,23 +36,34 @@ const GiftsAndCoponsContainerComponent = () => {
     return (
       <Suspense
         fallback={
-          <Skeleton.Node
-            className="!flex !w-full !h-full aspect-square rounded-[10px]"
-            active
-          />
+          <div className="!flex !w-full !h-full aspect-square rounded-[10px] animate-skeleton" />
         }
       >
         <div dir="rtl" className="w-full grid grid-cols-2 gap-[20px]">
           <CoponsAndGiftsSummeryComponentItem
             title={"کوپـن خـریـد"}
-            icon={<CouponIcon width="70" height="32" color="var(--cta)" />}
+            icon={
+              <CouponIcon
+                width="70"
+                height="32"
+                color="var(--cta)"
+                className="text-cta"
+              />
+            }
             value={labels.couponsCount.toString()}
             type={"copon"}
             loading={isFetching}
           />
           <CoponsAndGiftsSummeryComponentItem
             title={"کارت هدیه"}
-            icon={<GiftIcon width="70" height="32" color="var(--cta)" />}
+            icon={
+              <GiftIcon
+                width="70"
+                height="32"
+                color="var(--cta)"
+                className="text-cta"
+              />
+            }
             value={labels.giftCardCount.toString()}
             type={"gift"}
             loading={isFetching}

@@ -1,11 +1,11 @@
 "use client";
-import { LoadingIndicator } from "../loadingIndicator/loading-indicator";
+
 import AppLoading from "@/app/loading";
-import { LazyFooterComponent } from "../footer/footer-components-index";
 import NotFoundComponent from "../not-found-page/not-found-component";
 import useInitCompany from "@/hooks/useInitCompany";
 import Header from "../header/header";
 import { Suspense } from "react";
+import MemoizedFooterContainer from "../footer/footer-container";
 
 const AppLayOut = ({
   children,
@@ -27,7 +27,7 @@ const AppLayOut = ({
         <Suspense fallback={<AppLoading />}>
           <Header />
           {children}
-          <LazyFooterComponent />
+          <MemoizedFooterContainer />
         </Suspense>
       )}
     </div>

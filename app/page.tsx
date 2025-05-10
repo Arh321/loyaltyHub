@@ -7,9 +7,15 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Home() {
   return (
-    <Suspense fallback={<div>درحال بارگذاری</div>}>
+    <Suspense
+      fallback={
+        <div className="w-full h-full flex items-center justify-center">
+          <LoadingOutlined className="text-xl !text-cta" />
+        </div>
+      }
+    >
       <PagesContainer>
-        <div className="w-full h-full overflow-hidden pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px] animate-fadeIn">
+        <div className="w-full h-full overflow-hidden pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]">
           <CurrentLevelSliderContainer />
           <BannerSlidersComponent />
           <GiftsAndCoponsContainerLAzy />

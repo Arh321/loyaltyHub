@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Skeleton } from "antd";
 import clsx from "clsx";
+import Image from "next/image";
 
 type AntdLazyImageProps = {
   src?: string;
@@ -20,8 +21,8 @@ const AntdLazyImage: React.FC<AntdLazyImageProps> = ({
   className = "",
   style = {},
   loadingPriority = false,
-  width = "100%",
-  height = "auto",
+  width = "100",
+  height = "100",
   fallback = "/placeholder.webp",
   onLoad,
 }) => {
@@ -64,24 +65,21 @@ const AntdLazyImage: React.FC<AntdLazyImageProps> = ({
       className={clsx("overflow-hidden", className)}
     >
       {!isLoaded && !hasError && (
-        <Skeleton.Image
-          active
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            inset: 0,
-          }}
+        <div
+          className="!flex !w-full !h-full  rounded-[10px] animate-skeleton"
+          style={{ position: "absolute", inset: 0 }}
         />
       )}
 
       {isVisible && !hasError && (
-        <img
+        <Image
           src={src}
           alt={alt}
           loading={loadingPriority ? "eager" : "lazy"}
           decoding="async"
           onLoad={handleLoad}
+          width={Number(width)}
+          height={Number(height)}
           onError={handleError}
           className={clsx(
             "w-full h-full object-cover transition-opacity duration-500",
@@ -95,10 +93,12 @@ const AntdLazyImage: React.FC<AntdLazyImageProps> = ({
       )}
 
       {hasError && (
-        <img
+        <Image
           src={fallback}
+          width={100}
+          height={100}
           alt="fallback"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-containe bg-Highlighter-hover rounded-[6px]"
           style={{ position: "absolute", inset: 0 }}
         />
       )}

@@ -14,10 +14,41 @@ import { getInvoiceById, validateInvoiceById } from "@/utils/invoiceService";
 import { useNotify } from "@/components/notife/notife";
 import { IInvoiceDetail, IInvoiceId } from "@/types/invoice";
 import { getProfile } from "@/utils/userServise";
+import { useMutation } from "@tanstack/react-query";
+import { IHttpResult } from "@/types/http-result";
+import { AxiosError } from "axios";
+import { IProfileInfo } from "@/types/profile";
+
+const useValidateInvoiceById = () =>
+  useMutation<
+    IHttpResult<IInvoiceId>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    AxiosError<IHttpResult<any>>,
+    { invoiceId: string }
+  >({
+    mutationKey: ["validateInvoiceById"],
+    mutationFn: validateInvoiceById,
+  });
+
+const useGetProfile = () =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useMutation<IHttpResult<IProfileInfo>, AxiosError<IHttpResult<any>>, void>({
+    mutationKey: ["GetProfile"],
+    mutationFn: getProfile,
+  });
+
+const useInvoiceById = () =>
+  useMutation<
+    IHttpResult<IInvoiceDetail>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    AxiosError<IHttpResult<any>>,
+    { invoiceId: string }
+  >({
+    mutationKey: ["GetInvoiceById"],
+    mutationFn: getInvoiceById,
+  });
 
 const useAuth = () => {
-  const [loadingInvoice, setLoadingInvoice] = useState(false);
-  const [profileLoading, setProfileLoading] = useState<boolean>(false);
   const [invoiceDetail, setInvoiceDetail] = useState<
     IInvoiceDetail | undefined
   >();
@@ -27,96 +58,135 @@ const useAuth = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const path = usePathname();
+  const cookies = new Cookies();
   const { notify } = useNotify();
 
-  const invoiceId = searchParams.get("invoiceId");
+  const invoiceId = searchParams.get("invoiceId") ?? "";
   const avg = searchParams.get("average");
-
-  const cookies = new Cookies();
 
   const { hasToken } = useSelector<RootState, ProfileSliceType>(
     (state) => state.profileSlice
   );
 
-  /**
-   * Loads the invoice details based on the invoice ID from the URL.
-   */
-  const onLoadSearchedInvoice = useCallback(async () => {
+  const { mutate: validate, isPending: loadingValidateInvoice } =
+    useValidateInvoiceById();
+  const { mutate: getProf, isPending: profileLoading } = useGetProfile();
+  const { mutate: getInvoice, isPending: loadingInvoice } = useInvoiceById();
+
+  const loadInvoiceFlow = useCallback(() => {
     if (!invoiceId) return;
 
-    setLoadingInvoice(true);
+    validate(
+      { invoiceId },
+      {
+        onSuccess: (res) => {
+          if (!res.status) {
+            notify("error", res.statusMessage || "اطلاعات فاکتور مطابقت ندارد");
+            setShowInvoice(false);
+            return;
+          }
 
-    try {
-      const valid = await validateInvoiceById({ invoiceId });
+          dispatch(onLoadingProfile(true));
 
-      if (!valid.status) {
-        notify("error", valid.statusMessage || "اطلاعات فاکتور مطابقت ندارد");
-        setShowInvoice(false);
-        return;
+          // دریافت پروفایل
+          getProf(undefined, {
+            onSuccess: (res) => {
+              if (!res.status) {
+                handleProfileError(res.statusMessage);
+                return;
+              }
+
+              dispatch(onSetProfile(res.result));
+              dispatch(onLoadingProfile(false));
+
+              // دریافت فاکتور
+              getInvoice(
+                { invoiceId },
+                {
+                  onSuccess: (res) => {
+                    if (res.status) {
+                      setInvoiceDetail(res.result);
+                      setShowInvoice(true);
+                      notify(
+                        "success",
+                        res.statusMessage || "فاکتور با موفقیت دریافت شد"
+                      );
+                    } else {
+                      setShowInvoice(false);
+                      notify(
+                        "error",
+                        res.statusMessage || "خطا در دریافت فاکتور"
+                      );
+                    }
+                  },
+                  onError: (err) => {
+                    setShowInvoice(false);
+                    notify(
+                      "error",
+                      err.response?.data?.resultMessage || "خطای فاکتور"
+                    );
+                  },
+                }
+              );
+            },
+            onError: (err) => {
+              handleProfileError(err.response?.data?.resultMessage);
+            },
+          });
+        },
+        onError: (err) => {
+          notify(
+            "error",
+            err.response?.data?.resultMessage || "خطا در بررسی فاکتور"
+          );
+          setShowInvoice(false);
+        },
       }
-      getUserProfile();
-      const response = await getInvoiceById({ invoiceId });
+    );
+  }, [invoiceId, validate, getProf, getInvoice]);
 
-      if (response.status) {
-        notify("success", response.statusMessage);
-        setInvoiceDetail(() => response.result);
-      } else {
-        notify("error", response.statusMessage || "خطا در دریافت فاکتور");
-        setShowInvoice(false);
-      }
-    } catch (error) {
-      notify("error", "خطا در دریافت فاکتور");
+  const handleProfileError = (message?: string) => {
+    notify("error", message || "خطا در دریافت اطلاعات کاربر");
+    cookies.remove("token");
+    router.push("/login");
+  };
 
-      setShowInvoice(false);
-    } finally {
-      setLoadingInvoice(false);
-    }
-  }, [invoiceId, notify]);
-
-  const getUserProfile = useCallback(async () => {
-    try {
-      dispatch(onLoadingProfile(true));
-      setProfileLoading(true);
-      const response = await getProfile();
-      if (response.status) {
-        dispatch(onSetProfile(response.result));
+  const loadProfileOnly = useCallback(() => {
+    dispatch(onLoadingProfile(true));
+    getProf(undefined, {
+      onSuccess: (res) => {
+        if (res.status) {
+          dispatch(onSetProfile(res.result));
+        } else {
+          handleProfileError(res.statusMessage);
+        }
         dispatch(onLoadingProfile(false));
-      } else {
-        notify("error", response.statusMessage || "خطا در دریافت اطلاات کاربر");
-        cookies.remove("token");
-        setProfileLoading(false);
-        router.push("/login");
-      }
-    } catch (error) {
-      notify("error", "خطا در دریافت اطلاات کاربر");
-      cookies.remove("token");
-      router.push("/login");
-      setProfileLoading(false);
-    } finally {
-      setProfileLoading(false);
-      dispatch(onLoadingProfile(false));
-    }
-  }, []);
+      },
+      onError: (err) => {
+        handleProfileError(err.response?.data?.resultMessage);
+        dispatch(onLoadingProfile(false));
+      },
+    });
+  }, [getProf]);
 
-  /**
-   * Handles the token and invoice validation on component mount or path changes.
-   */
   useEffect(() => {
     if (path === "/" && hasToken && invoiceId && !avg) {
-      onLoadSearchedInvoice();
+      loadInvoiceFlow();
     } else if (!hasToken) {
       dispatch(onCheckHasToken());
     }
-  }, [path, hasToken, invoiceId, onLoadSearchedInvoice, dispatch]);
+  }, [path, hasToken, invoiceId, avg, loadInvoiceFlow]);
 
   useEffect(() => {
     if (!path.includes("login")) {
-      getUserProfile();
+      loadProfileOnly();
     }
-  }, [path]);
+  }, [path, loadProfileOnly]);
 
   return {
     loadingInvoice,
+    loadingValidateInvoice,
+    profileLoading,
     invoiceDetail,
     showInvoice,
     invoiceId,

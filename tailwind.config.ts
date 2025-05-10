@@ -58,6 +58,17 @@ const config: Config = {
             transform: "translateY(-2px)",
           },
         },
+        skeleton: {
+          "0%": {
+            backgroundColor: "#e0e0e0",
+          },
+          "50%": {
+            backgroundColor: "#c0c0c0",
+          },
+          "100%": {
+            backgroundColor: "#e0e0e0",
+          },
+        },
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in-out",
@@ -65,6 +76,7 @@ const config: Config = {
         "fadeIn-repetive": "fadeIn 2s ease-in-out",
         movable: "movable 3s infinite",
         popIn: "popIn 0.7s ease-in-out",
+        skeleton: "skeleton 1.5s infinite ease-in-out",
       },
       colors: {
         transparent: "transparent",

@@ -18,7 +18,7 @@ const NotFoundComponent = () => {
               height={200}
             />
           </div>
-          <p className="w-full flex flex-col items-center text-Secondary2 justify-center gap-[10px] font-Medium">
+          <p className="w-full flex flex-col items-center text-cta justify-center gap-[10px] font-Medium">
             <span className="bold-16">متاسفیم</span>
             <span className="w-1/2 flex flex-col gap-2 text-tertiary regular-14 text-center">
               صفحه ای که به دنبال آن هستید وجود ندارد
