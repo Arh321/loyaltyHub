@@ -3,16 +3,14 @@ import clsx from "clsx";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import style from "./banner-slider.module.css";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
-import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
+import { memo, useMemo, useState } from "react";
 import { getLandingBanners } from "@/utils/landingService";
-import { IBanners } from "@/types/banners-type";
 import { Skeleton } from "antd";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import MemoizedErrorComponent from "@/components/shared-components/error-component";
 import RedirectLoadingModal from "../redirect-to-shop/redirect-loading";
+import AntdLazyImage from "@/components/image-with-loader/image-with-loader";
 
 const BannerSlidersComponent = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -52,6 +50,7 @@ const BannerSlidersComponent = () => {
           slidesPerView={1}
           pagination={true}
           navigation={false}
+          speed={1500}
           autoplay={true}
           modules={[Navigation, Pagination, Autoplay]}
           className={clsx(style["bannersSlider-swiper"])}
@@ -67,10 +66,11 @@ const BannerSlidersComponent = () => {
                   href={item.linkUrl}
                   className="!w-full !h-full"
                 >
-                  <ImageWithLoader
+                  <AntdLazyImage
                     src={"https://hubapi.loyaltyhub.ir" + item.mobileImageUrl}
                     alt="index"
-                    imageClass="!w-full !h-full object-cover"
+                    className="!w-full !h-full object-cover"
+                    loadingPriority={index == 0}
                     width={406}
                     height={100}
                   />

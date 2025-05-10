@@ -1,10 +1,9 @@
 "use client";
 
 import { IClubStatusNew } from "@/types/club-status";
-import Image, { StaticImageData } from "next/image";
 import { Dispatch, SetStateAction } from "react";
-import ImageWithLoader from "../image-with-loader/image-with-loader";
 import MemoizedCtaButton from "../shared-components/cta-button";
+import AntdLazyImage from "../image-with-loader/image-with-loader";
 
 export type LevelStatesComponentsProps = {
   status: IClubStatusNew | undefined;
@@ -28,12 +27,12 @@ const LevelDetailPopUp: React.FC<LevelStatesComponentsProps> = ({
         </MemoizedCtaButton>
       )}
       <p className="regular-16 w-full flex flex-col gap-2 items-center relative">
-        <ImageWithLoader
+        <AntdLazyImage
           src={"https://hubapi.loyaltyhub.ir" + levelImege}
           width={100}
           height={100}
           alt={levelTitle ?? "Next"}
-          imageClass={"!size-[100px] [&_img]:!object-contain"}
+          className={"!size-[100px] [&_img]:!object-contain"}
         />
       </p>
 

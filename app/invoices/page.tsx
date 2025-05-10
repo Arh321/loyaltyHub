@@ -56,7 +56,7 @@ export default function InvoicesPAge() {
   return (
     <PagesContainer>
       <div className="w-full z-10  sticky top-0">
-        <div className="w-full flex items-center justify-center border-gradient-secondary border-b text-Secondary2 font-Medium text-xl py-4  overflow-hidden">
+        <div className="w-full flex items-center justify-center border-gradient-secondary border-b text-cta font-Medium text-xl py-4  overflow-hidden">
           فاکتورهای من
           <SortInvoiceListItems
             data={data}

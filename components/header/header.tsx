@@ -2,8 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { Icon } from "@iconify/react";
-import Image from "next/image";
-import logo from "../../public/images/hosseiniLogo.webp";
 import { usePathname } from "next/navigation";
 import React, { memo, useMemo, useState } from "react";
 import useAppInitializer from "@/hooks/useAppInitializer";

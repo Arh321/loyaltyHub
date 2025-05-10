@@ -45,7 +45,7 @@ const ContactUs = () => {
         dir="rtl"
         className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]"
       >
-        <h1 className="w-full text-center text-2xl font-Medium text-Secondary2">
+        <h1 className="w-full text-center text-2xl font-Medium text-cta">
           تماس با ما
         </h1>
         <p className="font-Medium w-full flex flex-col gap-4">
@@ -54,7 +54,7 @@ const ContactUs = () => {
               icon="tabler:clock-hour-9"
               width="1.8rem"
               height="1.8rem"
-              style={{ color: "var(--Secondary2)" }}
+              style={{ color: "var(--cta)" }}
             />
             <span>
               ساعات پشتیبانی همه روزه از ۹ الی ۲۱ (پیگیری سفارشات ۹ صبح تا ۱۸)
@@ -65,7 +65,7 @@ const ContactUs = () => {
               icon="icon-park-outline:send"
               width="2.8rem"
               height="1.4rem"
-              style={{ color: "var(--Secondary2)" }}
+              style={{ color: "var(--cta)" }}
             />
             <span>
               ارسال سفارشات مشهد بجز روزهای تعطیل از ۱۰ تا ۲۰:۳۰ و جمعه‌ها از ۱۰
@@ -77,7 +77,7 @@ const ContactUs = () => {
               icon="ic:round-mail"
               width="24"
               height="24"
-              style={{ color: "var(--Secondary2)" }}
+              style={{ color: "var(--cta)" }}
             />
             <a
               href="mailto:support@hosseinibrothers.com"
@@ -103,7 +103,7 @@ const ContactUs = () => {
                         icon="iconamoon:phone"
                         width="24"
                         height="24"
-                        className="text-Secondary2"
+                        className="text-cta"
                       />
                       <span className="whitespace-nowrap">تلفن شعبه</span>
                     </div>
@@ -111,7 +111,7 @@ const ContactUs = () => {
                       <Icon
                         icon="ion:time-outline"
                         width={24}
-                        className="text-Secondary2"
+                        className="text-cta"
                       />
                       <span className="whitespace-nowrap">ساعت کاری</span>
                     </div>

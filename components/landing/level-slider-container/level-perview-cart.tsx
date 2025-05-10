@@ -6,7 +6,7 @@ import { FC, useState } from "react";
 import { LevelState } from "@/hooks/useLevels";
 import LevelStatesContainer from "./level-states/level-states.container";
 import LevelPopUpDetail from "@/components/shared-components/level-detail-popup";
-import ImageWithLoader from "@/components/image-with-loader/image-with-loader";
+import AntdLazyImage from "@/components/image-with-loader/image-with-loader";
 
 interface LevelPerviewCartProps {
   level: IClubStatusNew;
@@ -36,17 +36,16 @@ const LevelPerviewCart: FC<LevelPerviewCartProps> = ({
         aria-controls={`level-popup-detail-${level.id}`}
         tabIndex={0}
       >
-        <figure className="w-[158px] flex items-center">
-          <ImageWithLoader
+        <div className="w-[158px] flex items-center">
+          <AntdLazyImage
             src={"https://hubapi.loyaltyhub.ir" + level.imageUrl}
             alt={`نشان سطح عضویت ${level.title}`}
-            imageClass="!w-full !h-[108px] [&_img]:!object-contain"
-            fetchPriority={levelStatus === "Current" ? "high" : "auto"}
-            loading={levelStatus === "Current" ? "eager" : "lazy"}
+            className="!w-full !h-[108px] [&_img]:!object-contain"
+            loadingPriority={levelStatus === "Current"}
             width={158}
             height={158}
           />
-        </figure>
+        </div>
 
         {!inLevelPAge ? (
           <LevelStatesContainer

@@ -1,7 +1,6 @@
 "use client";
 
 import PagesContainer from "@/components/pages-container/pages-container";
-import { IClubStatusNew } from "@/types/club-status";
 import border from "@/public/images/level-custom-border.webp";
 import Image from "next/image";
 import { lazy, Suspense, useMemo } from "react";

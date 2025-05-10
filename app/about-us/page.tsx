@@ -14,7 +14,7 @@ const AboutUsPage = () => {
         dir="rtl"
         className="w-full h-full overflow-y-auto pt-[16px] gap-4 flex flex-col sm:px-6 lsm:px-8 pb-[100px]"
       >
-        <h1 className="w-full text-center text-2xl font-Medium text-Secondary2">
+        <h1 className="w-full text-center text-2xl font-Medium text-cta">
           درباره ما
         </h1>
         <p className="font-Regular text-center">

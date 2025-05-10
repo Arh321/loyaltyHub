@@ -9,6 +9,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 const useValidateOtp = (
@@ -66,6 +67,10 @@ const useValidateOtp = (
   const handleValidateOtp = async (otp: string) => {
     validateOtpMutation.mutate({ otp });
   };
+
+  useEffect(() => {
+    navigate.prefetch("/");
+  }, []);
 
   return {
     handleValidateOtp,

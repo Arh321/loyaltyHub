@@ -7,6 +7,9 @@ import { AxiosError } from "axios";
 import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
+const STORAGE_KEY = "companyInfo";
+
 const useGetCompanyInfo = () => {
   return useMutation<ICompanyInfo[], AxiosError, void, unknown>({
     mutationKey: ["CompanyInfo"],
@@ -15,35 +18,66 @@ const useGetCompanyInfo = () => {
 };
 
 const useInitCompany = () => {
-  const { mutate: getCoInfo, isPending, data, isError } = useGetCompanyInfo();
+  const { mutate: getCoInfo, isPending, isError } = useGetCompanyInfo();
   const dispatch = useDispatch();
   const { notify } = useNotify();
-  const handleSetTheme = useCallback(
-    (theme: CompanyColors) => {
-      const root = document.documentElement;
-      Object.entries(theme).forEach(([key, value]) => {
-        root.style.setProperty(`--${key}`, value);
-      });
-    },
-    [data]
-  );
+
+  const handleSetTheme = useCallback((theme: CompanyColors) => {
+    const root = document.documentElement;
+    Object.entries(theme).forEach(([key, value]) => {
+      root.style.setProperty(`--${key}`, value);
+    });
+  }, []);
+
+  const saveToLocalStorage = (data: ICompanyInfo) => {
+    const storageData = {
+      data,
+      timestamp: new Date().getTime(),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(storageData));
+    localStorage.setItem("logo", data.logoUrl);
+  };
+
+  const getFromLocalStorage = (): {
+    data: ICompanyInfo;
+    isValid: boolean;
+  } | null => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return null;
+
+    const { data, timestamp } = JSON.parse(stored);
+    const now = new Date().getTime();
+    const isValid = now - timestamp < CACHE_DURATION;
+
+    return { data, isValid };
+  };
 
   const handleGetCompanyInfo = useCallback(() => {
+    const storedData = getFromLocalStorage();
+
+    if (storedData && storedData.isValid) {
+      // Use cached data if it's still valid
+      dispatch(setCompanyInfo(storedData.data));
+      handleSetTheme(storedData.data.colors);
+      return;
+    }
+
+    // Fetch new data if cache is invalid or doesn't exist
     getCoInfo(undefined, {
       onSuccess(data) {
         dispatch(setCompanyInfo(data[0]));
         handleSetTheme(data[0].colors);
-        localStorage.setItem("logo", data[0].logoUrl);
+        saveToLocalStorage(data[0]);
       },
       onError(error) {
         notify("error", `خطا در دریافت اطلاعات مجموعه ${error.message}`);
       },
     });
-  }, [data]);
+  }, [dispatch, getCoInfo, handleSetTheme, notify]);
 
   useEffect(() => {
     handleGetCompanyInfo();
-  }, []);
+  }, [handleGetCompanyInfo]);
 
   return {
     handleGetCompanyInfo,

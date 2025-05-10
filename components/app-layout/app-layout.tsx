@@ -4,7 +4,8 @@ import AppLoading from "@/app/loading";
 import { LazyFooterComponent } from "../footer/footer-components-index";
 import NotFoundComponent from "../not-found-page/not-found-component";
 import useInitCompany from "@/hooks/useInitCompany";
-import LazyHeader from "../header/header-lazy-component";
+import Header from "../header/header";
+import { Suspense } from "react";
 
 const AppLayOut = ({
   children,
@@ -20,19 +21,15 @@ const AppLayOut = ({
       dir="rtl"
       className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"
     >
-      <LoadingIndicator
-        component={
-          loadingCompanyInfo ? (
-            <AppLoading />
-          ) : (
-            <>
-              <LazyHeader />
-              {children}
-              <LazyFooterComponent />
-            </>
-          )
-        }
-      ></LoadingIndicator>
+      {loadingCompanyInfo ? (
+        <AppLoading />
+      ) : (
+        <Suspense fallback={<AppLoading />}>
+          <Header />
+          {children}
+          <LazyFooterComponent />
+        </Suspense>
+      )}
     </div>
   );
 };

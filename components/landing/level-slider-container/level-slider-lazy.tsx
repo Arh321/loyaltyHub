@@ -1,6 +1,6 @@
 "use client";
 
-import { Loading3QuartersOutlined, LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Skeleton } from "antd";
 import dynamic from "next/dynamic";
 

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import ImageWithLoader from "../image-with-loader/image-with-loader";
 import clsx from "clsx";
 import { RootState } from "@/redux/store";
+import AntdLazyImage from "../image-with-loader/image-with-loader";
 
 interface CompanyLogoComponentProps {
   isFooter?: boolean;
@@ -46,12 +46,13 @@ const CompanyLogoComponent = ({
   return (
     <div className={containerClassName}>
       {info && (
-        <ImageWithLoader
+        <AntdLazyImage
           src={isFooter ? info.logoUrlFooter : info.logoUrl}
           alt="HoseinyLogo"
           width={width}
           height={height}
-          imageClass={imageClassName}
+          loadingPriority={true}
+          className={imageClassName}
         />
       )}
     </div>

@@ -66,12 +66,12 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
       >
         {/* 🔹 Branch Name & Payment */}
         <div className="w-full flex items-center justify-between">
-          <span className="flex items-center gap-1 text-Secondary font-Regular">
+          <span className="flex items-center gap-1 text-cta font-Regular">
             <Icon
               icon="ph:map-pin"
               width="24"
               height="24"
-              style={{ color: "var(--Secondary)" }}
+              style={{ color: "var(--cta)" }}
             />
             <span>{invoice.branchName}</span>
           </span>
@@ -85,16 +85,11 @@ const InvoiceListItem: React.FC<InvoiceListItemProps> = ({
 
         {/* 🔹 Invoice ID & Purchase Date */}
         <div className="w-full flex items-center justify-between">
-          <span className="flex items-center gap-1 text-Secondary font-Regular">
-            <FactorIcon
-              width="24"
-              height="28"
-              color="var(--Secondary)"
-              fill={""}
-            />
+          <span className="flex items-center gap-1 text-cta font-Regular">
+            <FactorIcon width="24" height="28" color="var(--cta)" fill={""} />
             <span>#{invoice.sourceId}</span>
           </span>
-          <span dir="ltr" className="text-Secondary font-Regular">
+          <span dir="ltr" className="text-cta font-Regular">
             {moment(invoice.purchaseDate, "YYYY/MM/DD")
               .locale("fa")
               .format("YYYY/MM/DD hh:mm")}

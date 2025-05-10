@@ -6,8 +6,8 @@ import {
 } from "@/components/sharedIcons/icons-index";
 import { useState } from "react";
 import { CloseOutlined } from "@ant-design/icons";
-import ImageWithLoader from "../../image-with-loader/image-with-loader";
 import ProfileFirstViewInfo from "./profile-first-view-info";
+import AntdLazyImage from "../../image-with-loader/image-with-loader";
 
 export interface ProfileFirstViewComponentProps {
   name: string;
@@ -44,8 +44,8 @@ const ProfileFirstViewComponent: React.FC<ProfileFirstViewComponentProps> = ({
         <ProfileFirstViewLeftBorder width="23" height="102" color={""} />
         <div className="grow h-full relative rounded-[10px] overflow-hidden">
           <div className="w-full h-full ">
-            <ImageWithLoader
-              imageClass="w-full h-full object-cover "
+            <AntdLazyImage
+              className="w-full h-full object-cover "
               src={selectedBG.url}
               alt="Descriptive text"
               width={200}
