@@ -8,7 +8,7 @@ const InvoiceDetailsFooter: React.FC<{
   factorID: number;
 }> = ({ finalPrice, salePrice, factorID, vatPrice }) => (
   <div className=" bg-Highlighter flex flex-col py-2 px-2">
-    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-[#e2e2e2]">
+    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-borderColor">
       <span className="text-[13px] font-Bold">مبلغ فاکتور</span>
       <div className="flex gap-2 justify-between items-center w-1/4">
         <span className="font-Bold text-[13px]">
@@ -18,7 +18,7 @@ const InvoiceDetailsFooter: React.FC<{
       </div>
     </div>
     {vatPrice && (
-      <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-[#e2e2e2]">
+      <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-borderColor">
         <span className="text-[13px] font-Bold">مبلغ مالیات</span>
         <div className="flex gap-2 justify-between items-center w-1/4">
           <span className="font-Bold text-[13px]">
@@ -28,7 +28,7 @@ const InvoiceDetailsFooter: React.FC<{
         </div>
       </div>
     )}
-    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-[#e2e2e2]">
+    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlighter mb-2 border-b border-borderColor">
       <span className="text-[13px] font-Bold">مبلغ کل خرید</span>
       <div className="flex gap-2 justify-between items-center w-1/4">
         <span className="font-Bold text-[13px]">

@@ -28,6 +28,11 @@
   src: url("./fonts/IRANYekanXFaNum-Bold.woff") format("woff");
 }
 
+@font-face {
+  font-family: "Yekan";
+  src: url("/Yekan.ttf") format("trueType");
+}
+
 :root {
   /* Base primary color */
   --cta: #1e9c51;
@@ -44,6 +49,7 @@
   --Highlighter-hover: #edf0f8;
   --BG: #f2f6fc;
   --alert: #c03030;
+  --border-color: #e2e2e2;
 }
 
 body {
@@ -128,22 +134,6 @@ input[type="number"] {
   z-index: 1000;
   pointer-events: none;
   color: rgba(0, 0, 0, 0.88);
-}
-.ant-modal-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.ant-modal-wrap .ant-modal {
-  height: max-content !important;
-  max-height: 95dvh !important;
-  width: 90vw !important;
-  margin: auto !important;
-  top: auto !important;
-}
-
-.ant-modal-wrap .ant-modal:firstchild {
-  height: 100%;
 }
 
 .ant-tabs-nav {

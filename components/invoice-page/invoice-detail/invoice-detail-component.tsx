@@ -1,21 +1,14 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
+import React from "react";
 import Link from "next/link";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-import { RootState } from "@/redux/store";
-import { ProfileSliceType } from "@/redux/profile/profileSlice";
-
 import { IInvoiceDetail } from "@/types/invoice";
-
 import { IProfileInfo } from "@/types/profile";
 import InvoiceDetailHeader from "./invoice-detail-components/invoice-detail-header";
 import InvoiceDetailSummary from "./invoice-detail-components/invoice-detail-summeries";
 import InvoiceDetailItemsTable from "./invoice-detail-components/invoice-detail-table";
 import InvoiceDetailsFooter from "./invoice-detail-components/invoice-detail-footer";
-import { getInvoiceById } from "@/utils/invoiceService";
+import useInvoiceDetail from "@/hooks/useInvoiceDetail";
+import style from "@/styles/pages-loader-style.module.css";
 type InvoiceIdPageProps = {
   transactionID?: string;
   invoiceDetail?: IInvoiceDetail;
@@ -31,69 +24,31 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
   showServayButton,
   loadingInvoice,
 }) => {
-  const [invoice, setInvoice] = useState<IInvoiceDetail>(
-    invoiceDetail ? invoiceDetail : undefined
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState(false);
-  const { info } = useSelector<RootState, ProfileSliceType>(
-    (state) => state.profileSlice
-  );
-  const onLoadSearchedInvoice = useCallback(async () => {
-    setLoading(true);
-    setError(false);
-    try {
-      const response = await getInvoiceById({ invoiceId: transactionID });
+  const {
+    invoice,
+    downloadPdfDocument,
+    print,
+    isPending,
+    isError,
+    reset,
+    info,
+  } = useInvoiceDetail(transactionID, onClose, invoiceDetail);
 
-      if (response.status) {
-        setInvoice(response.result);
-      } else {
-        setError(true);
-      }
-    } catch (error) {
-      setError(true);
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  }, [transactionID, onClose]);
-
-  useEffect(() => {
-    if (!invoiceDetail) {
-      onLoadSearchedInvoice();
-    }
-  }, [transactionID]);
-
-  const downloadPdfDocument = () => {
-    const input = document.getElementById("testId");
-    if (input) {
-      html2canvas(input).then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        pdf.setFontSize(40);
-        pdf.addImage(imgData, "JPEG", 15, 40, 180, 200);
-        pdf.save("download.pdf");
-      });
-    }
-  };
-
-  const print = () => window.print();
-
-  if (loading) {
+  if (isPending || loadingInvoice) {
     return (
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="loader"></div>
+      <div className="w-full h-[90dvh] grow flex justify-center items-center">
+        <div className={style["loader"]}></div>
       </div>
     );
   }
 
-  if (error) {
+  if (isError) {
     return (
       <ErrorState
         onClose={onClose}
         downloadPdf={downloadPdfDocument}
         print={print}
-        onLoadSearchedInvoice={onLoadSearchedInvoice}
+        onLoadSearchedInvoice={() => reset()}
       />
     );
   }
@@ -102,7 +57,7 @@ const InvoiceIdPage: React.FC<InvoiceIdPageProps> = ({
     return (
       <div
         dir="rtl"
-        className="w-full flex flex-col h-full overflow-hidden animate-fadeIn bg-Highlighter p-1 rounded-lg"
+        className="w-full flex flex-col h-full overflow-y-auto custome-scrool-bar animate-fadeIn bg-Highlighter p-1 rounded-lg"
       >
         <InvoiceDetailHeader
           transactionID={transactionID}
@@ -128,8 +83,7 @@ const InvoiceDetails: React.FC<{
         departmentName={"سجاد"}
         info={info}
       />
-
-      <div className="max-h-[35dvh] overflow-y-auto custome-scrool-bar">
+      <div className="w-full">
         <InvoiceDetailItemsTable items={invoice.body} />
       </div>
       <InvoiceDetailsFooter
@@ -147,14 +101,14 @@ const SurveyButton: React.FC<{
 }> = ({ invoiceId }) => (
   <Link
     href={`/survey?invoiceId=${invoiceId}`}
-    className=" py-3 flex justify-center rounded-md bg-Secondary2 text-Highlighter hover:!text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
+    className="py-3 flex justify-center rounded-md bg-cta text-Highlighter hover:!text-Highlighter w-2/3 mx-auto text-highlighter font-Bold"
   >
     ثبت نظر برای این فاکتور
   </Link>
 );
 
 const ErrorState: React.FC<{
-  onLoadSearchedInvoice: () => Promise<void>;
+  onLoadSearchedInvoice: () => void;
   downloadPdf: () => void;
   onClose?: React.Dispatch<React.SetStateAction<boolean>>;
   print: () => void;

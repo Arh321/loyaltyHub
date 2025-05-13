@@ -63,14 +63,14 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
       onCancel={handleCancel}
       style={{
         direction: "rtl",
-        width: "95vw !important",
-        maxWidth: "450px",
-        height: "95dvh",
       }}
       classNames={{
         header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
-        content: " !p-2 !bg-BG !h-full",
+        content: " !p-2 !bg-BG",
         footer: "!hidden",
+        body: "!w-[95vw] !max-w-[375px] !h-[85vh]",
+        wrapper:
+          "!w-max !h-max m-auto [&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden",
       }}
       closeIcon={false}
       footer={false}

@@ -5,11 +5,11 @@ const InvoiceDetailItemsTable: React.FC<{
   items: IInvoiceDetail["body"];
 }> = ({ items }) => (
   <div className="w-full border-collapse font-Regular flex flex-col">
-    <div className="border font-Medium bg-Secondary2 px-2 py-1 text-base text-Highlighter text-highlighter text-center sticky top-0">
+    <div className="border font-Medium bg-cta px-2 py-1 text-base text-Highlighter text-highlighter text-center sticky top-0">
       مشخصات فاکتور
     </div>
     <div className="font-bold w-full flex ">
-      <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
+      <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-cta">
         <div className="w-2/5 px-2 py-1 h-full border-l border-highlighter">
           <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
             <span className="text-[8px]">نام کالا</span>
@@ -50,12 +50,14 @@ const InvoiceDetailItemsTable: React.FC<{
 
 const RowOfFactorDetail = ({ item }: { item: FactorDetail }) => {
   return (
-    <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-Secondary2">
+    <div className="font-bold bg-Highlighter w-full p-1 flex border-b border-cta">
       <div className="w-2/5 px-2 py-[1px] h-full border-l border-highlighter">
         <p className="flex flex-col gap-2 h-full justify-center items-center w-full !mb-0">
-          <span className="text-[8px]">{item.productName}</span>
+          <span className="text-[8px] max-w-[125px] whitespace-nowrap text-ellipsis overflow-hidden">
+            {item.productName}
+          </span>
           <span className="border-b border-tertiary px-2 w-full"></span>
-          <span className="text-[8px]">
+          <span className="text-[8px] max-w-[125px] whitespace-nowrap text-ellipsis overflow-hidden">
             {item.productCode ? item.productCode : "---"}
           </span>
         </p>

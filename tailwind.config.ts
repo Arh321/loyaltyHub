@@ -98,6 +98,7 @@ const config: Config = {
         Secondary: "var(--Secondary)",
         Primary: "var(--Primary)",
         Focus: "var(--Focus)",
+        borderColor: "var(--border-color)",
       },
       screens: {
         sm: "320px",
