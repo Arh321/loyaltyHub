@@ -11,6 +11,7 @@ import Modal from "antd/es/modal/Modal";
 import { CloseOutlined } from "@ant-design/icons";
 import LevelDetailPopUp from "./level-list-cart-detail";
 import style from "./levels-list-style.module.css";
+import LevelDetailBenefitsModal from "./levelListCartModalComponents/level-datail-benefits";
 interface LevelsListCartProps {
   level: IClubStatusNew;
   levelsStatus: [string, string][];
@@ -23,9 +24,12 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
   getRemainingPointsAndPercent,
 }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     setOpen(false);
-  }, [open]);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
   useEffect(() => {
     const handlePopState = (event: PopStateEvent) => {
       if (open) {
@@ -132,66 +136,13 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
           </div>
         </div>
       </div>
-      <Modal
-        open={!!open}
-        title={
-          <div className="w-full flex items-center justify-center relative">
-            <span className="!absolute top-0 bottom-0 my-auto right-2">
-              {levelsStatus.find((item) => +item[0] == level.id)[1] ==
-                "Done" && (
-                <span className="w-max ">
-                  <Icon
-                    icon="simple-line-icons:check"
-                    width="24"
-                    height="24"
-                    style={{ color: "var(--Secondary2)" }}
-                  />
-                </span>
-              )}
-              {levelsStatus.find((item) => +item[0] == level.id)[1] ==
-                "Next" && (
-                <span className="w-max ">
-                  <Icon
-                    icon="lets-icons:lock-light"
-                    width="28"
-                    height="28"
-                    style={{ color: "var(--Alert)" }}
-                  />
-                </span>
-              )}
-            </span>
-            <span>{level.title}</span>
-            <CloseOutlined
-              className="!text-Alert !absolute top-0 bottom-0 my-auto left-2"
-              role="button"
-              onClick={() => {
-                setOpen(() => !open);
-              }}
-            />
-          </div>
-        }
-        onCancel={handleCancel}
-        style={{
-          direction: "rtl",
-          width: "95vw !important",
-          maxWidth: "450px",
-          height: "90dvh",
-        }}
-        classNames={{
-          header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
-          content: " !p-2 !bg-BG !h-full",
-          footer: "!hidden",
-        }}
-        closeIcon={false}
-        footer={false}
-      >
-        <LevelDetailPopUp
-          levelImege={level.imageUrl}
-          status={level}
-          onClose={setOpen}
-          levelsStatus={levelsStatus}
-        />
-      </Modal>
+      <LevelDetailBenefitsModal
+        handleCancel={handleCancel}
+        level={level}
+        levelsStatus={levelsStatus}
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   );
 };

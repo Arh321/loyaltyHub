@@ -4,6 +4,7 @@ import { Modal } from "antd";
 import React, { Dispatch, SetStateAction, useEffect, useMemo } from "react";
 import InvoiceIdPage from "./invoice-detail-component";
 import { IInvoiceDetail, IInvoiceId } from "@/types/invoice";
+import clsx from "clsx";
 
 interface InvoiceModalDetailProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -69,8 +70,10 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
         content: " !p-2 !bg-BG",
         footer: "!hidden",
         body: "!w-[95vw] !max-w-[375px] !h-[85vh]",
-        wrapper:
-          "!w-max !h-max m-auto [&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden",
+        wrapper: clsx(
+          "!w-max !h-max m-auto",
+          "[&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden [&_.ant-modal]:flex [&_.ant-modal]:justify-center [&_.ant-modal]:items-center"
+        ),
       }}
       closeIcon={false}
       footer={false}

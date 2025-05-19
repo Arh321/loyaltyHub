@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import SmartBackground from "../shared-components/smart-background";
+import clsx from "clsx";
 
 // Dynamically import components with loading fallbacks
 const LazyHeaderLanding = dynamic(() => import("./header-landing-container"), {
@@ -30,7 +31,7 @@ const LazyHeaderLanding = dynamic(() => import("./header-landing-container"), {
 const SurveyButton = ({ onClick }: { onClick: () => void }) => (
   <MemoizedCtaButton
     onClick={onClick}
-    className="w-full flex !justify-end px-4 py-4 text-Highlighter"
+    className="w-max !h-max flex !justify-end p-1!bg-transparent  text-Highlighter"
   >
     <Icon icon="stash:times" width="2.5rem" />
   </MemoizedCtaButton>
@@ -57,7 +58,12 @@ const Header = () => {
       externalUrl={info ? info["Background-design"] : ""}
       fallbackUrl={"/images/bg-art.webp"}
     >
-      <div className="bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3">
+      <div
+        className={clsx(
+          "w-full bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3",
+          isSurveyPage && "flex justify-end items-center !py-2"
+        )}
+      >
         {isSurveyPage ? (
           <SurveyButton onClick={() => setIsModalOpen(true)} />
         ) : !isLoginPage ? (

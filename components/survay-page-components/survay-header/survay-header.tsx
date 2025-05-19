@@ -1,6 +1,7 @@
 "use client";
 
 import InvoiceModalDetail from "@/components/invoice-page/invoice-detail/invoice-detai-modal";
+import MemoizedCtaButton from "@/components/shared-components/cta-button";
 import { IInvoiceDetail } from "@/types/invoice";
 import moment from "jalali-moment";
 import { useState } from "react";
@@ -25,7 +26,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
   return (
     <div
       dir="rtl"
-      className="w-full flex flex-col gap-2 py-2 border-b border-gray-300 sm:px-6"
+      className="w-full flex flex-col gap-2 py-2 border-b border-gray-300 sm:px-4"
     >
       <h1 className="w-full font-Medium text-Primary text-center !m-0">
         {survayTopic}
@@ -40,12 +41,12 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
               .format("dddd jD jMMMM")}
           </span>
         </span>
-        <button
+        <MemoizedCtaButton
           onClick={() => setOpen(true)}
-          className="w-[136px] h-[40px] text-Secondary2 font-Medium flex justify-center items-center rounded-[8px] border border-Secondary2"
+          className="w-[136px] h-[40px] text-cta font-Medium flex justify-center items-center rounded-[8px] border border-cta !bg-transparent"
         >
           مشاهده فاکتور
-        </button>
+        </MemoizedCtaButton>
       </div>
       <p className="text-center w-full text-Secondary font-Regular !m-0">
         {survayDescription}

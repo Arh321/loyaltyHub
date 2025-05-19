@@ -4,6 +4,7 @@ import { Modal } from "antd";
 import { Dispatch, SetStateAction } from "react";
 import LevelDetailPopUp from "../myLevels-page/level-list-cart-detail";
 import MemoizedCtaButton from "./cta-button";
+import clsx from "clsx";
 
 interface LevelPopUpDetailProps {
   level: IClubStatusNew;
@@ -18,9 +19,6 @@ const LevelPopUpDetail: React.FC<LevelPopUpDetailProps> = ({
   setOpen,
   levelsStatus,
 }) => {
-  const handleOpenModal = () => {
-    setOpen(true);
-  };
   const handleCloseModal = () => {
     setOpen(false);
   };
@@ -41,14 +39,17 @@ const LevelPopUpDetail: React.FC<LevelPopUpDetailProps> = ({
       onCancel={handleCloseModal}
       style={{
         direction: "rtl",
-        width: "95vw !important",
-        maxWidth: "450px",
-        height: "90dvh",
       }}
       classNames={{
         header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
-        content: " !p-2 !bg-BG !h-full",
+        content:
+          " !p-2 !bg-BG !w-[95vw] !max-w-[375px] !max-h-[85vh] overflow-y-auto",
         footer: "!hidden",
+        body: "!w-full !h-max",
+        wrapper: clsx(
+          "!w-max !h-max m-auto",
+          "[&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden [&_.ant-modal]:flex [&_.ant-modal]:justify-center [&_.ant-modal]:items-center"
+        ),
       }}
       closeIcon={false}
       footer={false}

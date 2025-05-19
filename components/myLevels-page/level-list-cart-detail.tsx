@@ -20,7 +20,7 @@ const LevelDetailPopUp: React.FC<LevelStatesComponentsProps> = ({
   levelTitle,
 }) => {
   return (
-    <div className="w-full flex flex-col items-center gap-2 grow pt-[10px] pb-[20px] px-4 rounded-[6px] relative ">
+    <div className="w-full flex flex-col items-center gap-2 grow pt-[10px] pb-[20px] px-4 rounded-[6px] relative animate-fadeIn">
       {onClose && (
         <MemoizedCtaButton className="absolute !bg-transparent  top-4 left-6 z-10 text-primary">
           <i className="pi pi-times" style={{ fontSize: "1rem" }}></i>

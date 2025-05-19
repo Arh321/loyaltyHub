@@ -10,6 +10,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useNotify } from "@/components/notife/notife";
 import { IConfirmSurveyPoints } from "@/types/survet-types";
 import { applyCompletedSurveyInvoice } from "@/utils/surveyService";
+import MemoizedCtaButton from "@/components/shared-components/cta-button";
+import clsx from "clsx";
 
 interface SurveySubmitModalProps {
   paramsData: {
@@ -80,25 +82,27 @@ const SurveySubmitModal: React.FC<SurveySubmitModalProps> = ({
       onCancel={handleCancel}
       style={{
         direction: "rtl",
-        width: "95vw",
-        maxWidth: "450px",
       }}
       classNames={{
-        wrapper: style["survey-modal-wrapper"],
-
-        header: "w-full text-center font-Medium !bg-transparent",
-        content: style["modal-close-button"] + " !px-[23px] !bg-BG ",
+        header: "w-full text-center font-Medium !bg-transparent !py-1 !m-0",
+        content: " !p-2 !bg-BG !w-[95vw] !max-w-[375px]",
+        footer: "!w-full",
+        body: "!w-full !h-max",
+        wrapper: clsx(
+          "!w-max !h-max m-auto",
+          "[&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden [&_.ant-modal]:flex [&_.ant-modal]:justify-center [&_.ant-modal]:items-center"
+        ),
       }}
       footer={
         <div className="w-full flex justify-center">
-          <button
+          <MemoizedCtaButton
             onClick={handleOk}
             disabled={loading}
-            className="font-Bold hover:bg-SecondaryHover disabled:!opacity-50 transition-all text-xl bg-Secondary2 !text-Highlighter p-3 rounded-lg w-[202px]"
+            className="font-Bold hover:bg-cta-hover disabled:!opacity-50 transition-all text-xl bg-cta !text-Highlighter p-3 rounded-lg w-[202px]"
           >
             متوجه شدم
             {loading && <LoadingOutlined />}
-          </button>
+          </MemoizedCtaButton>
         </div>
       }
     >
@@ -120,7 +124,7 @@ const SurveySubmitModal: React.FC<SurveySubmitModalProps> = ({
           disabled={loading}
           placeholder="دیدگاه خود را اینجا بنویسید..."
           maxLength={200}
-          className="!h-[100px] disabled:!opacity-70 !font-Medium placeholder:text-Secondary text-Primary placeholder:font-Regular !shadow-none !border-Highlighter focus:!border-Secondary2"
+          className="!h-[100px] disabled:!opacity-70 !font-Medium placeholder:text-Secondary text-Primary placeholder:font-Regular !shadow-none !border-Highlighter focus:!border-cta"
         />
       </div>
     </Modal>
