@@ -32,7 +32,7 @@ const SurvayHeader: React.FC<SurvayHeaderProps> = ({
         {survayTopic}
       </h1>
       <div className="w-full flex items-center justify-between">
-        <span className="font-Regular border-r-2 border-Secondary2 px-[10px] flex items-end gap-1">
+        <span className="font-Regular border-r-2 border-cta px-[10px] flex items-end gap-1">
           <span>فاکتور</span>
           <span>،</span>
           <span>

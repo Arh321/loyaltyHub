@@ -7,6 +7,7 @@ import { ProfileFirstViewComponentProps } from "./profile-first-view";
 import useLevels from "@/hooks/useLevels";
 import { useMemo } from "react";
 import { Skeleton } from "antd";
+import AntdLazyImage from "@/components/image-with-loader/image-with-loader";
 
 const levelImages = [
   {
@@ -38,7 +39,6 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
     () => levels.find((level) => levelStates[level.id] === "Current"),
     [levels, levelStates]
   );
-  const hasLevelImage = levelImages.find((item) => item?.id == levelId);
 
   if (loading)
     return (
@@ -79,15 +79,14 @@ const ProfileFirstViewInfo: React.FC<ProfileFirstViewComponentProps> = ({
         </p>
       </div>
       {!!currentLevel && (
-        <div className="w-[70px] flex items-center animate-movable">
-          <Image
+        <div className="!size-[70px] flex items-center animate-movable">
+          <AntdLazyImage
             src={"https://hubapi.loyaltyhub.ir" + currentLevel.imageUrl}
-            alt="back-ground"
-            className="w-full h-auto"
-            priority
+            alt={currentLevel?.title ?? "back-ground"}
+            className="!w-full !h-full object-cover"
+            loadingPriority={true}
             width={70}
             height={70}
-            style={{ objectFit: "contain" }}
           />
         </div>
       )}

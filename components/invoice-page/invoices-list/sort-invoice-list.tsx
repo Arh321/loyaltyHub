@@ -98,7 +98,7 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
               className={clsx(
                 "px-4 py-2 rounded transition-all text-lg",
                 sortType === option.id
-                  ? "bg-Secondary2 text-Highlighter"
+                  ? "bg-cta text-Highlighter"
                   : "text-Secondary bg-transparent"
               )}
             >
@@ -115,7 +115,7 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
             className={clsx(
               "px-4 py-2 rounded transition-all text-lg",
               sortType === undefined
-                ? "bg-Secondary2 text-Highlighter"
+                ? "bg-cta text-Highlighter"
                 : "text-Secondary bg-transparent"
             )}
           >

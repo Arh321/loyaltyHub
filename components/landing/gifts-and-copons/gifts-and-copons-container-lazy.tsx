@@ -1,5 +1,5 @@
 "use client";
-import { Skeleton } from "antd";
+
 import dynamic from "next/dynamic";
 
 const GiftsAndCoponsContainerLAzy = dynamic(
@@ -7,11 +7,13 @@ const GiftsAndCoponsContainerLAzy = dynamic(
   {
     ssr: false, // Disable SSR for this client-side component
     loading: () => (
-      <div>
-        <Skeleton.Node
-          className="!flex !w-full !h-full aspect-square rounded-[10px]"
-          active
-        />
+      <div className="w-full grid grid-cols-2 gap-[20px]">
+        {[0, 1].map((index) => (
+          <div
+            key={index}
+            className="!flex !w-full aspect-square rounded-[10px] animate-skeleton"
+          />
+        ))}
       </div>
     ), // Fallback while loading
   }

@@ -147,6 +147,10 @@ input[type="number"] {
   background-color: #f0f0f0 !important;
 }
 
+.general-rtl-class {
+  direction: rtl;
+}
+
 /* @layer base {
   :root {
     --background: 0 0% 100%;

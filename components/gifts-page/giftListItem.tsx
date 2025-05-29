@@ -96,7 +96,7 @@ const GiftListItemComponent: React.FC<GiftItemProps> = ({ gift, index }) => {
       >
         <CopyOutlined width={"2rem"} className="text-xl" />
       </button>
-      <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-[110px] h-[110px] flex flex-col justify-center items-center gap-1 text-Secondary2">
+      <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-[110px] h-[110px] flex flex-col justify-center items-center gap-1 text-cta">
         <span className="font-Medium text-lg">
           <span>{numberToPersianPrice(gift.ceilingLimitation)}</span>
           <span className="font-Regular text-xs pr-1">تومان</span>

@@ -8,7 +8,7 @@ interface ProfileOneRowInfoProps {
     value: string;
   }[];
 
-  onEditMethod: () => void;
+  onEditMethod?: () => void;
 }
 
 const ProfileOneRowInfo: React.FC<ProfileOneRowInfoProps> = ({
@@ -38,12 +38,14 @@ const ProfileOneRowInfo: React.FC<ProfileOneRowInfoProps> = ({
           </p>
         );
       })}
-      <button
-        onClick={onEditMethod}
-        className="absolute left-[10px] top-[10px]"
-      >
-        <ProfileEditIcon width="21" height="20" color="#1E9C51" />
-      </button>
+      {onEditMethod && (
+        <button
+          onClick={onEditMethod}
+          className="absolute left-[10px] top-[10px]"
+        >
+          <ProfileEditIcon width="21" height="20" color="var(--cta)" />
+        </button>
+      )}
     </div>
   );
 };

@@ -101,9 +101,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col gap-[15px] p-[4px]"
     >
-      <h3 className="text-Secondary2 text-lg font-Medium mb-[10px]">
-        {headerTitle}
-      </h3>
+      <h3 className="text-cta text-lg font-Medium mb-[10px]">{headerTitle}</h3>
       <div className="w-full grid grid-cols-2 gap-2">
         {/* First Name Input */}
         <div
@@ -203,7 +201,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
           onChange={onChangeGender}
           defaultValue={mandatory.gender}
           buttonStyle="solid"
-          className="!w-full !flex !items-center gap-[10px]  [&_.ant-radio-button-wrapper-checked]:!bg-Secondary2 [&_.ant-radio-button-wrapper]:text-Secondary2"
+          className="!w-full !flex !items-center gap-[10px]  [&_.ant-radio-button-wrapper-checked]:!bg-cta [&_.ant-radio-button-wrapper]:text-cta"
         >
           {options.map((option, index) => {
             return (
@@ -224,7 +222,7 @@ const ProfileEditMandatoryForm: React.FC<ProfileEditMandatoryFormProps> = ({
         <button
           type="submit"
           disabled={loading}
-          className="font-Medium bg-Secondary2  disabled:opacity-70 text-Highlighter py-2 w-full text-lg rounded-lg"
+          className="font-Medium bg-cta  disabled:opacity-70 text-Highlighter py-2 w-full text-lg rounded-lg"
         >
           ثبت اطلاعات
           {loading && <LoadingOutlined />}

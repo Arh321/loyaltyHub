@@ -35,9 +35,7 @@ const ProfileCompleteInfoSection: React.FC<ProfileCompleteInfoSectionProps> = ({
       }}
       className="w-full flex flex-col opacity-0 gap-[10px] bg-Highlighter rounded-[10px] p-[10px] animate-fadeUp !duration-500"
     >
-      <h2 className="text-Secondary2 text-lg font-Medium mb-[10px]">
-        {headerTitle}
-      </h2>
+      <h2 className="text-cta text-lg font-Medium mb-[10px]">{headerTitle}</h2>
       <ProfileOneRowInfo
         items={[
           {

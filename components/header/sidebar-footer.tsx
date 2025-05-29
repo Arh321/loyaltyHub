@@ -29,7 +29,7 @@ const SideBarFooter = () => {
             borderImage:
               "linear-gradient(to right, transparent, rgb(255,255,255,0.5),transparent) 1",
           }}
-          className="w-full font-Regular text-Secondary2 flex flex-col gap-2 backdrop-blur-md items-center justify-center "
+          className="w-full font-Regular text-cta flex flex-col gap-2 backdrop-blur-md items-center justify-center "
         >
           <span>طراحی و تولید توسط</span>
           <span

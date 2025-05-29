@@ -17,7 +17,7 @@ const LoginHeader = ({ activeStep, backUrl, phone }: LoginHeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-4">
       <MemoizedCompanyLogoComponent />
-      <div className="w-full flex flex-col items-center text-Secondary2 justify-center gap-4 font-Medium">
+      <div className="w-full flex flex-col items-center text-cta justify-center gap-4 font-Medium">
         <span className="bold-16">خوش آمدید به {info.companyName}</span>
 
         {backUrl && (

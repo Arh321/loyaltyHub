@@ -64,14 +64,12 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
         className="w-full h-full flex flex-col justify-between pt-[20px]"
       >
         <div className="w-full flex items-center justify-between pr-[14px]">
-          <span className="text-Secondary2 font-Medium text-xl">
-            {level.title}
-          </span>
+          <span className="text-cta font-Medium text-xl">{level.title}</span>
           <span
             className={clsx(
               "w-[74px] h-[34px] flex items-center rounded-r-[50px] border-r border-y pr-[10px]",
               levelsStatus.find((item) => +item[0] == level.id)[1] == "Done"
-                ? "border-Secondary2"
+                ? "border-cta"
                 : "border-Alert"
             )}
           >
@@ -97,7 +95,7 @@ const LevelsListCart: React.FC<LevelsListCartProps> = ({
             className={clsx(
               "w-[132px] h-[66px] rounded-t-full bg-Highlighter  border-x border-t flex items-end justify-center",
               levelsStatus.find((item) => +item[0] == level.id)[1] == "Done"
-                ? "border-Secondary2"
+                ? "border-cta"
                 : "border-Alert"
             )}
           >

@@ -71,7 +71,7 @@ const CouponItem: React.FC<CouponItemProps> = ({ coupon, index, type }) => {
       >
         <CopyOutlined width={"2rem"} className="text-xl" />
       </button>
-      <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-16 h-16 flex flex-col justify-center items-center gap-1 text-Secondary2">
+      <div className="bg-[rgb(30,156,81,0.1)] rounded-full w-16 h-16 flex flex-col justify-center items-center gap-1 text-cta">
         <span className="font-Medium text-lg">{coupon.discountPercent}%</span>
         <span className="text-xs font-Regular">تخفیف</span>
       </div>

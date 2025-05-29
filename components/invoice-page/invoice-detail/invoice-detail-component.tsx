@@ -124,7 +124,7 @@ const ErrorState: React.FC<{
     />
     <button
       onClick={() => onLoadSearchedInvoice()}
-      className="font-Medium bg-Secondary2 text-Highlighter p-3 text-lg rounded-lg w-max"
+      className="font-Medium bg-cta text-Highlighter p-3 text-lg rounded-lg w-max"
     >
       تلاش مجدد
     </button>

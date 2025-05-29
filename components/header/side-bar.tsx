@@ -105,7 +105,7 @@ const Sidebar = () => {
                   href={`${item.url}`}
                   className="font-Regular  px-[20px] text-[14px] flex items-center gap-[10px] text-primary py-2"
                 >
-                  <span className="text-Secondary2">{item.icon}</span>
+                  <span className="text-cta">{item.icon}</span>
                   <span className="text-Primary">{item.label}</span>
                 </Link>
               ) : (
@@ -113,7 +113,7 @@ const Sidebar = () => {
                   // onClick={(e: any) => item.command && item.command(e)}
                   className="font-Regular  px-[20px] text-[14px] flex items-center gap-[10px] text-primary py-2"
                 >
-                  <span className="text-Secondary2">{item.icon}</span>
+                  <span className="text-cta">{item.icon}</span>
                   <span className="text-Primary">{item.label}</span>
                 </button>
               );

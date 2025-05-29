@@ -89,7 +89,7 @@ export default function InvoicesPage() {
         {nextLevel && (
           <div className="w-full flex flex-col items-center justify-center gap-1 bg-gradient-to-r from-transparent via-white to-transparent border-2 border-transparent border-t-white/50 border-b-white/50 backdrop-blur-md text-center p-3 rounded-md">
             <span className="font-Regular">تا فعال شدن سطح بعدی</span>
-            <span className=" text-lg text-Secondary2 border border-Secondary2 rounded-full px-6 font-Medium flex items-center gap-2">
+            <span className=" text-lg text-cta border border-cta rounded-full px-6 font-Medium flex items-center gap-2">
               <span className="text-sm">امتیاز مانده</span>
               {getRemainingPointsAndPercent(nextLevel)[1]}
             </span>
