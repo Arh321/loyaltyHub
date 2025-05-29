@@ -7,16 +7,10 @@ import style from "../invoice-page/invoices-list/invoice-list-style.module.css";
 import React, { memo, useCallback, useEffect, useState } from "react";
 import { Skeleton } from "antd";
 import { getUserGiftCards } from "@/utils/giftAndCouponsService";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { ProfileSliceType } from "@/redux/profile/profileSlice";
 
 const GiftListItemComponent = React.lazy(() => import("./giftListItem"));
 
 const GiftsContainerList = () => {
-  const { info } = useSelector<RootState, ProfileSliceType>(
-    (state) => state.profileSlice
-  );
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<IGifts[]>();
 

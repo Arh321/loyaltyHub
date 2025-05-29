@@ -80,6 +80,7 @@
   justify-content: center;
   font-size: 14px;
   font-family: "Medium";
+  margin: 0 !important;
 }
 
 .coupons-tabs_container
@@ -95,7 +96,7 @@
   [class~="ant-tabs-nav-list"]
   [class~="ant-tabs-tab-active"]
   [class~="ant-tabs-tab-btn"] {
-  color: var(--Secondary2);
+  color: var(--cta);
 }
 
 .coupons-tabs_container
@@ -103,5 +104,5 @@
   [class~="ant-tabs-nav-wrap"]
   [class~="ant-tabs-nav-list"]
   [class~="ant-tabs-ink-bar"] {
-  background: var(--Secondary2);
+  background: var(--cta);
 }

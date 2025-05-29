@@ -14,7 +14,7 @@ import { IInvoiceDetail } from "@/types/invoice";
 import { IHttpResult } from "@/types/http-result";
 import { AxiosError } from "axios";
 import { useNotify } from "@/components/notife/notife";
-import { downloadToPDF } from "@/utils/common-methods/exportPdf";
+import { safeDownloadToPdf } from "@/utils/common-methods/downloadToPdfWrapper";
 
 const useGetInvoiceDetail = () => {
   return useMutation<
@@ -69,8 +69,8 @@ const useInvoiceDetail = (
     return res;
   }, [invoiceDetail, data]);
 
-  const downloadPdfDocument = () => {
-    downloadToPDF("testId", `فاکتور ${invoice.id}`);
+  const downloadPdfDocument = async () => {
+    await safeDownloadToPdf("testId", `فاکتور ${invoice.id}`);
   };
 
   const print = () => window.print();

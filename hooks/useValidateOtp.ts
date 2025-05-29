@@ -20,6 +20,11 @@ const useValidateOtp = (
   const dispatch = useDispatch();
   const navigate = useRouter();
   const { notify } = useNotify();
+
+  useEffect(() => {
+    navigate.prefetch("/");
+  }, []);
+
   const validateOtpMutation = useMutation<
     IHttpResult<IAuthResult>,
     AxiosError<IHttpResult<unknown>>,
@@ -37,7 +42,7 @@ const useValidateOtp = (
     },
     onSuccess: (response) => {
       if (response.status) {
-        notify("success", "موفق خوش آمدید");
+        notify("success", response.resultMessage ?? "موفق خوش آمدید");
 
         dispatch(
           onSetToken({
