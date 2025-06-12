@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import clsx from "clsx";
 import { RootState } from "@/redux/store";
 import AntdLazyImage from "../image-with-loader/image-with-loader";
+import { useMemo } from "react";
 
 interface CompanyLogoComponentProps {
   isFooter?: boolean;
@@ -43,11 +44,16 @@ const CompanyLogoComponent = ({
     ]
   );
 
+  const src = useMemo(() => {
+    const bodySrc = isFooter ? info.logoUrlFooter : info.logoUrl;
+    return "https://hubapi.loyaltyhub.ir" + bodySrc;
+  }, [isFooter, info]);
+
   return (
     <div className={containerClassName}>
       {info && (
         <AntdLazyImage
-          src={isFooter ? info.logoUrlFooter : info.logoUrl}
+          src={src}
           alt="HoseinyLogo"
           width={width}
           height={height}

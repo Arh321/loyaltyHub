@@ -1,38 +1,38 @@
-type CompanySocialMedias = {
-  instagram: string;
-  telegram: string;
-  website: string;
-  email: string;
+type SocialMedia = {
+  socialMediaId: number;
+  title: string;
+  logoUrl: string;
+  linkUrl: string;
 };
 
 export type CompanyColors = {
   cta: string;
-  "cta-disabled": string;
-  "cta-hover": string;
-  "cta-focus": string;
-  "cta-30": string;
-  Highlighter: string;
-  "Highlighter-disabled": string;
-  "Highlighter-hover": string;
-  "Highlighter-focus": string;
-  "Highlighter-Faded": string;
-  BG: string;
-  Alert: string;
-  Tritary: string;
-  Secondary: string;
-  Primary: string;
-  Focus: string;
+  ctaDisabled: string;
+  ctaHover: string;
+  ctaFocus: string;
+  cta30: string;
+  highlighter: string;
+  highlighterDisabled: string;
+  highlighterHover: string;
+  highlighterFocus: string;
+  highlighterFaded: string;
+  bg: string;
+  alert: string;
+  tritary: string;
+  secondary: string;
+  primary: string;
+  focus: string;
 };
 
 export interface ICompanyInfo {
   companyName: string;
   logoUrlFooter: string;
   logoUrl: string;
-  "Background-design": string;
+  backgroundDesign: string;
   phoneNumbers: string[];
   companyAddress: string;
   companyWebSiteAddress: string;
   companyEmail: string;
-  companySocialMedias?: CompanySocialMedias;
+  companySocialMedias?: SocialMedia[];
   colors?: CompanyColors;
 }

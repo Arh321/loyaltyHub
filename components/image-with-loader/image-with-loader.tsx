@@ -21,8 +21,8 @@ const AntdLazyImage: React.FC<AntdLazyImageProps> = ({
   className = "",
   style = {},
   loadingPriority = false,
-  width = "100",
-  height = "100",
+  width,
+  height,
   fallback = "/placeholder.webp",
   onLoad,
 }) => {
@@ -81,13 +81,10 @@ const AntdLazyImage: React.FC<AntdLazyImageProps> = ({
           width={Number(width)}
           height={Number(height)}
           onError={handleError}
-          className={clsx(
-            "w-full h-full object-cover transition-opacity duration-500",
-            {
-              "opacity-0": !isLoaded,
-              "opacity-100": isLoaded,
-            }
-          )}
+          className={clsx("object-cover transition-opacity duration-500", {
+            "opacity-0": !isLoaded,
+            "opacity-100": isLoaded,
+          })}
           // style={{ display: isLoaded ? "block" : "none" }}
         />
       )}

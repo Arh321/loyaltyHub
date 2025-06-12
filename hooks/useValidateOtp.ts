@@ -6,6 +6,7 @@ import {
   onLoginWithOtp,
   onLoginWithOtpByInvoiceID,
 } from "@/utils/authService";
+import { setCookie } from "@/utils/common-methods/cookiesMethodes";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
@@ -42,7 +43,19 @@ const useValidateOtp = (
     },
     onSuccess: (response) => {
       if (response.status) {
-        notify("success", response.resultMessage ?? "موفق خوش آمدید");
+        notify("success", "موفق خوش آمدید");
+        setCookie(
+          "token",
+          response.result.token,
+          String(response.result.expiresIn)
+        );
+        setTimeout(() => {
+          if (isWithInvoiceId) {
+            navigate.push(`/?invoiceId=${invoiceId}`);
+          } else {
+            navigate.push("/");
+          }
+        }, 20);
 
         dispatch(
           onSetToken({
@@ -50,12 +63,6 @@ const useValidateOtp = (
             token: response.result.token,
           })
         );
-
-        if (isWithInvoiceId) {
-          navigate.push(`/?invoiceId=${invoiceId}`);
-        } else {
-          navigate.push("/");
-        }
       } else {
         notify("error", response.statusMessage || "کد تایید نادرست است");
       }

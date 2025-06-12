@@ -11,33 +11,35 @@ const AppLayOut = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  let loading = false;
   let companyInfo = null;
 
   try {
+    loading = true;
     const result = await getCompanyInfo();
-    companyInfo = result[0];
+    companyInfo = result?.result;
+    loading = false;
   } catch (error) {
+    loading = false;
     // fail silently, pass null
-    console.error("Error fetching companyInfo:", error);
+    throw new Error("Error fetching companyInfo:", error);
   }
-
+  if (loading) return <AppLoading />;
   if (!companyInfo) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
   return (
     <div
       dir="rtl"
       className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"
     >
-      <Suspense fallback={<AppLoading />}>
-        <Header />
-        {companyInfo ? (
-          <CompanyClientWrapper companyInfo={companyInfo}>
-            {children}
-          </CompanyClientWrapper>
-        ) : (
-          <NotFoundComponent title="خطا در دریافت اطلاعات مجموعه" />
-        )}
-        <MemoizedFooterContainer />
-      </Suspense>
+      <Header />
+      {companyInfo ? (
+        <CompanyClientWrapper companyInfo={companyInfo}>
+          {children}
+        </CompanyClientWrapper>
+      ) : (
+        <NotFoundComponent title="خطا در دریافت اطلاعات مجموعه" />
+      )}
+      <MemoizedFooterContainer />
     </div>
   );
 };

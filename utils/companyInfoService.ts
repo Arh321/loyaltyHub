@@ -1,16 +1,11 @@
 import { ICompanyInfo } from "@/types/company-info-type";
-import axios from "axios";
+import axiosInstance, { controlers } from "./apiConfig";
+import { IHttpResult } from "@/types/http-result";
 
-const companyInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_EXAMPLE_URL, // Use environment variables for flexibility
-  timeout: 50000, // Set a timeout to handle long requests
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export const getCompanyInfo = async (): Promise<ICompanyInfo[]> => {
-  const response = await companyInstance.get("/api/companyInfo/info");
+export const getCompanyInfo = async (): Promise<IHttpResult<ICompanyInfo>> => {
+  const response = await axiosInstance.get(
+    `${controlers.Setting}/GetThemeSettings`
+  );
 
   return response.data;
 };

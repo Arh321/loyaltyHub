@@ -51,11 +51,11 @@ const getFooterItemsData = (pathname: string): FooterItemType[] => {
         <MemoizedCompanyLogoComponent
           containerClass="flex flex-col items-center"
           width={80}
-          height={80}
+          height={60}
           imageClass="!w-[80px] !h-[60px] [&_img]:!object-contain"
           logoIconSize={{
-            width: "70",
-            height: "44",
+            width: "80",
+            height: "60",
             color: "white",
           }}
           isFooter

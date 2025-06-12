@@ -1,6 +1,7 @@
 import { useNotify } from "@/components/notife/notife";
 import { setCompanyInfo } from "@/redux/companySlice/companySlice";
 import { CompanyColors, ICompanyInfo } from "@/types/company-info-type";
+import { IHttpResult } from "@/types/http-result";
 import { getCompanyInfo } from "@/utils/companyInfoService";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
@@ -11,7 +12,7 @@ const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
 const STORAGE_KEY = "companyInfo";
 
 const useGetCompanyInfo = () => {
-  return useMutation<ICompanyInfo[], AxiosError, void, unknown>({
+  return useMutation<IHttpResult<ICompanyInfo>, AxiosError, void, unknown>({
     mutationKey: ["CompanyInfo"],
     mutationFn: () => getCompanyInfo(),
   });
@@ -65,9 +66,12 @@ const useInitCompany = () => {
     // Fetch new data if cache is invalid or doesn't exist
     getCoInfo(undefined, {
       onSuccess(data) {
-        dispatch(setCompanyInfo(data[0]));
-        handleSetTheme(data[0].colors);
-        saveToLocalStorage(data[0]);
+        const res = data?.result;
+        if (res) {
+          dispatch(setCompanyInfo(res));
+          handleSetTheme(res.colors);
+          saveToLocalStorage(res);
+        }
       },
       onError(error) {
         notify("error", `خطا در دریافت اطلاعات مجموعه ${error.message}`);

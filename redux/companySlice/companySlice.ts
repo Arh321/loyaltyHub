@@ -7,7 +7,7 @@ export interface ICompanyInfoSlice {
 
 const initialState: ICompanyInfoSlice = {
   info: {
-    "Background-design": "",
+    backgroundDesign: "",
     companyAddress: "",
     companyEmail: "",
     companyName: "",

@@ -35,17 +35,9 @@ const profileSlice = createSlice({
       }>
     ) => {
       state.customerToken = payload.payload.token;
-      cookies.set("token", payload.payload.token, {
-        path: "/",
-        secure: true,
-        sameSite: "strict",
-        expires: convertMinuteToDate(payload.payload.expireMinute),
-      });
       state.hasToken = true;
     },
-    // onProfileCompleteDialog: (state) => {
-    //   state.profileCompleteDialog = !state.profileCompleteDialog;
-    // },
+
     onCheckHasToken: (state) => {
       const token = cookies.get("token");
       if (!!token) {

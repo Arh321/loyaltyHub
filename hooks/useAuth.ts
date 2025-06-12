@@ -1,53 +1,20 @@
 import Cookies from "universal-cookie";
 import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
-import { AppDispatch, RootState } from "@/redux/store";
-import {
-  onCheckHasToken,
-  onLoadingProfile,
-  onSetProfile,
-  ProfileSliceType,
-} from "@/redux/profile/profileSlice";
-import { getInvoiceById, validateInvoiceById } from "@/utils/invoiceService";
+import { AppDispatch } from "@/redux/store";
+import { onLoadingProfile, onSetProfile } from "@/redux/profile/profileSlice";
 import { useNotify } from "@/components/notife/notife";
-import { IInvoiceDetail, IInvoiceId } from "@/types/invoice";
-import { getProfile } from "@/utils/userServise";
-import { useMutation } from "@tanstack/react-query";
-import { IHttpResult } from "@/types/http-result";
-import { AxiosError } from "axios";
-import { IProfileInfo } from "@/types/profile";
+import { IInvoiceDetail } from "@/types/invoice";
 
-const useValidateInvoiceById = () =>
-  useMutation<
-    IHttpResult<IInvoiceId>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    AxiosError<IHttpResult<any>>,
-    { invoiceId: string }
-  >({
-    mutationKey: ["validateInvoiceById"],
-    mutationFn: validateInvoiceById,
-  });
-
-const useGetProfile = () =>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  useMutation<IHttpResult<IProfileInfo>, AxiosError<IHttpResult<any>>, void>({
-    mutationKey: ["GetProfile"],
-    mutationFn: getProfile,
-  });
-
-const useInvoiceById = () =>
-  useMutation<
-    IHttpResult<IInvoiceDetail>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    AxiosError<IHttpResult<any>>,
-    { invoiceId: string }
-  >({
-    mutationKey: ["GetInvoiceById"],
-    mutationFn: getInvoiceById,
-  });
-
+import {
+  useInvoiceById,
+  useValidateInvoiceId,
+  useGetProfile,
+} from "./useAuthHooks";
+import { checkCookieExists } from "@/utils/common-methods/cookiesMethodes";
+import { useHandleApi } from "./useHandleApi";
 const useAuth = () => {
   const [invoiceDetail, setInvoiceDetail] = useState<
     IInvoiceDetail | undefined
@@ -64,96 +31,23 @@ const useAuth = () => {
   const invoiceId = searchParams.get("invoiceId") ?? "";
   const avg = searchParams.get("average");
 
-  const { hasToken } = useSelector<RootState, ProfileSliceType>(
-    (state) => state.profileSlice
-  );
-
-  const { mutate: validate, isPending: loadingValidateInvoice } =
-    useValidateInvoiceById();
-  const { mutate: getProf, isPending: profileLoading } = useGetProfile();
+  const { mutate: validateInvoice, isPending: loadingValidateInvoice } =
+    useValidateInvoiceId();
+  const { mutate: getProfile, isPending: profileLoading } = useGetProfile();
   const { mutate: getInvoice, isPending: loadingInvoice } = useInvoiceById();
-
-  const loadInvoiceFlow = useCallback(() => {
-    if (!invoiceId) return;
-
-    validate(
-      { invoiceId },
-      {
-        onSuccess: (res) => {
-          if (!res.status) {
-            notify("error", res.statusMessage || "اطلاعات فاکتور مطابقت ندارد");
-            setShowInvoice(false);
-            return;
-          }
-
-          dispatch(onLoadingProfile(true));
-
-          // دریافت پروفایل
-          getProf(undefined, {
-            onSuccess: (res) => {
-              if (!res.status) {
-                handleProfileError(res.statusMessage);
-                return;
-              }
-
-              dispatch(onSetProfile(res.result));
-              dispatch(onLoadingProfile(false));
-
-              // دریافت فاکتور
-              getInvoice(
-                { invoiceId },
-                {
-                  onSuccess: (res) => {
-                    if (res.status) {
-                      setInvoiceDetail(res.result);
-                      setShowInvoice(true);
-                      notify(
-                        "success",
-                        res.statusMessage || "فاکتور با موفقیت دریافت شد"
-                      );
-                    } else {
-                      setShowInvoice(false);
-                      notify(
-                        "error",
-                        res.statusMessage || "خطا در دریافت فاکتور"
-                      );
-                    }
-                  },
-                  onError: (err) => {
-                    setShowInvoice(false);
-                    notify(
-                      "error",
-                      err.response?.data?.resultMessage || "خطای فاکتور"
-                    );
-                  },
-                }
-              );
-            },
-            onError: (err) => {
-              handleProfileError(err.response?.data?.resultMessage);
-            },
-          });
-        },
-        onError: (err) => {
-          notify(
-            "error",
-            err.response?.data?.resultMessage || "خطا در بررسی فاکتور"
-          );
-          setShowInvoice(false);
-        },
-      }
-    );
-  }, [invoiceId, validate, getProf, getInvoice]);
 
   const handleProfileError = (message?: string) => {
     notify("error", message || "خطا در دریافت اطلاعات کاربر");
     cookies.remove("token");
+    notify("warning", "لطفا دوباره وارد شوید");
     router.push("/login");
   };
 
-  const loadProfileOnly = useCallback(() => {
+  const { handleResponse, handleError } = useHandleApi();
+
+  const loadProfile = useCallback(() => {
     dispatch(onLoadingProfile(true));
-    getProf(undefined, {
+    getProfile(undefined, {
       onSuccess: (res) => {
         if (res.status) {
           dispatch(onSetProfile(res.result));
@@ -167,21 +61,78 @@ const useAuth = () => {
         dispatch(onLoadingProfile(false));
       },
     });
-  }, [getProf]);
+  }, [getProfile]);
+
+  const loadInvoice = useCallback(() => {
+    getInvoice(
+      { invoiceId },
+      {
+        onSuccess: (res) => {
+          handleResponse({
+            response: res,
+            successMsg: "فاکتور با موفقیت دریافت شد",
+            errorMsg: "خطا در دریافت فاکتور",
+            setShowInvoice,
+            onSuccess: () => {
+              setInvoiceDetail(res.result);
+            },
+          });
+        },
+        onError: (err) => {
+          handleError(err, "خطای فاکتور", setShowInvoice);
+        },
+      }
+    );
+  }, [getInvoice, invoiceId]);
+
+  const loadInvoiceFlow = useCallback(() => {
+    if (!invoiceId) {
+      loadProfile();
+      return;
+    }
+
+    validateInvoice(
+      { invoiceId },
+      {
+        onSuccess: (res) => {
+          handleResponse({
+            response: res,
+            errorMsg: "اطلاعات فاکتور مطابقت ندارد",
+            setShowInvoice,
+            onSuccess: () => {
+              dispatch(onLoadingProfile(true));
+              getProfile(undefined, {
+                onSuccess: (res) => {
+                  if (res.statusCode == 401 || !res.result) {
+                    handleProfileError(res.statusMessage);
+                    return;
+                  }
+                  dispatch(onSetProfile(res.result));
+                  dispatch(onLoadingProfile(false));
+                  loadInvoice();
+                },
+                onError: (err) => {
+                  handleProfileError(err.response?.data?.resultMessage);
+                },
+              });
+            },
+          });
+        },
+        onError: (err) => {
+          handleError(err, "خطا در بررسی فاکتور", setShowInvoice);
+        },
+      }
+    );
+  }, [invoiceId, validateInvoice, getProfile, getInvoice]);
 
   useEffect(() => {
-    if (path === "/" && hasToken && invoiceId && !avg) {
-      loadInvoiceFlow();
-    } else if (!hasToken) {
-      dispatch(onCheckHasToken());
-    }
-  }, [path, hasToken, invoiceId, avg, loadInvoiceFlow]);
-
-  useEffect(() => {
-    if (!path.includes("login")) {
-      loadProfileOnly();
-    }
-  }, [path, loadProfileOnly]);
+    if (checkCookieExists("token") && !path.includes("login"))
+      if (path === "/") {
+        loadInvoiceFlow();
+      } else {
+        handleProfileError("لطفا دوباره ورود کنید");
+      }
+  }, [path, invoiceId, avg]);
 
   return {
     loadingInvoice,
@@ -194,5 +145,4 @@ const useAuth = () => {
     cookies,
   };
 };
-
 export default useAuth;

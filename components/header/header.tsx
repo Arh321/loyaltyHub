@@ -55,7 +55,9 @@ const Header = () => {
         backgroundRepeat: "repeat",
         backgroundSize: "contain",
       }}
-      externalUrl={info ? info["Background-design"] : ""}
+      externalUrl={
+        info ? "https://hubapi.loyaltyhub.ir" + info["Background-design"] : ""
+      }
       fallbackUrl={"/images/bg-art.webp"}
     >
       <div

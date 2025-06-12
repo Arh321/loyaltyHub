@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
-import HoseinyLogoText from "@/components/sharedIcons/hosseinyIcon";
 
-import logo from "@/public/LOGO.png";
 import clsx from "clsx";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import style from "./redirect-to-shop.module.css";
+import MemoizedCompanyLogoComponent from "@/components/shared-components/company-logo-component";
 interface openRedirectModalProps {
   openRedirectModal: boolean;
   setOpenRedirectModal: Dispatch<SetStateAction<boolean>>;
@@ -43,12 +42,17 @@ const RedirectLoadingModal: React.FC<openRedirectModalProps> = ({
           className="w-full h-max flex flex-col gap-4 items-center animate-flicker"
           role="presentation"
         >
-          <Image src={logo} alt="لوگوی برادران حسینی" priority className="" />
-          <HoseinyLogoText
-            width="184"
-            height="64"
-            color="white"
-            aria-label="آیکون برادران حسینی"
+          <MemoizedCompanyLogoComponent
+            containerClass="flex flex-col items-center"
+            width={120}
+            height={120}
+            imageClass="!w-[200px] !h-[160px] [&_img]:!object-contain"
+            logoIconSize={{
+              width: "100",
+              height: "74",
+              color: "white",
+            }}
+            isFooter
           />
         </div>
         <p

@@ -14,7 +14,7 @@ const ProfileIcon: React.FC<IconsProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_605_1777)">
+      <g clipPath="url(#clip0_605_1777)">
         <path
           d="M1.16663 12C1.16663 6.01692 6.01687 1.16667 12 1.16667V1.16667C17.983 1.16667 22.8333 6.01692 22.8333 12V12C22.8333 17.9831 17.983 22.8333 12 22.8333V22.8333C6.01687 22.8333 1.16663 17.9831 1.16663 12V12Z"
           stroke={color}
@@ -62,7 +62,7 @@ const ProfileIcon: React.FC<IconsProps> = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_605_1777)">
+      <g clipPath="url(#clip0_605_1777)">
         <path
           d="M0.666626 14C0.666626 6.63621 6.63616 0.666672 14 0.666672V0.666672C21.3638 0.666672 27.3333 6.63621 27.3333 14V14C27.3333 21.3638 21.3638 27.3333 14 27.3333V27.3333C6.63616 27.3333 0.666626 21.3638 0.666626 14V14Z"
           stroke={color}

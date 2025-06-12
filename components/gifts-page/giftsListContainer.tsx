@@ -1,51 +1,23 @@
 "use client";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import clsx from "clsx";
-import { IGifts } from "@/types/coupon-and-gift";
 import style from "../invoice-page/invoices-list/invoice-list-style.module.css";
 
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo } from "react";
 import { Skeleton } from "antd";
-import { getUserGiftCards } from "@/utils/giftAndCouponsService";
+import useUserGiftCards from "@/hooks/useGetGiftsLabels";
 
 const GiftListItemComponent = React.lazy(() => import("./giftListItem"));
 
 const GiftsContainerList = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<IGifts[]>();
+  const { data, isFetching, isError } = useUserGiftCards();
 
-  const [error, setError] = useState<boolean>(false);
-
-  const getBAnners = useCallback(async () => {
-    setLoading(true);
-    try {
-      const response = await getUserGiftCards({
-        customerId: 2280,
-      });
-      if (response.status) {
-        const gifts = response.result.filter(
-          (item) => !item.isCoupon && item.isActive && !item.isUsed
-        );
-        setData(() => gifts);
-      } else {
-        setLoading(false);
-
-        setError(true);
-      }
-    } catch (error) {
-      setLoading(false);
-
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+  const labels = useMemo(() => {
+    const res = data?.result;
+    return res ?? [];
   }, [data]);
 
-  useEffect(() => {
-    getBAnners();
-  }, []);
-
-  if (loading || !data)
+  if (isFetching)
     return (
       <div className="w-full flex flex-col gap-[12px]">
         {Array.from({ length: 8 }).map((_, index) => {
@@ -60,24 +32,24 @@ const GiftsContainerList = () => {
       </div>
     );
 
-  if (data)
-    return (
-      <div className="w-full flex flex-col gap-[12px]">
-        <TransitionGroup component="ul" className="space-y-2">
-          {data.map((item, index) => {
-            return (
-              <CSSTransition
-                key={index}
-                timeout={500}
-                classNames={clsx(style["fade"])}
-              >
-                <GiftListItemComponent key={index} gift={item} index={index} />
-              </CSSTransition>
-            );
-          })}
-        </TransitionGroup>
-      </div>
-    );
+  if (isError || labels.length == 0) return null;
+  return (
+    <div className="w-full flex flex-col gap-[12px]">
+      <TransitionGroup component="ul" className="space-y-2">
+        {labels.map((item, index) => {
+          return (
+            <CSSTransition
+              key={index}
+              timeout={500}
+              classNames={clsx(style["fade"])}
+            >
+              <GiftListItemComponent key={index} gift={item} index={index} />
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
+    </div>
+  );
 };
 
 export default memo(GiftsContainerList);
