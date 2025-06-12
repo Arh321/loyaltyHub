@@ -2,36 +2,32 @@ import NotFoundComponent from "../not-found-page/not-found-component";
 import Header from "../header/header";
 import MemoizedFooterContainer from "../footer/footer-container";
 import CompanyClientWrapper from "./CompanyClientWrapper";
-import { getCompanyInfo } from "@/utils/companyInfoService";
 import { Suspense } from "react";
 import AppLoading from "@/app/loading";
+import { fetchCompanyInfo } from "./matadata-components/company-api";
 
 const AppLayOut = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  let loading = false;
-  let companyInfo = null;
+  const companyInfo = await fetchCompanyInfo();
 
-  try {
-    loading = true;
-    const result = await getCompanyInfo();
-    companyInfo = result?.result;
-    loading = false;
-  } catch (error) {
-    loading = false;
-    // fail silently, pass null
-    throw new Error("Error fetching companyInfo:", error);
-  }
-  if (loading) return <AppLoading />;
+  if (!companyInfo) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
+
   if (!companyInfo) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
   return (
     <div
       dir="rtl"
       className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"
     >
-      <Header />
+      <Suspense
+        fallback={
+          <div className="!flex !w-full !h-[20px] animate-skeleton"></div>
+        }
+      >
+        <Header />
+      </Suspense>
       {companyInfo ? (
         <CompanyClientWrapper companyInfo={companyInfo}>
           {children}

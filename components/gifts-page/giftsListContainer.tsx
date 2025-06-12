@@ -3,7 +3,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import clsx from "clsx";
 import style from "../invoice-page/invoices-list/invoice-list-style.module.css";
 
-import React, { memo, useEffect, useMemo } from "react";
+import React, { memo, useMemo } from "react";
 import { Skeleton } from "antd";
 import useUserGiftCards from "@/hooks/useGetGiftsLabels";
 

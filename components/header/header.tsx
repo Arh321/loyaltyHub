@@ -43,7 +43,6 @@ const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const pathname = usePathname();
   useAppInitializer();
-
   const isSurveyPage = useMemo(() => pathname.includes("survey"), [pathname]);
   const isLoginPage = useMemo(() => pathname.includes("login"), [pathname]);
   const isInMainRoute = useMemo(() => pathname === "/", [pathname]);
