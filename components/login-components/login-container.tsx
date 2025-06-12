@@ -22,7 +22,7 @@ const LoginPageContainer = () => {
 
   return (
     <PagesContainer>
-      <div dir="rtl" className="w-full h-full font-Medium p-8">
+      <div dir="rtl" className="w-full h-full font-Medium py-8 px-2">
         {/* Header Section */}
         <MemoizedLoginHeaderLAzy
           activeStep={activeStep}

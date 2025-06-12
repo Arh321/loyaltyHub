@@ -69,7 +69,7 @@ const BannerSlidersComponent = () => {
                   <AntdLazyImage
                     src={"https://hubapi.loyaltyhub.ir" + item.mobileImageUrl}
                     alt="index"
-                    className="!w-full !h-full object-cover"
+                    className="!w-full !h-full object-cover [&_.mainImage]:!h-full"
                     loadingPriority={index == 0}
                     width={406}
                     height={100}

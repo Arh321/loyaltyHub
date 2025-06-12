@@ -47,6 +47,12 @@ const Header = () => {
   const isLoginPage = useMemo(() => pathname.includes("login"), [pathname]);
   const isInMainRoute = useMemo(() => pathname === "/", [pathname]);
 
+  const externalUrl = useMemo(() => {
+    return info && info["Background-design"]
+      ? "https://hubapi.loyaltyhub.ir" + info["Background-design"]
+      : "";
+  }, [info]);
+
   return (
     <SmartBackground
       className="w-full"
@@ -54,15 +60,14 @@ const Header = () => {
         backgroundRepeat: "repeat",
         backgroundSize: "contain",
       }}
-      externalUrl={
-        info ? "https://hubapi.loyaltyhub.ir" + info["Background-design"] : ""
-      }
+      externalUrl={externalUrl}
       fallbackUrl={"/images/bg-art.webp"}
     >
       <div
         className={clsx(
           "w-full bg-gradient-to-l from-cta via-transparent to-cta px-4 py-3",
-          isSurveyPage && "flex justify-end items-center !py-2"
+          isSurveyPage && "flex justify-end items-center !py-2",
+          isLoginPage && "!py-1"
         )}
       >
         {isSurveyPage ? (
@@ -73,20 +78,21 @@ const Header = () => {
           <div className="w-full flex items-center justify-center relative">
             <Link href="/" className="w-max h-max">
               <MemoizedCompanyLogoComponent
-                height={48}
-                width={48}
-                imageClass="!size-[48px] [&_img]:!object-contain pt-4"
-                containerClass="w-max h-max"
+                imageClass={
+                  "!w-[78px] !h-[50px] [&_img]:!w-full [&_img]:!h-full [&_img]:!object-contain"
+                }
               />
             </Link>
           </div>
         )}
       </div>
-      <HeaderModalsContainer
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        pathname={pathname}
-      />
+      {!isLoginPage && (
+        <HeaderModalsContainer
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          pathname={pathname}
+        />
+      )}
     </SmartBackground>
   );
 };

@@ -9,6 +9,7 @@ import useInterval from "@/hooks/useTimer";
 import useValidateOtp from "@/hooks/useValidateOtp";
 import DotsLoading from "../shared-components/dots-loader";
 import MemoizedCtaButton from "../shared-components/cta-button";
+import { useRouter } from "next/navigation";
 
 const INITIAL_TIMER = 120;
 const OTP_LENGTH = 5;
@@ -32,6 +33,7 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
   handleSendOtpByInvoiceId,
   invoiceId,
 }) => {
+  const navigate = useRouter();
   const [otp, setOtp] = useState("");
   const [seconds, setSeconds] = useState(INITIAL_TIMER);
   const [active, setActive] = useState(true);
@@ -92,21 +94,26 @@ const GetOtpCodeComponent: React.FC<GetOtpCodeComponentProps> = ({
       />
 
       <div className="w-full flex items-center justify-center gap-8 mt-4">
-        {!isWithInvoiceId && (
-          <MemoizedCtaButton
-            onClick={() => setActiveStep(0)}
-            className="regular-18 !bg-transparent text-cta flex items-center gap-2 cursor-pointer"
-            endIcon={
-              <Icon
-                icon="lets-icons:edit-light"
-                width="1.3rem"
-                className="text-cta"
-              />
+        <MemoizedCtaButton
+          onClick={() => {
+            if (isWithInvoiceId) {
+              navigate.push("/");
+              return;
             }
-          >
-            <span>ویرایش شماره</span>
-          </MemoizedCtaButton>
-        )}
+            setActiveStep(0);
+          }}
+          className="regular-18 !bg-transparent text-cta flex items-center gap-2 cursor-pointer"
+          endIcon={
+            <Icon
+              icon="lets-icons:edit-light"
+              width="1.3rem"
+              className="text-cta"
+            />
+          }
+        >
+          <span>{!isWithInvoiceId ? "ویرایش شماره" : "شماره من نیست"}</span>
+        </MemoizedCtaButton>
+
         <p className="flex items-center gap-4">
           <span>{isTimerExpired ? "ارسال مجدد" : "زمان باقی‌مانده"}</span>
           {isTimerExpired && (

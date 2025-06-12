@@ -1,6 +1,6 @@
 "use client";
 import { memo } from "react";
-import SmartBackground from "../shared-components/smart-background";
+import SmartBackground from "../../shared-components/smart-background";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
@@ -11,8 +11,10 @@ const SideBarFooter = () => {
       style={{
         backgroundRepeat: "no-repeat", // Prevents the image from repeating
       }}
-      externalUrl={info ? info["Background-design"] : ""}
-      fallbackUrl="/images/default-bg.webp"
+      externalUrl={
+        info ? "https://hubapi.loyaltyhub.ir" + info["Background-design"] : ""
+      }
+      fallbackUrl={"/images/bg-art.webp"}
       className="absolute bottom-0 right-0 left-0 mx-auto w-full h-[250px]"
     >
       <div

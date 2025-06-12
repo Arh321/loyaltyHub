@@ -74,7 +74,7 @@ const ProfileFirstViewComponent: React.FC<ProfileFirstViewComponentProps> = ({
         <div className="grow h-full relative rounded-[10px] overflow-hidden">
           <div className="w-full h-full">
             <AntdLazyImage
-              className="!w-full !h-full object-cover"
+              className="!w-full !h-full object-cover [&_.mainImage]:w-full"
               src={selectedBG.url}
               alt="Profile background"
               width={200}

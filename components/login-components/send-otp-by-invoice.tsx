@@ -3,6 +3,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import MemoizedCtaButton from "../shared-components/cta-button";
+import DotsLoading from "../shared-components/dots-loader";
 
 interface SendOtpByInvoiceProps {
   handleSendOtpByInvoiceId: () => void;
@@ -22,13 +23,11 @@ const SendOtpByInvoice: React.FC<SendOtpByInvoiceProps> = ({
   return (
     <div className="w-full flex flex-col gap-4 items-center mt-4">
       <span className="w-full text-center whitespace-nowrap text-cta font-Medium">
-        در حال ارسال کد تایید به سر شماره فاکتور
+        {!getOtpError
+          ? "در حال ارسال کد تایید به سر شماره فاکتور"
+          : "خطا در ارسال کد تایید"}
       </span>
-      {loading && (
-        <div className="relative">
-          <span className="loader-otp !text-cta"></span>
-        </div>
-      )}
+      {loading && <DotsLoading />}
       {getOtpError && (
         <MemoizedCtaButton
           onClick={handleSendOtpByInvoiceId}

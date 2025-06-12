@@ -1,52 +1,37 @@
 "use client";
+import { DataOrdersType } from "@/hooks/useGetInvoiceList";
 import { IInvoice } from "@/types/invoice";
 import { CloseOutlined } from "@ant-design/icons";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Drawer } from "antd";
 import clsx from "clsx";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
+const sortingOptions: {
+  label: string;
+  key: string;
+  order: "asc" | "desc";
+  id: 1 | 2 | 3 | 4;
+}[] = [
+  { label: "کمترین مبلغ", key: "payAmount", order: "asc", id: 1 },
+  { label: "بالاترین مبلغ", key: "payAmount", order: "desc", id: 2 },
+  { label: "اولین فاکتور", key: "purchaseDate", order: "asc", id: 3 },
+  { label: "آخرین فاکتور", key: "purchaseDate", order: "desc", id: 4 },
+];
 
 interface SortInvoiceListItemsProps {
-  setData: Dispatch<SetStateAction<IInvoice[]>>;
-  data: IInvoice[];
-  initialData: IInvoice[];
+  sortData: (payload: DataOrdersType | null) => void;
 }
 
 const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
-  setData,
-  data,
-  initialData,
+  sortData,
 }) => {
   const [sortType, setSortType] = useState<1 | 2 | 3 | 4 | undefined>(
     undefined
   );
   const [collapsed, setCollapsed] = useState(false);
 
-  const sortingOptions: {
-    label: string;
-    key: string;
-    order: "asc" | "desc";
-    id: 1 | 2 | 3 | 4;
-  }[] = [
-    { label: "کمترین مبلغ", key: "payAmount", order: "asc", id: 1 },
-    { label: "بالاترین مبلغ", key: "payAmount", order: "desc", id: 2 },
-    { label: "اولین فاکتور", key: "purchaseDate", order: "asc", id: 3 },
-    { label: "آخرین فاکتور", key: "purchaseDate", order: "desc", id: 4 },
-  ];
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
-  };
-  const sortData = (
-    key: "payAmount" | "purchaseDate",
-    order: "asc" | "desc"
-  ) => {
-    const sortedData = [...data].sort((a, b) => {
-      const valA = key === "purchaseDate" ? new Date(a[key]) : a[key];
-      const valB = key === "purchaseDate" ? new Date(b[key]) : b[key];
-      return order === "asc" ? (valA > valB ? 1 : -1) : valA < valB ? 1 : -1;
-    });
-    setData(sortedData);
   };
 
   return (
@@ -71,7 +56,6 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
         className="p-0"
         classNames={{
           body: "!p-0 ",
-
           wrapper:
             "!w-full !max-w-[470px] rounded-t-[20px] overflow-hidden relative !mx-auto",
         }}
@@ -88,10 +72,10 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
             <button
               key={option.id}
               onClick={() => {
-                sortData(
-                  option.key as "payAmount" | "purchaseDate",
-                  option.order
-                );
+                sortData({
+                  key: option.key as "payAmount" | "purchaseDate",
+                  order: option.order,
+                });
                 setSortType(option.id);
                 toggleCollapsed();
               }}
@@ -108,7 +92,7 @@ const SortInvoiceListItems: React.FC<SortInvoiceListItemsProps> = ({
           <hr className="border border-gradient-secondary" />
           <button
             onClick={() => {
-              setData(initialData);
+              sortData(null);
               setSortType(undefined);
               toggleCollapsed();
             }}

@@ -30,7 +30,7 @@ export default function CompanyClientWrapper({
       JSON.stringify({ data: companyInfo, timestamp: Date.now() })
     );
     localStorage.setItem("logo", companyInfo.logoUrl);
-  }, [companyInfo, dispatch]);
+  }, [companyInfo]);
 
   return <>{children}</>;
 }

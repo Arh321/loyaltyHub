@@ -4,8 +4,8 @@ import { Drawer } from "antd";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Link from "next/link";
 
-import MemoizedCompanyLogoComponent from "../shared-components/company-logo-component";
-import MemoizedCtaButton from "../shared-components/cta-button";
+import MemoizedCompanyLogoComponent from "../../shared-components/company-logo-component";
+import MemoizedCtaButton from "../../shared-components/cta-button";
 import MemoizedSideBarFooter from "./sidebar-footer";
 
 const Sidebar = () => {
@@ -55,9 +55,19 @@ const Sidebar = () => {
 
   return (
     <>
-      <button onClick={toggleCollapsed} className="text-Highlighter">
-        <Icon icon="lucide:menu" color="white" width={"2rem"} />
-      </button>
+      <MemoizedCtaButton
+        onClick={toggleCollapsed}
+        className="text-Highlighter"
+        aria-label="Toggle menu"
+        aria-expanded={collapsed}
+      >
+        <Icon
+          icon="lucide:menu"
+          color="white"
+          width={"2rem"}
+          aria-hidden="true"
+        />
+      </MemoizedCtaButton>
       <Drawer
         title={false}
         placement={"right"}
@@ -67,7 +77,6 @@ const Sidebar = () => {
         className="p-0"
         classNames={{
           body: "!p-0 ",
-
           wrapper:
             "!w-[70vw] !max-w-[400px] rounded-tl-[50px] rounded-bl-[50px] overflow-hidden relative",
         }}
@@ -88,10 +97,9 @@ const Sidebar = () => {
               </span>
             </MemoizedCtaButton>
             <MemoizedCompanyLogoComponent
-              height={48}
-              width={48}
-              imageClass="!w-[60px] !h-[48px] [&_img]:!object-contain"
-              containerClass="w-max h-max"
+              imageClass={
+                "!size-[58px] [&_img]:!w-full [&_img]:!h-full [&_img]:!object-contain"
+              }
             />
           </div>
           <div

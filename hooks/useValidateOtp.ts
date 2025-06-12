@@ -22,9 +22,11 @@ const useValidateOtp = (
   const navigate = useRouter();
   const { notify } = useNotify();
 
-  useEffect(() => {
+  const handleNavigate = () => {
     navigate.prefetch("/");
-  }, []);
+    const url = isWithInvoiceId ? `/?invoiceId=${invoiceId}` : "/";
+    navigate.push(url);
+  };
 
   const validateOtpMutation = useMutation<
     IHttpResult<IAuthResult>,
@@ -43,26 +45,10 @@ const useValidateOtp = (
     },
     onSuccess: (response) => {
       if (response.status) {
-        notify("success", "موفق خوش آمدید");
-        setCookie(
-          "token",
-          response.result.token,
-          String(response.result.expiresIn)
-        );
-        setTimeout(() => {
-          if (isWithInvoiceId) {
-            navigate.push(`/?invoiceId=${invoiceId}`);
-          } else {
-            navigate.push("/");
-          }
-        }, 20);
+        setCookie("token", response.result.token, response.result.expiresIn);
 
-        dispatch(
-          onSetToken({
-            expireMinute: response.result.expiresIn,
-            token: response.result.token,
-          })
-        );
+        handleNavigate();
+        notify("success", "موفق خوش آمدید");
       } else {
         notify("error", response.statusMessage || "کد تایید نادرست است");
       }

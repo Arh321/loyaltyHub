@@ -3,40 +3,26 @@
 import InvoicesListContainer from "@/components/invoice-page/invoices-list/invoices-list-container";
 import SortInvoiceListItems from "@/components/invoice-page/invoices-list/sort-invoice-list";
 import PagesContainer from "@/components/pages-container/pages-container";
-import { IInvoice } from "@/types/invoice";
-import { getAllInvoices } from "@/utils/invoiceService";
+import { useInvoices } from "@/hooks/useGetInvoiceList";
+import { LoadingOutlined } from "@ant-design/icons";
 import { Skeleton } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-export default function InvoicesPAge() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
-  const [data, setData] = useState<IInvoice[]>([]);
-  const onGetAllInvoices = async () => {
-    setLoading(true);
+export default function InvoicesPage() {
+  const {
+    invoicesList,
+    error,
+    isFetchingNextPage,
+    listRef,
+    isLoading,
+    sortData,
+  } = useInvoices();
 
-    try {
-      const response = await getAllInvoices({ page: 1, size: 10 });
+  if (error) {
+    return <div>Error loading invoices</div>;
+  }
 
-      if (response.status) {
-        setData(() => response.result.data);
-      } else {
-        //  notify("error", response.statusMessage || "خطا در دریافت فاکتور");
-        setError(true);
-      }
-    } catch (error) {
-      //  notify("error", "خطا در دریافت فاکتور");
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    onGetAllInvoices();
-  }, []);
-
-  if (loading || !data)
+  if (isLoading) {
     return (
       <PagesContainer>
         <div className="w-full h-[80dvh] flex flex-col gap-[12px] custome-scrool-bar overflow-y-auto pt-4 sm:px-6 lsm:px-8 pb-[100px]">
@@ -52,21 +38,30 @@ export default function InvoicesPAge() {
         </div>
       </PagesContainer>
     );
+  }
 
   return (
     <PagesContainer>
-      <div className="w-full z-10  sticky top-0">
-        <div className="w-full flex items-center justify-center border-gradient-secondary border-b text-cta font-Medium text-xl py-4  overflow-hidden">
+      <div className="w-full z-10 sticky top-0">
+        <div className="w-full flex items-center justify-center border-gradient-secondary border-b text-cta font-Medium text-xl py-4 overflow-hidden">
           فاکتورهای من
-          <SortInvoiceListItems
-            data={data}
-            setData={setData}
-            initialData={data}
-          />
+          <SortInvoiceListItems sortData={sortData} />
         </div>
       </div>
-      <div className="w-full h-[80dvh] flex flex-col custome-scrool-bar overflow-y-auto gap-4 pt-4 sm:px-6 lsm:px-8 pb-[100px]">
-        <InvoicesListContainer data={data} />
+      <div
+        id="invoices-list"
+        className="w-full h-[80dvh] flex flex-col custome-scrool-bar overflow-y-auto gap-4 pt-4 sm:px-6 lsm:px-8 pb-[100px]"
+      >
+        <div ref={listRef} className="w-full h-max">
+          <InvoicesListContainer data={invoicesList} />
+        </div>
+        {isFetchingNextPage && (
+          <div className="w-full flex items-center justify-center">
+            <span className="w-max h-max block">
+              <LoadingOutlined className="text-cta text-2xl" />
+            </span>
+          </div>
+        )}
       </div>
     </PagesContainer>
   );

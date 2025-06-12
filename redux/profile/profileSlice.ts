@@ -1,4 +1,4 @@
-import { IProfileInfo, IValidateUser } from "@/types/profile";
+import { IProfileInfo } from "@/types/profile";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "universal-cookie";
 
@@ -35,9 +35,17 @@ const profileSlice = createSlice({
       }>
     ) => {
       state.customerToken = payload.payload.token;
+      cookies.set("token", payload.payload.token, {
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+        expires: convertMinuteToDate(payload.payload.expireMinute),
+      });
       state.hasToken = true;
     },
-
+    // onProfileCompleteDialog: (state) => {
+    //   state.profileCompleteDialog = !state.profileCompleteDialog;
+    // },
     onCheckHasToken: (state) => {
       const token = cookies.get("token");
       if (!!token) {

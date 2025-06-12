@@ -46,7 +46,7 @@ const CompanyLogoComponent = ({
 
   const src = useMemo(() => {
     const bodySrc = isFooter ? info.logoUrlFooter : info.logoUrl;
-    return "https://hubapi.loyaltyhub.ir" + bodySrc;
+    return bodySrc ? "https://hubapi.loyaltyhub.ir" + bodySrc : "";
   }, [isFooter, info]);
 
   return (

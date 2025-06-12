@@ -1,5 +1,5 @@
 import React, { memo, Suspense } from "react";
-import SideBar from "./side-bar";
+import SideBar from "./header-sidebar-components/side-bar";
 import { Skeleton } from "antd";
 import Link from "next/link";
 import MemoizedNavigationButtons from "./header-navigations";
@@ -34,10 +34,9 @@ const HeaderLandingContainer: React.FC<HeaderLandingContainerProps> = ({
       </Suspense>
       <Link href="/" className="absolute inset-0 m-auto w-max h-max">
         <MemoizedCompanyLogoComponent
-          height={48}
-          width={48}
-          imageClass="!w-[60px] !h-[48px] [&_img]:!object-contain"
-          containerClass="w-max h-max"
+          imageClass={
+            "!size-[58px] [&_img]:!w-full [&_img]:!h-full [&_img]:!object-contain"
+          }
         />
       </Link>
 

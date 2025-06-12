@@ -70,11 +70,9 @@ const InvoiceModalDetail: React.FC<InvoiceModalDetailProps> = ({
         content: " !p-2 !bg-BG",
         footer: "!hidden",
         body: "!w-[95vw] !max-w-[375px] !h-[85vh]",
-        wrapper: clsx(
-          "!w-max !h-max m-auto",
-          "[&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden [&_.ant-modal]:flex [&_.ant-modal]:justify-center [&_.ant-modal]:items-center"
-        ),
+        wrapper: clsx("!w-max !h-max m-auto", ""),
       }}
+      className="!p-0 !top-0 !my-0 !mx-auto"
       closeIcon={false}
       footer={false}
     >

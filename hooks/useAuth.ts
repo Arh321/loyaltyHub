@@ -126,13 +126,12 @@ const useAuth = () => {
   }, [invoiceId, validateInvoice, getProfile, getInvoice]);
 
   useEffect(() => {
-    if (checkCookieExists("token") && !path.includes("login"))
-      if (path === "/") {
-        loadInvoiceFlow();
-      } else {
-        handleProfileError("لطفا دوباره ورود کنید");
-      }
-  }, [path, invoiceId, avg]);
+    if (checkCookieExists("token") && !path.includes("login")) {
+      loadInvoiceFlow();
+    } else {
+      handleProfileError("لطفا دوباره ورود کنید");
+    }
+  }, []);
 
   return {
     loadingInvoice,

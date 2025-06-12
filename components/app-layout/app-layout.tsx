@@ -23,18 +23,14 @@ const AppLayOut = async ({
     >
       <Suspense
         fallback={
-          <div className="!flex !w-full !h-[20px] animate-skeleton"></div>
+          <div className="!flex !w-full !h-[56px] animate-skeleton"></div>
         }
       >
         <Header />
       </Suspense>
-      {companyInfo ? (
-        <CompanyClientWrapper companyInfo={companyInfo}>
-          {children}
-        </CompanyClientWrapper>
-      ) : (
-        <NotFoundComponent title="خطا در دریافت اطلاعات مجموعه" />
-      )}
+      <CompanyClientWrapper companyInfo={companyInfo}>
+        {children}
+      </CompanyClientWrapper>
       <MemoizedFooterContainer />
     </div>
   );

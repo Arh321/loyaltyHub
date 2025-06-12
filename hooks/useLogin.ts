@@ -3,7 +3,7 @@ import { IHttpResult } from "@/types/http-result";
 import { onGetOtpByInvoiceId, onGetOtpByPhone } from "@/utils/authService";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 // Common mutation options for OTP handling
@@ -12,10 +12,14 @@ const OTP_MUTATION_OPTIONS = {
   onError: (notify: any, errorMessage?: string) => () =>
     notify("error", errorMessage ?? "خطا در ارسال کد تایید"),
   handleSuccess:
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (notify: any, setActiveStep: any, setPhone?: any) => (data: any) => {
+    (notify: any, setActiveStep: any, setPhone?: any, navigate?: any) =>
+    (data: any) => {
       if (data.status) {
         notify("success", "کد تایید با موفقیت ارسال شد");
+        if (navigate && data?.statusCode == 404) {
+          navigate.push("/login");
+          return;
+        }
         setActiveStep(1);
         setPhone?.(data.result);
       } else {
@@ -60,6 +64,7 @@ const useLoginHandlers = () => {
   const [backUrl, setBackUrl] = useState<string | null>(null);
   const { notify } = useNotify();
   const searchParams = useSearchParams();
+  const navigate = useRouter();
 
   const { phoneOtp, invoiceOtp } = useOtpMutations();
 
@@ -93,7 +98,13 @@ const useLoginHandlers = () => {
         ),
         onError: (error) => {
           const message = error.response.data.resultMessage;
-          OTP_MUTATION_OPTIONS.onError(notify, message);
+          notify(
+            "error",
+            error?.response?.data?.resultMessage ?? "خطا در ارسال کد تایید"
+          );
+          if (error?.response?.data?.statusCode == 404) {
+            navigate.push("/login");
+          }
         },
       }
     );

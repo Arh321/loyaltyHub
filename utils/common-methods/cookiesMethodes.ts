@@ -1,46 +1,40 @@
 // Cookie utility functions
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+
 export const setCookie = (
   name: string,
   value: string,
-  expirationDate: string
+  expirationMinutes: number
 ): void => {
-  const expires = `expires=${new Date(expirationDate).toUTCString()}`;
-  document.cookie = `${name}=${value};${expires};path=/`;
+  cookies.set(name, value, {
+    path: "/",
+    secure: true,
+    sameSite: "strict",
+    expires: convertMinuteToDate(expirationMinutes),
+  });
 };
 
 export const getCookie = (name: string): string | null => {
-  const cookieName = `${name}=`;
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(";");
-
-  for (let cookie of cookieArray) {
-    cookie = cookie.trim();
-    if (cookie.indexOf(cookieName) === 0) {
-      return cookie.substring(cookieName.length);
-    }
-  }
-  return null;
+  return cookies.get(name) || null;
 };
 
 export const deleteCookie = (name: string): void => {
-  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  cookies.remove(name, { path: "/" });
 };
 
 export const checkCookieExists = (name: string): boolean => {
-  return getCookie(name) !== null;
+  return cookies.get(name) !== undefined;
 };
 
 export const getAllCookies = (): { [key: string]: string } => {
-  const cookies: { [key: string]: string } = {};
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(";");
+  return cookies.getAll();
+};
 
-  for (let cookie of cookieArray) {
-    cookie = cookie.trim();
-    if (cookie) {
-      const [name, value] = cookie.split("=");
-      cookies[name] = value;
-    }
-  }
-  return cookies;
+// Helper function to convert minutes to Date object
+const convertMinuteToDate = (minutes: number): Date => {
+  const date = new Date();
+  date.setMinutes(date.getMinutes() + minutes);
+  return date;
 };

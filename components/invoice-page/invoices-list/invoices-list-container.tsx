@@ -1,43 +1,61 @@
 "use client";
-import { useEffect } from "react";
-import InoiceListItem from "./invoice-list-item";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import InvoiceListItem from "./invoice-list-item";
 import { IInvoice } from "@/types/invoice";
-import style from "./invoice-list-style.module.css";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
-import clsx from "clsx";
+import { motion, AnimatePresence } from "framer-motion";
+
 interface InvoicesListContainerProps {
   data: IInvoice[];
 }
+
 const InvoicesListContainer: React.FC<InvoicesListContainerProps> = ({
   data,
 }) => {
-  useEffect(() => {
-    AOS.init({
-      once: true,
-      duration: 300,
-      offset: 0,
-    });
-  }, []);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+    },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
-    <div className="w-full flex flex-col gap-[12px]">
-      <TransitionGroup component="ul" className="space-y-2">
-        {data.map((item, index) => {
-          return (
-            <CSSTransition
-              key={item.id}
-              timeout={500}
-              classNames={clsx(style["fade"])}
-            >
-              <>
-                <InoiceListItem key={index} index={index} invoice={item} />
-              </>
-            </CSSTransition>
-          );
-        })}
-      </TransitionGroup>
-    </div>
+    <motion.div
+      className="w-full flex flex-col gap-[12px]"
+      initial="hidden"
+      animate="show"
+      variants={containerVariants}
+    >
+      <AnimatePresence>
+        {data.map((item, index) => (
+          <motion.div
+            key={item.id}
+            variants={itemVariants}
+            initial="hidden"
+            animate="show"
+            exit={{ opacity: 0, y: -20 }}
+            layout
+          >
+            <InvoiceListItem index={index} invoice={item} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
