@@ -1,38 +1,30 @@
-import NotFoundComponent from "../not-found-page/not-found-component";
 import Header from "../header/header";
 import MemoizedFooterContainer from "../footer/footer-container";
-import CompanyClientWrapper from "./CompanyClientWrapper";
 import { Suspense } from "react";
-import AppLoading from "@/app/loading";
-import { fetchCompanyInfo } from "./matadata-components/company-api";
+import SplashScreenWrapper from "./splash-screen-loader/SplashScreenWrapper";
 
 const AppLayOut = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const companyInfo = await fetchCompanyInfo();
-
-  if (!companyInfo) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
-
-  if (!companyInfo) return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
   return (
-    <div
-      dir="rtl"
-      className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"
-    >
+    <SplashScreenWrapper>
       <Suspense
         fallback={
           <div className="!flex !w-full !h-[56px] animate-skeleton"></div>
         }
       >
-        <Header />
+        <div
+          dir="rtl"
+          className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"
+        >
+          <Header />
+          {children}
+          <MemoizedFooterContainer />
+        </div>
       </Suspense>
-      <CompanyClientWrapper companyInfo={companyInfo}>
-        {children}
-      </CompanyClientWrapper>
-      <MemoizedFooterContainer />
-    </div>
+    </SplashScreenWrapper>
   );
 };
 
