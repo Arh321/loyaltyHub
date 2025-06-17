@@ -51,7 +51,10 @@ const FooterContainer = () => {
   return (
     <>
       <footer className="w-full max-w-[470px] fixed bottom-0 right-0 left-0 mx-auto z-50 translate-y-[100px] opacity-0 animate-fadeUp">
-        <div dir="rtl" className="w-full relative h-[80px]">
+        <div
+          dir="rtl"
+          className="w-full relative h-[80px] bg-cta rounded-t-[20px]"
+        >
           <SmartBackground
             className="w-full h-full rounded-t-[20px] overflow-hidden bg-center bg-contain bg-repeat"
             style={{

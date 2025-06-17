@@ -77,11 +77,11 @@ const useInitCompany = () => {
         notify("error", `خطا در دریافت اطلاعات مجموعه ${error.message}`);
       },
     });
-  }, [dispatch, getCoInfo, handleSetTheme, notify]);
+  }, []);
 
   useEffect(() => {
     handleGetCompanyInfo();
-  }, [handleGetCompanyInfo]);
+  }, []);
 
   return {
     handleGetCompanyInfo,

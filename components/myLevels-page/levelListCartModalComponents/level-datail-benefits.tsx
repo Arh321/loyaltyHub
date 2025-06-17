@@ -56,7 +56,7 @@ const LevelDetailBenefitsModal: React.FC<LevelsListCartProps> = ({
         footer: "!hidden",
         body: "!w-full !h-max",
         wrapper: clsx(
-          "!w-max !h-max m-auto",
+          "!w-full !h-full m-auto",
           "[&_.ant-modal]:!w-full [&_.ant-modal]:!inset-0 [&_.ant-modal]:!m-auto [&_.ant-modal]:!h-full [&_.ant-modal]:!overflow-hidden [&_.ant-modal]:flex [&_.ant-modal]:justify-center [&_.ant-modal]:items-center"
         ),
       }}
