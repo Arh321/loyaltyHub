@@ -58,12 +58,22 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!loadingCompanyInfo) {
-      // وقتی اطلاعات اومد، 500ms بعد welcome رو حذف کن
-      const timeout = setTimeout(() => {
-        setShowWelcome(false);
-      }, 3000); // فرصت برای انیمیشن خروج
+      // Check if welcome screen has been shown before
+      const hasSeenWelcome = sessionStorage.getItem("hasSeenWelcome");
 
-      return () => clearTimeout(timeout);
+      if (!hasSeenWelcome) {
+        // If not shown before, show for 3 seconds then hide
+        const timeout = setTimeout(() => {
+          setShowWelcome(false);
+          // Store in session storage that welcome has been shown
+          sessionStorage.setItem("hasSeenWelcome", "true");
+        }, 3000);
+
+        return () => clearTimeout(timeout);
+      } else {
+        // If already shown in this session, don't show again
+        setShowWelcome(false);
+      }
     }
   }, [loadingCompanyInfo]);
 
