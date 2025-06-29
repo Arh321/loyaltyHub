@@ -22,7 +22,7 @@ function InterceptorInit() {
 
 const WelcomeSplash = () => {
   return (
-    <div className="w-full h-full bg-white flex flex-col items-center justify-center gap-6 p-6 relative overflow-hidden">
+    <div className="w-full h-full bg-white flex flex-col items-center justify-center gap-6 p-6 relative overflow-hidden relative">
       {/* لوگو */}
       <motion.div
         initial={{ scale: 0.1, opacity: 0, y: -200, filter: "blur(10px)" }}
@@ -56,6 +56,9 @@ const WelcomeSplash = () => {
       >
         جایی برای تجربه خرید بهتر و امتیازهای ویژه
       </motion.p>
+      <span className="absolute bottom-4 right-0 left-0 w-max mx-auto">
+        Loyaltyhub @v1.1.0
+      </span>
     </div>
   );
 };
@@ -71,16 +74,14 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const welcomeState = sessionStorage.getItem("hasSeenWelcome");
-    if (!loadingCompanyInfo && !welcomeState) {
+    if (!loadingCompanyInfo) {
       const timeout = setTimeout(() => {
         setShowWelcome(false);
         // Store in session storage that welcome has been shown
         sessionStorage.setItem("hasSeenWelcome", "true");
-      }, 3000);
+      }, 4000);
 
       return () => clearTimeout(timeout);
-    } else {
-      setShowWelcome(false);
     }
   }, [loadingCompanyInfo]);
 
@@ -98,7 +99,7 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
       >
         <WelcomeSplash />
       </div>
-      {children}
+      {!loadingCompanyInfo && children}
     </AuthRedirectProvider>
   );
 };

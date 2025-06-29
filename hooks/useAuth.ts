@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
@@ -27,6 +27,8 @@ const useAuth = () => {
   const path = usePathname();
   const cookies = new Cookies();
   const { notify } = useNotify();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const timeRef = useRef<any>(null);
 
   const invoiceId = searchParams.get("invoiceId") ?? "";
   const avg = searchParams.get("average");
@@ -37,10 +39,13 @@ const useAuth = () => {
   const { mutate: getInvoice, isPending: loadingInvoice } = useInvoiceById();
 
   const handleProfileError = (message?: string) => {
-    notify("error", message || "خطا در دریافت اطلاعات کاربر");
-    cookies.remove("token");
-    notify("warning", "لطفا دوباره وارد شوید");
-    router.push("/login");
+    clearTimeout(timeRef.current);
+
+    timeRef.current = setTimeout(() => {
+      notify("error", message || "خطا در دریافت اطلاعات کاربر");
+      cookies.remove("token");
+      router.push("/login");
+    }, 50);
   };
 
   const { handleResponse, handleError } = useHandleApi();
@@ -49,8 +54,10 @@ const useAuth = () => {
     dispatch(onLoadingProfile(true));
     getProfile(undefined, {
       onSuccess: (res) => {
-        if (res.status) {
+        if (res.statusCode == 200) {
           dispatch(onSetProfile(res.result));
+          const fullName = `${res?.result?.mandatory?.firstName} ${res?.result?.mandatory?.lastName} خوش آمدید`;
+          notify("success", fullName);
         } else {
           handleProfileError(res.statusMessage);
         }
