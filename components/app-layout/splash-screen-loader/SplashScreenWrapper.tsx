@@ -22,7 +22,7 @@ function InterceptorInit() {
 
 const WelcomeSplash = () => {
   return (
-    <div className="w-full h-full bg-white flex flex-col items-center justify-center gap-6 p-6 relative overflow-hidden relative">
+    <div className="w-full h-full bg-white flex flex-col items-center justify-center gap-6 p-6 relative overflow-hidden">
       {/* لوگو */}
       <motion.div
         initial={{ scale: 0.1, opacity: 0, y: -200, filter: "blur(10px)" }}
@@ -73,7 +73,6 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    const welcomeState = sessionStorage.getItem("hasSeenWelcome");
     if (!loadingCompanyInfo) {
       const timeout = setTimeout(() => {
         setShowWelcome(false);
