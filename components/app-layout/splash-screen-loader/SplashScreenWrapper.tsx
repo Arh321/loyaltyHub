@@ -6,6 +6,19 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import {
+  AuthRedirectProvider,
+  useAuthRedirect,
+} from "@/components/AuthRedirectContext/AuthRedirectContext";
+import { setupInterceptors } from "@/utils/apiConfig";
+function InterceptorInit() {
+  const { redirectToLogin } = useAuthRedirect();
+
+  // فقط یک‌بار ستاپ می‌کنیم
+  setupInterceptors(redirectToLogin);
+
+  return null;
+}
 
 const WelcomeSplash = () => {
   return (
@@ -57,23 +70,17 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    if (!loadingCompanyInfo) {
-      // Check if welcome screen has been shown before
-      const hasSeenWelcome = sessionStorage.getItem("hasSeenWelcome");
-
-      if (!hasSeenWelcome) {
-        // If not shown before, show for 3 seconds then hide
-        const timeout = setTimeout(() => {
-          setShowWelcome(false);
-          // Store in session storage that welcome has been shown
-          sessionStorage.setItem("hasSeenWelcome", "true");
-        }, 3000);
-
-        return () => clearTimeout(timeout);
-      } else {
-        // If already shown in this session, don't show again
+    const welcomeState = sessionStorage.getItem("hasSeenWelcome");
+    if (!loadingCompanyInfo && !welcomeState) {
+      const timeout = setTimeout(() => {
         setShowWelcome(false);
-      }
+        // Store in session storage that welcome has been shown
+        sessionStorage.setItem("hasSeenWelcome", "true");
+      }, 3000);
+
+      return () => clearTimeout(timeout);
+    } else {
+      setShowWelcome(false);
     }
   }, [loadingCompanyInfo]);
 
@@ -81,7 +88,8 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
     return <NotFoundComponent title="خطا در دریافت اطلاعات" />;
 
   return (
-    <>
+    <AuthRedirectProvider>
+      <InterceptorInit />
       <div
         className={clsx(
           "fixed top-0 right-0 w-full h-full transition-transform duration-500 z-[99999999999999999999999]",
@@ -90,8 +98,8 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
       >
         <WelcomeSplash />
       </div>
-      {!loadingCompanyInfo && children}
-    </>
+      {children}
+    </AuthRedirectProvider>
   );
 };
 

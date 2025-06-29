@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import SplashScreenWrapper from "./splash-screen-loader/SplashScreenWrapper";
 import ErrorBoundaryWrapper from "../error-component/ErrorBoundary";
 import NotFoundComponent from "../not-found-page/not-found-component";
+import AppLoading from "@/app/loading";
 
 const AppLayOut = async ({
   children,
@@ -17,11 +18,7 @@ const AppLayOut = async ({
       }
     >
       <SplashScreenWrapper>
-        <Suspense
-          fallback={
-            <div className="!flex !w-full !h-[56px] animate-skeleton"></div>
-          }
-        >
+        <Suspense fallback={<AppLoading />}>
           <div
             dir="rtl"
             className="max-w-[470px] mx-auto h-dvh flex flex-col bg-cta overflow-hidden"

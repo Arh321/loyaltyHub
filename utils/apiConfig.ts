@@ -58,30 +58,16 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
-  (response: AxiosResponse): AxiosResponse => response, // Pass through successful responses
-  (error: AxiosError): Promise<AxiosError> => {
-    // Handle errors globally
-    if (error.response?.status === 401) {
-      console.error("Unauthorized! Redirecting...");
-
-      if (typeof window !== "undefined") {
-        const currentUrl = new URL(window.location.href);
-        const invoiceId = currentUrl.searchParams.get("invoiceId");
-        if (invoiceId) {
-          cookies.remove("token");
-        }
-        // Construct the login URL with backUrl if invoiceId exists
-        const loginUrl = invoiceId ? `/login?backUrl=${invoiceId}` : "/login";
-
-        // Redirect if not already on the login page
-        if (!currentUrl.pathname.includes("/login")) {
-          window.location.href = loginUrl;
-        }
+export const setupInterceptors = (redirectToLogin: () => void) => {
+  axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === 401) {
+        redirectToLogin(); // 👈 اینجا صداش می‌زنیم
       }
+      return Promise.reject(error);
     }
-    return Promise.reject(error);
-  }
-);
+  );
+};
 
 export default axiosInstance;

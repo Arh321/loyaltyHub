@@ -34,24 +34,23 @@
 }
 
 :root {
-  /* Base primary color */
-  --cta: #1e9c51;
-  /* 40% lighter than base for disabled state */
-  --cta-disabled: #90cba8;
-  /* 20% darker than base for hover state */
-  --cta-hover: #167b40;
-  /* 40% darker than base for focus state */
-  --cta-focus: #0f5c30;
-  --cta-30: #1e9c5032;
-  --secondaryColor: "#50675E";
-  --textColor: "#ffffff";
-  --Highlighter: #ffffff;
-  --Highlighter-hover: #edf0f8;
-  --BG: #f2f6fc;
-  --alert: #c03030;
-  --border-color: #e2e2e2;
+  --cta: "#1e9c51",
+  --ctaDisabled: "#90cba8",
+  --ctaHover: "#167b40",
+  --ctaFocus: "#0f5c30",
+  --aler: "#c03030",
+  --primary: "#1976d2",
+  --focus: "#388e3c",
+  --tritary: "#e0e0e0",
+  --secondary: "#50675E",
+  --cta30: "#1e9c5032",
+  --highlighter: "#ffffff",
+  --highlighterDisabled: "#201f12",
+  --highlighterHover: "#fff176",
+  --highlighterFocus: "#ffee58",
+  --highlighterFaded: "#fffde7",
+  --bg: "#f2f6fc"
 }
-
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

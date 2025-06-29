@@ -9,6 +9,7 @@ import { generateSiteMetadata } from "@/components/app-layout/matadata-component
 export async function generateMetadata() {
   return generateSiteMetadata();
 }
+
 export default function RootLayout({
   children,
 }: Readonly<{
