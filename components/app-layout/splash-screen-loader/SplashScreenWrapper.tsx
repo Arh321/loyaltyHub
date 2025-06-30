@@ -92,8 +92,8 @@ const SplashScreenWrapper = ({ children }: { children: React.ReactNode }) => {
       <InterceptorInit />
       <div
         className={clsx(
-          "fixed top-0 right-0 w-full h-full transition-transform duration-500 z-[99999999999999999999999]",
-          showWelcome ? "translate-x-0" : "translate-x-full"
+          "fixed top-0 right-0 w-full h-full transition-transform duration-500 z-[99999999999999999999999]"
+          // showWelcome ? "translate-x-0" : "translate-x-full"
         )}
       >
         <WelcomeSplash />
