@@ -55,7 +55,7 @@ const Header = () => {
 
   return (
     <SmartBackground
-      className="w-full"
+      className="w-full bg-cta"
       style={{
         backgroundRepeat: "repeat",
         backgroundSize: "contain",
